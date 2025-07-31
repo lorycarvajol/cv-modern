@@ -34,16 +34,17 @@ const Contact = () => {
                         </li>
                         <li>
                             <i className="far fa-envelope"></i>
-                            <CopyToClipboard text="lorycarvajolwebdev@gmail.com">
-                                <span
-                                    className="clickInput"
-                                    onClick={() => {
-                                        alert('E-mail copié !');
-                                    }}
-                                >
-                                    lorycarvajolwebdev@gmail.com
-                                </span>
-                            </CopyToClipboard>
+                            <span
+                                className="clickInput"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    // Ouvrir le client mail dans une nouvelle fenêtre/onglet
+                                    window.open("mailto:lorycarvajolwebdev@gmail.com?subject=Contact%20Professionnel&body=Bonjour%20Lory,%0D%0A%0D%0AJe%20vous%20contacte%20suite%20à%20la%20consultation%20de%20votre%20CV%20en%20ligne.%0D%0A%0D%0ACordialement", '_blank');
+                                    alert('Client mail ouvert !');
+                                }}
+                            >
+                                lorycarvajolwebdev@gmail.com
+                            </span>
                         </li>
                     </ul>
                     
