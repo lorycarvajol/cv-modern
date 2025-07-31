@@ -1,18 +1,32 @@
 .knowledges {
   .knowledgesContent {
     box-sizing: border-box;
-    min-height: 85vh;
     width: 100%;
-    height: 85vh;
+    height: calc(90vh - 1rem); // 90% de hauteur moins marges
+    margin: 0.5rem 0;
     position: relative;
     overflow: hidden;
     display: grid;
-    gap: 10px;
-    padding: 5px;
+    gap: 8px;
+    padding: 0;
     grid-template-columns: 38% 1fr 1fr;
-    grid-template-rows: 70% 30%;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas:
       "L E E"
       "O O H";
+    
+    // Pas d'effet glassbox sur le conteneur
+    background: transparent;
+    
+    // Les 4 divs enfants occupent exactement la hauteur disponible
+    .languagesFrameworks,
+    .experience,
+    .otherSkills,
+    .hobbies {
+      overflow: hidden;
+      height: 100%;
+      box-sizing: border-box;
+      margin: 0;
+    }
   }
 }

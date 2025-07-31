@@ -1,14 +1,16 @@
 .portfolio {
     .portfolioContent {
       width: 100%;
+      height: calc(90vh - 1rem); // 90% de hauteur moins marges
+      margin: 0.5rem 0;
       display: grid;
-      min-height: $minHeight;
       grid-template-columns: 1fr;
-      grid-template-rows: 44px 1fr;
+      grid-template-rows: 60px 1fr;
       grid-template-areas: 
         "1"
         "2";
-        
+      overflow: hidden;
+      box-sizing: border-box;
     }
   
     .radioDisplay {
@@ -25,9 +27,9 @@
   
       li {
         color: $color-3;
-        font-size: 1.1rem;
+        font-size: 0.95rem;
         text-transform: uppercase;
-        padding: 0 1rem;
+        padding: 0 0.5rem;
         flex: 1;
         z-index: 2;
         @include verticalCenter;
@@ -84,25 +86,31 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
+      overflow: hidden;
+      padding: 0.3rem;
+      box-sizing: border-box;
+      height: 100%;
       
       .project {
         background: $color-2;
         border-radius: $borderRadius;
         border-top: 0.3px solid rgba(255, 255, 240, 0.664);
-      border-left: 0.3px solid rgba(255, 255, 240, 0.685);
-        margin: 6px;
+        border-left: 0.3px solid rgba(255, 255, 240, 0.685);
+        margin: 2px;
         text-align: center;
         width: 32%;
-        max-height: 50%;
-        padding: .5rem;
-        gap: 5px;
+        height: calc(50% - 4px); // Hauteur fixe optimisée
+        padding: 0.3rem;
+        gap: 2px;
         display: grid;
-        grid-template-rows: 15% 15% 55% 15%;
+        grid-template-rows: 18% 15% 52% 15%;
         grid-template-areas: 
           "1"
           "2"
           "3"
           "4";
+        box-sizing: border-box;
+        overflow: hidden;
       }
       .icons {
         grid-area: 1;
@@ -121,7 +129,7 @@
         color: $white;
         grid-area: 2;
         font-family: $font-2;
-        font-size: 1.65rem;
+        font-size: 1.4rem;
         @include verticalCenter;
         justify-content: left;
   
@@ -229,19 +237,77 @@
   }
   @media (max-width: 520px){
     .radioDisplay {
-      height: 80px !important;
+      height: auto !important;
       width: 97% !important;
+      padding: 0.5rem 1rem;
+      
+      li {
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+      }
     }
+    
     .portfolioContent {
-      grid-template-rows: 1fr !important;
+      grid-template-rows: auto 1fr !important;
   
       .project {
-        grid-template-rows: 30px 40px 80px 40px !important;
+        grid-template-rows: 35px 45px 100px 45px !important;
         width: 98% !important;
+        margin: 3px;
   
+        h3 {
+          font-size: 1.4rem;
+        }
+        
         img {
           height: 100% !important;
         }
+        
+        .icons i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    
+    .showInfos .infosContent {
+      width: 95% !important;
+      padding: 1rem;
+      top: 10%;
+      
+      h2 {
+        font-size: 1.3rem;
+      }
+      
+      .text {
+        font-size: 0.9rem;
+      }
+      
+      .button {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  @media (max-width: 400px){
+    .radioDisplay {
+      padding: 0.3rem 0.5rem;
+      
+      li {
+        font-size: 0.8rem;
+        padding: 0 0.3rem;
+      }
+    }
+    
+    .portfolioContent .project {
+      grid-template-rows: 30px 40px 80px 40px !important;
+      
+      h3 {
+        font-size: 1.2rem;
+      }
+      
+      .icons i {
+        font-size: 1rem;
       }
     }
   }

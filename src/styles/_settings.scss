@@ -27,11 +27,31 @@ $minHeight: 94vh;
   margin: 0;
   padding: 0;
 }
-body {
-  margin: 1rem auto;
-  max-width: 1200px;
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   font-family: $font-1;
   color: $black;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @media screen and (max-width: 768px) {
+    align-items: flex-start;
+    padding-top: 5vh;
+  }
+  
+  @media screen and (max-width: 480px) {
+    padding-top: 2vh;
+  }
 }
 button {
   cursor: pointer;
@@ -49,15 +69,37 @@ a:visited {
 }
 .home, .knowledges, .portfolio, .contact {
   display: flex;
+  gap: 1rem;
+  height: 90vh; // Maximum 90% de la hauteur d'écran
+  width: 80vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  
+  // Centrage vertical automatique via body flex
 
   @media screen and (max-width: 850px){
     display: block !important;
+    gap: 0;
+    width: 95vw;
+    height: 85vh; // Réduit sur mobile
+    padding-top: 60px;
+    margin-top: 0;
   }
 }
 .homeContent, .knowledgesContent, .portfolioContent, .contactContent {
   margin-left: .4rem;
+  flex: 1;
+  height: calc(90vh - 1rem); // 90% de hauteur moins padding
+  overflow: hidden;
+  box-sizing: border-box;
 
   @media screen and (max-width: 850px){
     margin-left: 0 !important;
+    margin-top: 0;
+    height: calc(85vh - 60px - 1rem);
+    overflow-y: auto;
   }
 }

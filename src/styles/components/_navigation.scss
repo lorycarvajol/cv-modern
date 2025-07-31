@@ -1,22 +1,38 @@
 .sidebar {
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin: 0.5rem 0;
   color: $white;
-  background: rgba(0, 0, 0, 0.116);
   font-family: $font-1;
-  min-height: 80vh;
-  min-width: 264px;
-  border-radius: $borderRadius;
-  border-top: 0.3px solid rgba(255, 255, 240, 0.664);
-  border-left: 0.3px solid rgba(255, 255, 240, 0.685);
+  height: calc(90vh - 1rem); // 90% de hauteur moins marges
+  min-width: 240px;
+  width: 240px;
+  flex-shrink: 0;
+  
+  // Design glassbox harmonisé
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) brightness(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  
+  // Styles de base
+  color: $white;
+  font-family: $font-1;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 240px 1fr 108px;
+  grid-template-rows: 240px 1fr 120px;
   grid-template-areas:
     "1"
     "2"
     "3";
-  box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; // Ombres pour effet neumorphique
+  
+  // Transitions et interactions
+  transition: all 0.3s ease;
+  z-index: 1000;
+  
+  &:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
 
   .id {
     grid-area: 1;
@@ -43,8 +59,9 @@
         text-transform: uppercase;
         letter-spacing: .2rem;
         margin-top: 1.5rem;
-        color: $color-5;
-        text-shadow: 0 0 5px rgba(10, 255, 239, 0.5); // Effet néon atténué
+        color: #0affef;
+        font-family: 'Orbitron', sans-serif;
+        text-shadow: 0 0 10px rgba(10, 255, 239, 0.8);
       }
     }
 
@@ -72,18 +89,18 @@
         }
 
         a {
-          color: $color-5;
-          transition: color 0.3s ease, text-shadow 0.3s ease;
+          color: rgba(255, 255, 255, 0.8);
+          transition: all 0.3s ease;
 
           &:hover {
-            color: $color-4;
-            text-shadow: 0 0 5px rgba(10, 255, 239, 0.5); // Effet néon atténué au survol
+            color: #0affef;
+            text-shadow: 0 0 10px rgba(10, 255, 239, 0.8);
           }
 
           &.navActive {
-            color: $color-4;
+            color: #0affef;
             font-weight: bold;
-            text-shadow: 0 0 5px rgba(10, 255, 239, 0.7); // Effet néon plus marqué pour l'élément actif
+            text-shadow: 0 0 15px rgba(10, 255, 239, 1);
           }
         }
 
@@ -91,9 +108,9 @@
           position: absolute;
           font-size: 0.95rem;
           transform: translateY(3px);
-          transition: 0.2s ease;
-          color: $color-5;
-          text-shadow: 0 0 5px rgba(10, 255, 239, 0.5); // Effet néon atténué pour les icônes
+          transition: all 0.3s ease;
+          color: rgba(255, 255, 255, 0.8);
+          text-shadow: 0 0 8px rgba(10, 255, 239, 0.6);
         }
 
         span {
@@ -114,17 +131,22 @@
 
       li {
         font-size: 1.5rem;
-        background: $color-5;
-        color: $color-1;
+        background: rgba(255, 255, 255, 0.15);
+        color: #0affef;
         border-radius: 50%;
         padding: .5rem 0.8rem;
-        transition: 0.3s;
+        transition: all 0.3s ease;
         cursor: pointer;
-        box-shadow: 4px 4px 10px #1a1a1a, -4px -4px 10px #3a3a3a; // Légère ombre pour l'effet neumorphique
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 
         &:hover {
-          background: $color-4;
-          text-shadow: 0 0 5px rgba(10, 255, 239, 0.5); // Effet néon atténué au survol
+          background: rgba(10, 255, 239, 0.2);
+          color: #fff;
+          text-shadow: 0 0 15px rgba(10, 255, 239, 0.8);
+          box-shadow: 0 8px 24px rgba(10, 255, 239, 0.3);
+          transform: translateY(-2px);
         }
 
         &:nth-child(1) {
@@ -145,11 +167,11 @@
 
       a,
       a:visited {
-        color: $color-5;
+        color: rgba(255, 255, 255, 0.7);
 
         &:hover {
-          color: $color-4;
-          text-shadow: 0 0 5px rgba(10, 255, 239, 0.5); // Effet néon atténué au survol
+          color: #0affef;
+          text-shadow: 0 0 10px rgba(10, 255, 239, 0.8);
         }
       }
     }
@@ -158,9 +180,23 @@
 
 @media screen and (max-width: 850px) {
   .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     display: flex;
-    min-height: 50px;
-    margin-bottom: 0.2rem;
+    height: 60px;
+    margin: 0;
+    width: 100%;
+    
+    // Design glassbox maintenu
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px) brightness(1.2);
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    z-index: 1001;
 
     .id,
     .socialNetwork {
@@ -169,11 +205,19 @@
 
     .navigation {
       width: 100%;
-      padding: 0.1rem 1rem;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
 
       ul {
         display: flex;
         justify-content: space-between;
+        width: 100%;
+        margin: 0;
+
+        li {
+          padding: 0.5rem;
+        }
 
         span {
           margin-left: 1.5rem !important;
@@ -185,20 +229,39 @@
 
 @media screen and (max-width: 580px) {
   .sidebar {
+    min-width: auto;
+    
     ul {
       justify-content: space-around !important;
 
       li {
-        padding: 1rem 0 !important;
+        padding: 0.8rem 0.2rem !important;
+        font-size: 1rem;
       }
 
       i {
-        font-size: 1.4rem !important;
-        transform: translateY(-3px) !important;
+        font-size: 1.2rem !important;
+        transform: translateY(-2px) !important;
       }
 
       span {
         display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar {
+    .navigation {
+      padding: 0.2rem 0.3rem;
+      
+      ul li {
+        padding: 0.4rem 0.1rem !important;
+        
+        i {
+          font-size: 1rem !important;
+        }
       }
     }
   }

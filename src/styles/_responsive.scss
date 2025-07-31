@@ -1,0 +1,143 @@
+// Global responsive utilities and improvements
+
+// Container improvements
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @media screen and (max-width: 768px) {
+    padding: 0 0.5rem;
+  }
+  
+  @media screen and (max-width: 480px) {
+    padding: 0 0.25rem;
+  }
+}
+
+// Improved breakpoints for better responsive behavior
+@mixin mobile-small {
+  @media screen and (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin mobile-large {
+  @media screen and (max-width: 580px) {
+    @content;
+  }
+}
+
+@mixin tablet-small {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 850px) {
+    @content;
+  }
+}
+
+@mixin tablet-large {
+  @media screen and (max-width: 950px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
+
+// Responsive text utilities
+.responsive-text {
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+}
+
+.responsive-title {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
+.responsive-subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+}
+
+// Responsive spacing utilities
+.responsive-padding {
+  padding: clamp(0.5rem, 2vw, 2rem);
+}
+
+.responsive-margin {
+  margin: clamp(0.5rem, 2vw, 2rem);
+}
+
+// Image responsive utility
+.responsive-image {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+// Grid responsive utilities
+.responsive-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+// Flex responsive utilities
+.responsive-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  @include mobile {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+// Hide/show utilities for different screen sizes
+.hide-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.show-mobile-only {
+  display: none;
+  
+  @include mobile {
+    display: block !important;
+  }
+}
+
+.show-tablet-only {
+  display: none;
+  
+  @include tablet {
+    display: block !important;
+  }
+}

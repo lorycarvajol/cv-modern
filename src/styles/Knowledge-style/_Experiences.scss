@@ -1,38 +1,72 @@
 .experience {
-     background: #1e1e1e;
-     border-radius: 12px;
-     padding: 20px;  
-     box-shadow: inset 6px 6px 12px #141414, inset -6px -6px 12px #282828;
-     transition: transform 0.3s ease, box-shadow 0.3s ease;
+     background: rgba(255, 255, 255, 0.1);
+     border-radius: 15px;
+     padding: 15px;
+     backdrop-filter: blur(10px) brightness(1.2);
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+     transition: all 0.3s ease;
      grid-area: E;
      height: 100%;
+     position: relative;
+     overflow: hidden;
+     box-sizing: border-box;
+     display: flex;
+     flex-direction: column;
+
+     &:hover {
+       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+       transform: translateY(-5px);
+     }
 
      h3 {
        margin-bottom: 15px;
-       color: #fff;
+       color: #0affef;
+       font-family: 'Orbitron', sans-serif;
        text-transform: uppercase;
        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
      }
    
      
      div {
-          height: 30%;
+          flex: 1;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          margin-bottom: 10px;
+          overflow: hidden;
 
           h4 {
        color: #ccc;
-       margin-bottom: 10px;
+       margin-bottom: 8px;
+       font-size: 1rem;
        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
      }
 
      p {
        color: #ddd;
+       font-size: 0.9rem;
+       line-height: 1.3;
      }
 
      button{
-          margin-left: 80%;
+       background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+       color: #0affef;
+       border: none;
+       padding: 0.6rem 1rem;
+       border-radius: 50px;
+       cursor: pointer;
+       font-size: 0.9rem;
+       box-shadow: 4px 4px 10px #1a1a1a, -4px -4px 10px #3a3a3a;
+       text-shadow: 0 0 5px #0affef, 0 0 10px #0affef, 0 0 20px #0affef;
+       transition: all 0.3s ease;
+       margin-left: 80%;
+
+       &:hover {
+         background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+         box-shadow: 0 0 10px #0affef, 0 0 20px #0affef, 0 0 40px #0affef;
+         color: #fff;
+       }
      }
      }
    

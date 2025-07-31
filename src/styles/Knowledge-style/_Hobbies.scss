@@ -1,25 +1,47 @@
 .hobbies {
-     background: #1e1e1e;
-     border-radius: 12px;
-     padding: 20px;
-     
-     box-shadow: inset 6px 6px 12px #141414, inset -6px -6px 12px #282828;
-     transition: transform 0.3s ease, box-shadow 0.3s ease;
+     background: rgba(255, 255, 255, 0.1);
+     border-radius: 15px;
+     padding: 15px;
+     backdrop-filter: blur(10px) brightness(1.2);
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+     transition: all 0.3s ease;
      grid-area: H;
+     position: relative;
+     overflow: hidden;
+     height: 100%;
+     box-sizing: border-box;
+     display: flex;
+     flex-direction: column;
+
+     &:hover {
+       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+       transform: translateY(-5px);
+     }
    
      h3 {
        margin-bottom: 15px;
-       color: #fff;
+       color: #0affef;
+       font-family: 'Orbitron', sans-serif;
        text-transform: uppercase;
        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
      }
    
      ul {
+       flex: 1;
+       display: flex;
+       flex-direction: column;
+       justify-content: space-around;
+       overflow: hidden;
+       
        li {
          color: #fff;
-         margin-bottom: 10px;
+         margin-bottom: 8px;
+         font-size: 0.95rem;
+         line-height: 1.4;
+         
          i {
-           color: #fa8231;
+           color: #0affef;
            margin-right: 10px;
          }
        }

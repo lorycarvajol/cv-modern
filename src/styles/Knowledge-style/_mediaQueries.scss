@@ -1,7 +1,7 @@
 @media screen and (max-width: 950px) {
      .knowledgesContent {
        h3 {
-         font-size: 1.2rem !important;
+         font-size: 1.1rem !important;
        }
    
        .languagesList {
@@ -9,12 +9,12 @@
        }
    
        p {
-         font-size: .8rem;
+         font-size: .85rem;
        }
    
        .otherSkills,
        .hobbies {
-         font-size: .8rem;
+         font-size: .85rem;
        }
      }
    }
@@ -32,36 +32,92 @@
      }
    }
    
+   @media screen and (max-width: 768px) {
+     .knowledgesContent {
+       display: grid !important;
+       grid-template-columns: 1fr 1fr !important;
+       grid-template-rows: auto auto !important;
+       gap: 10px;
+   
+       .languagesFrameworks {
+         grid-column: 1 / -1;
+         margin-bottom: 15px !important;
+       }
+   
+       .experience {
+         grid-column: 1 / -1;
+         margin: 0 !important;
+       }
+   
+       .otherSkills {
+         grid-column: 1;
+         margin: 0 !important;
+         width: 100% !important;
+       }
+   
+       .hobbies {
+         grid-column: 2;
+         margin: 0 !important;
+         width: 100% !important;
+       }
+     }
+   }
+   
    @media screen and (max-width: 500px) {
      .knowledgesContent {
        display: grid !important;
        grid-template-columns: 1fr !important;
-       grid-template-rows: 1fr 1fr 180px 180px !important;
+       grid-template-rows: auto auto auto auto !important;
+       gap: 15px;
    
        .languagesFrameworks {
-         height: 90% !important;
-         grid-area: 1 !important;
-         margin-bottom: 35px !important;
+         grid-area: 1;
+         margin-bottom: 0 !important;
        }
    
        .experience {
-         margin-top: 1px !important;
-         grid-area: 2 !important;
-         margin-left: 6px !important;
+         grid-area: 2;
+         margin: 0 !important;
        }
    
        .otherSkills {
-         grid-area: 3 !important;
-         margin-top: 3px !important;
-         width: 92% !important;
+         grid-area: 3;
+         margin: 0 !important;
+         width: 100% !important;
        }
    
        .hobbies {
-         grid-area: 4 !important;
-         margin-left: 6px !important;
-         margin-right: 0 !important;
-         width: 89.5% !important;
-         margin-top: 5px !important;
+         grid-area: 4;
+         margin: 0 !important;
+         width: 100% !important;
+       }
+     }
+   }
+   
+   @media screen and (max-width: 400px) {
+     .knowledgesContent {
+       gap: 10px;
+       
+       h3 {
+         font-size: 1rem !important;
+       }
+       
+       h4 {
+         font-size: 0.8rem !important;
+       }
+       
+       h5 {
+         font-size: 0.5rem !important;
+         padding: 0.1rem 0.8rem !important;
+       }
+       
+       p {
+         font-size: 0.75rem;
+       }
+       
+       .otherSkills,
+       .hobbies {
+         font-size: 0.75rem;
        }
      }
    }

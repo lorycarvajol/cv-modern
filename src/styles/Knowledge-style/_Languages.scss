@@ -1,25 +1,52 @@
 .languagesFrameworks {
-  background: #1e1e1e;
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: inset 6px 6px 12px #141414, inset -6px -6px 12px #282828;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px) brightness(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
   grid-area: L;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+  }
 
 
   h3 {
-    margin-bottom: 10px;
-    color: #fff;
+    margin-bottom: 15px;
+    color: #0affef;
+    font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
   }
 
   .button {
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    color: #0affef;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 4px 4px 10px #1a1a1a, -4px -4px 10px #3a3a3a;
+    text-shadow: 0 0 5px #0affef, 0 0 10px #0affef, 0 0 20px #0affef;
+    transition: all 0.3s ease;
     margin-top: 10px;
     margin-left: 70%;
+
+    &:hover {
+      background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+      box-shadow: 0 0 10px #0affef, 0 0 20px #0affef, 0 0 40px #0affef;
+      color: #fff;
+    }
   }
 
   .years {
@@ -40,17 +67,24 @@
   }
 
   .languagesList {
-    padding-top: .5rem;
+    padding-top: 0.5rem;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 
     li {
       color: $white;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
     }
 
     .progressBar {
-      height: .4rem;
+      height: .3rem; // Réduit la hauteur
       background: transparent;
       border-radius: 50px;
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
       position: relative;
 
       &:after {
@@ -58,7 +92,7 @@
         position: absolute;
         background: $color-3;
         border-radius: 50px;
-        height: .4rem;
+        height: .3rem;
         width: 0;
         animation: line 2s ease-out forwards;
 
