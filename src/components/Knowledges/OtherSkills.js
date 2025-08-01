@@ -37,7 +37,7 @@ const OtherSkills = () => {
                 title="Compétences Techniques Détaillées"
                 moduleType="Autres Compétences"
             >
-                <h2>🔧 Compétences Techniques Avancées</h2>
+                <h2>Compétences Techniques Avancées</h2>
                 
                 <h3>Programmation & Développement</h3>
                 <ul>

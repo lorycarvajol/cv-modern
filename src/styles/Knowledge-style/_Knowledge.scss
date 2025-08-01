@@ -5,7 +5,7 @@
     height: calc(90vh - 1rem); // 90% de hauteur moins marges
     margin: 0.5rem 0;
     position: relative;
-    overflow: hidden;
+    // overflow: hidden;
     display: grid;
     gap: 8px;
     padding: 0;
@@ -24,7 +24,7 @@
     .experience,
     .otherSkills,
     .hobbies {
-      overflow: hidden;
+      // overflow: hidden;
       height: 100%;
       box-sizing: border-box;
       margin: 0;

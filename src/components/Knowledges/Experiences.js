@@ -56,7 +56,7 @@ const Experiences = () => {
             >
                 {selectedExperience === 'airbus' && (
                     <>
-                        <h2>🚀 Apprentis Data-Analyste - Airbus (2022-2024)</h2>
+                        <h2>Apprentis Data-Analyste - Airbus (2022-2024)</h2>
                         
                         <h3>Contexte & Mission</h3>
                         <p>
@@ -98,7 +98,7 @@ const Experiences = () => {
 
                 {selectedExperience === 'formateur' && (
                     <>
-                        <h2>👨‍🏫 Coach/Formateur DWWM (2020-2022)</h2>
+                        <h2>Coach/Formateur DWWM (2020-2022)</h2>
                         
                         <h3>Formation Initiale</h3>
                         <p>
@@ -147,7 +147,7 @@ const Experiences = () => {
 
                 {selectedExperience === 'alstom' && (
                     <>
-                        <h2>🔧 Monteur-Câbleur - Alstom-Areva (2001-2009)</h2>
+                        <h2>Monteur-Câbleur - Alstom-Areva (2001-2009)</h2>
                         
                         <h3>Contexte Industriel</h3>
                         <p>

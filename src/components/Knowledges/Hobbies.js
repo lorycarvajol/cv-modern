@@ -41,7 +41,7 @@ const Hobbies = () => {
                 title="Passions & Centres d'Intérêt"
                 moduleType="Intérêts Personnels"
             >
-                <h2>🎯 Mes Passions</h2>
+                <h2>Mes Passions</h2>
                 
                 <h3>Cuisine & Gastronomie</h3>
                 <p>
