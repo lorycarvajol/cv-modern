@@ -1,0 +1,308 @@
+.fullpage-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fullpage-modal-container {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.15) 0%, 
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 25px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 8px 24px rgba(0, 175, 239, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  width: 95vw;
+  height: 90vh;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
+  animation: modalSlideIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(0, 175, 239, 0.6) 50%, 
+      transparent
+    );
+  }
+}
+
+.fullpage-modal-header {
+  padding: 30px 40px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 100%
+  );
+
+  .header-content {
+    .module-type {
+      color: rgba(10, 255, 239, 0.8);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px rgba(10, 255, 239, 0.5);
+    }
+
+    h1 {
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 
+        0 0 20px rgba(10, 255, 239, 0.4),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+      background: linear-gradient(135deg, #fff, rgba(10, 255, 239, 0.8));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  .close-button {
+    background: linear-gradient(145deg, 
+      rgba(58, 58, 58, 0.8), 
+      rgba(42, 42, 42, 0.9)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(10, 255, 239, 0.2), 
+        rgba(10, 255, 239, 0.05)
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    i {
+      color: #fff;
+      font-size: 1.2rem;
+      z-index: 1;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      border-color: rgba(10, 255, 239, 0.6);
+      box-shadow: 
+        0 8px 25px rgba(10, 255, 239, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+
+      &::before {
+        opacity: 1;
+      }
+
+      i {
+        color: #0affef;
+        text-shadow: 0 0 15px rgba(10, 255, 239, 0.8);
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.fullpage-modal-content {
+  padding: 40px;
+  height: calc(100% - 120px);
+  overflow-y: auto;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.8;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, 
+      rgba(10, 255, 239, 0.6), 
+      rgba(10, 255, 239, 0.3)
+    );
+    border-radius: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, 
+        rgba(10, 255, 239, 0.8), 
+        rgba(10, 255, 239, 0.5)
+      );
+    }
+  }
+
+  h2 {
+    color: #0affef;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    margin: 30px 0 20px;
+    text-shadow: 0 0 15px rgba(10, 255, 239, 0.6);
+  }
+
+  h3 {
+    color: rgba(10, 255, 239, 0.9);
+    font-size: 1.4rem;
+    margin: 25px 0 15px;
+    text-shadow: 0 0 10px rgba(10, 255, 239, 0.4);
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, 
+          rgba(10, 255, 239, 0.1), 
+          rgba(10, 255, 239, 0.05)
+        );
+        padding-left: 20px;
+        border-radius: 10px;
+      }
+
+      i {
+        color: #0affef;
+        margin-right: 15px;
+        font-size: 1.2rem;
+        text-shadow: 0 0 10px rgba(10, 255, 239, 0.6);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fullpage-modal-container {
+    width: 95vw;
+    height: 95vh;
+    border-radius: 20px;
+  }
+
+  .fullpage-modal-header {
+    padding: 20px;
+    
+    .header-content h1 {
+      font-size: 2rem;
+    }
+
+    .close-button {
+      width: 40px;
+      height: 40px;
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .fullpage-modal-content {
+    padding: 20px;
+    font-size: 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .fullpage-modal-header {
+    .header-content h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .fullpage-modal-content {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+}
