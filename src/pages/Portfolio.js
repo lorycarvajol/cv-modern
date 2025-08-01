@@ -6,7 +6,9 @@ const Portfolio = () => {
     return (
         <div className="portfolio">
             <Navigation />
-            <ProjectList />
+            <div className="portfolio-container">
+                <ProjectList />
+            </div>
         </div>
     );
 };

@@ -11,7 +11,10 @@
       "Bash(npm uninstall:*)",
       "Bash(npm cache clean:*)",
       "Bash(npm install)",
-      "Bash(npm start)"
+      "Bash(npm start)",
+      "Bash(grep:*)",
+      "Bash(tasklist:*)",
+      "Bash(npx kill-port:*)"
     ],
     "deny": []
   }
