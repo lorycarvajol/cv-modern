@@ -231,21 +231,12 @@ a:visited {
   position: relative;
   overflow: hidden;
 }
-.home .homeContent:after {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: inherit;
-  background: url("../../media/matronche2.jpg") no-repeat center/cover;
-  background-position: 70px -200px;
-  z-index: -1;
-  filter: brightness(70%);
-}
 .home .homeContent .content {
   position: absolute;
   top: 15%;
   left: 10%;
   font-family: "Nova Round", cursive;
+  z-index: 10;
 }
 .home .homeContent .content h1 {
   font-size: 5rem;
@@ -278,7 +269,7 @@ a:visited {
   }
 }
 @media screen and (max-width: 580px) {
-  .homeContent:after {
+  .home .homeContent::after {
     background: url("../../media/matronche2.jpg") no-repeat 40% 30%/cover !important;
   }
   .homeContent h1 {

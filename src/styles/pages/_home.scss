@@ -129,32 +129,27 @@
     }
 }
 
-// body {
-//     background-image: radial-gradient(circle at center center, rgba(33,33,33,0), rgb(33,33,33)),
-//                       repeating-linear-gradient(135deg, rgb(33,33,33) 0px, rgb(33,33,33) 1px, transparent 1px, transparent 4px),
-//                       repeating-linear-gradient(45deg, rgb(56,56,56) 0px, rgb(56,56,56) 5px, transparent 5px, transparent 6px),
-//                       linear-gradient(90deg, rgb(33,33,33), rgb(33,33,33));
-//     animation: oscillateLight 15s ease-in-out infinite;
-// }
+// Animation subtile de scintillement du gradient
+@keyframes subtleShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: brightness(1) contrast(1) saturate(1);
+  }
+  25% {
+    background-position: 50% 100%;
+    filter: brightness(1.1) contrast(1.05) saturate(1.1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(0.95) contrast(0.98) saturate(0.95);
+  }
+  75% {
+    background-position: 50% 0%;
+    filter: brightness(1.05) contrast(1.02) saturate(1.05);
+  }
+}
 
 
-  // body {
-  //    background-image: radial-gradient(circle at center center, rgba(33,33,33,0),rgb(33,33,33)),repeating-linear-gradient(135deg, rgb(33,33,33) 0px, rgb(33,33,33) 1px,transparent 1px, transparent 4px),repeating-linear-gradient(45deg, rgb(56,56,56) 0px, rgb(56,56,56) 5px,transparent 5px, transparent 6px),linear-gradient(90deg, rgb(33,33,33),rgb(33,33,33));
-  // }
-
-  /* src/components/NeumorphicBackground.css */
-
-  /* src/components/NeumorphicBackground.css */
-// body {
-//   margin: 0;
-//   padding: 0;
-//   overflow-x: hidden;
-//   font-family: 'Arial', sans-serif;
-//   background-color: #aaaaaa; /* Darker background to enhance neon effects */
-// }
-
-
-/* src/App.css */
 
  html {
   margin: 0;
@@ -163,9 +158,9 @@
   height: 100%;
   overflow-x: hidden;
   font-family: 'Arial', sans-serif;
-  background: radial-gradient(circle, #0099ff, #00ffcc, #8a2be2); /* Gradient colors */
-  background-size: 200% 200%; /* Enlarge background for smooth animation */
-  animation: oscillateColors 15s infinite ease-in-out; /* Gradient animation */
+  background: radial-gradient(circle, #0099ff, #00ffcc, #8a2be2);
+  background-size: 200% 200%;
+  animation: subtleShimmer 8s infinite ease-in-out;
 }
 
 #root {
@@ -179,15 +174,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../../media/hexa-back.png'); /* Replace with your image path */
+  background-image: url('../../media/hexa-back.png'); /* Image de fond uniquement */
   
-  background-size: cover; /* Adjust based on your needs */
+  background-size: cover;
   background-position: center;
   
-  opacity: 0.8; /* Adjust opacity as needed */
+  opacity: 0.8;
   
-  z-index: -1; /* Ensure the image is behind the content but above the gradient */
-  pointer-events: none; /* Allows clicks to pass through the image */
+  z-index: -1;
+  pointer-events: none;
 }
 
 .App::after {
@@ -197,7 +192,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.921); /* Semi-transparent dark overlay */
+  background: rgba(25, 25, 25, 0.719); /* Semi-transparent dark overlay */
   z-index: -1; /* Ensure the overlay is above the image but below the content */
   pointer-events: none; /* Allows clicks to pass through the overlay */
 }
@@ -214,3 +209,4 @@
     background-position: 0% 50%;
   }
 }
+
