@@ -10,14 +10,15 @@
     gap: 8px;
     padding: 0;
     grid-template-columns: 38% 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas:
       "L E E"
+      "L E E"
       "O O H";
-    
+
     // Pas d'effet glassbox sur le conteneur
     background: transparent;
-    
+
     // Les 4 divs enfants occupent exactement la hauteur disponible
     .languagesFrameworks,
     .experience,

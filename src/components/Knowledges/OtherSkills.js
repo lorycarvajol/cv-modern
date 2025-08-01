@@ -11,7 +11,7 @@ const OtherSkills = () => {
 
     return (
         <>
-            <Glassbox>
+        
             <div className="otherSkills">
                 <h3>Autres compétences</h3>
                 <div className="list">
@@ -38,7 +38,7 @@ const OtherSkills = () => {
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel nunc non ipsum.</p>
                 </Modal>
                 )}
-            </Glassbox>
+           
         </>
     );
 };
