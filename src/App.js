@@ -6,6 +6,7 @@ import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Modal from './components/common/Modal';
+import ChatBox from './components/common/ChatBox';
 
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
         <Modal show={showModal} onClose={closeModal} title={modalTitle}>
           {modalContent}
         </Modal>
+        <ChatBox />
       </Router>
     </div>
   );
