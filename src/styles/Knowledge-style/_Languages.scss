@@ -1,8 +1,7 @@
 .languagesFrameworks {
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.15) 0%, 
-    rgba(255, 255, 255, 0.08) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 100%);
   border-radius: 20px;
   padding: 24px;
   display: flex;
@@ -12,7 +11,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   border-left: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     0 2px 8px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -30,28 +29,26 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(0, 175, 239, 0.6) 50%, 
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(0, 175, 239, 0.6) 50%,
+        transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
 
   &:hover {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.2) 0%, 
-      rgba(255, 255, 255, 0.12) 100%
-    );
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.12) 100%);
     border-color: rgba(0, 175, 239, 0.4);
-    box-shadow: 
+    box-shadow:
       0 16px 48px rgba(0, 0, 0, 0.4),
       0 4px 16px rgba(0, 175, 239, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
       0 0 20px rgba(0, 175, 239, 0.2);
     transform: translateY(-8px) scale(1.02);
-    
+
     &::before {
       opacity: 1;
     }
@@ -62,14 +59,14 @@
     color: #0affef;
     font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
-    text-shadow: 
+    text-shadow:
       0 0 10px rgba(10, 255, 239, 0.6),
       0 0 20px rgba(10, 255, 239, 0.4),
       1px 1px 3px rgba(0, 0, 0, 0.8);
     font-weight: 600;
     letter-spacing: 1px;
     position: relative;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -81,7 +78,7 @@
       transition: width 0.4s ease;
     }
   }
-  
+
   &:hover h3::after {
     width: 100%;
   }
@@ -96,10 +93,9 @@
   }
 
   .small-button {
-    background: linear-gradient(145deg, 
-      rgba(58, 58, 58, 0.8), 
-      rgba(42, 42, 42, 0.9)
-    );
+    background: linear-gradient(145deg,
+        rgba(58, 58, 58, 0.8),
+        rgba(42, 42, 42, 0.9));
     color: #0affef;
     border: 1px solid rgba(10, 255, 239, 0.3);
     padding: 0.5rem 1rem;
@@ -108,7 +104,7 @@
     font-size: 0.8rem;
     font-weight: 500;
     backdrop-filter: blur(10px);
-    box-shadow: 
+    box-shadow:
       0 3px 10px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-shadow: 0 0 5px rgba(10, 255, 239, 0.6);
@@ -119,7 +115,7 @@
     width: fit-content;
     position: relative;
     overflow: hidden;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -127,35 +123,33 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(10, 255, 239, 0.2), 
-        transparent
-      );
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(10, 255, 239, 0.2),
+          transparent);
       transition: left 0.4s ease;
     }
 
     &:hover {
-      background: linear-gradient(145deg, 
-        rgba(10, 255, 239, 0.15), 
-        rgba(10, 255, 239, 0.08)
-      );
+      background: linear-gradient(145deg,
+          rgba(10, 255, 239, 0.15),
+          rgba(10, 255, 239, 0.08));
       border-color: rgba(10, 255, 239, 0.6);
-      box-shadow: 
+      box-shadow:
         0 6px 20px rgba(10, 255, 239, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.2),
         0 0 20px rgba(10, 255, 239, 0.4);
       color: #fff;
-      text-shadow: 
+      text-shadow:
         0 0 8px rgba(10, 255, 239, 0.8),
         0 0 15px rgba(10, 255, 239, 0.5);
       transform: translateY(-1px) scale(1.03);
-      
+
       &::before {
         left: 100%;
       }
     }
-    
+
     &:active {
       transform: translateY(0) scale(1.01);
     }
@@ -167,7 +161,7 @@
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    
+
     h4 {
       font-size: 0.85rem;
       margin-bottom: 6px;

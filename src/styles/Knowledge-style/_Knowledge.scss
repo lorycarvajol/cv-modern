@@ -2,10 +2,10 @@
   .knowledgesContent {
     box-sizing: border-box;
     width: 100%;
-    height: calc(90vh - 1rem); // 90% de hauteur moins marges
-    margin: 0.5rem 0;
+    height: calc(90vh - 1rem); // Même hauteur que la sidebar
+    margin: 0.5rem 0; // Mêmes marges que la sidebar
     position: relative;
-    // overflow: hidden;
+    overflow: visible;
     display: grid;
     gap: 8px;
     padding: 0;

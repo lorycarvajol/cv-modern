@@ -3,16 +3,13 @@ import FullPageModal from '../common/FullPageModal';
 
 const Experiences = () => {
     const [showModal, setShowModal] = useState(false);
-    const [selectedExperience, setSelectedExperience] = useState(null);
 
-    const openModal = (experience) => {
-        setSelectedExperience(experience);
+    const openModal = () => {
         setShowModal(true);
     };
 
     const closeModal = () => {
         setShowModal(false);
-        setSelectedExperience(null);
     };
 
     return (
@@ -21,31 +18,28 @@ const Experiences = () => {
                 <h3>Expérience</h3>
 
                 <div className="exp-1">
-                    <h4>Apprentis Data-analyste Airbus 2022 / 2024</h4>
-                    <p>- Mise en place du projet PiltoME.</p>
-                    <p>- Suivi et support des activités du service Manufacturing Engineering.</p>
-                    <button className="small-button" onClick={() => openModal('airbus')}>
-                        Voir plus
-                    </button>
+                    <h4>Formateur/Consultant numérique 2025 / 2026</h4>
+                    <p>- Formateur numérique pour l'entreprise Nepsod et consultant freelance</p>
+                    <p>- Formateur en développement web et mobile et consultant formation / data analyste</p>
                 </div>
 
                 <div className="exp-2">
-                    <h4>Formation puis Coach/Formateur DWWM 2020 / 2022</h4>
-                    <p>Formateur en développement web et mobile</p>
-                    <p>Responsable du site de formation de Saint-Baldoph.</p>
-                    <button className="small-button" onClick={() => openModal('formateur')}>
-                        Voir plus
-                    </button>
+                    <h4>Apprentis Data-analyste Airbus 2022 / 2024</h4>
+                    <p>- Mise en place du projet PiltoME.</p>
+                    <p>- Suivi et support des activités du service Manufacturing Engineering.</p>
                 </div>
 
                 <div className="exp-3">
-                    <h4>Monteur - Cableur Alstom-Areva 2001 / 2009</h4>
-                    <p>- Montage de sous-ensembles mécaniques en "atelier blanc".</p>
-                    <p>- Montage de postes sur site sous la direction du superviseur.</p>
-                    <button className="small-button" onClick={() => openModal('alstom')}>
-                        Voir plus
-                    </button>
+                    <h4>Formation puis Coach/Formateur DWWM 2020 / 2022</h4>
+                    <p>Formateur en développement web et mobile</p>
+                    <p>Responsable du site de formation de Saint-Baldoph.</p>
                 </div>
+
+               
+                
+                <button className="small-button" onClick={openModal}>
+                    Voir plus
+                </button>
             </div>
 
             <FullPageModal 
@@ -54,8 +48,53 @@ const Experiences = () => {
                 title="Parcours Professionnel Détaillé"
                 moduleType="Expériences"
             >
-                {selectedExperience === 'airbus' && (
-                    <>
+                <div className="all-experiences">
+                    
+                    <div className="experience-section">
+                        <h2>Formateur/Consultant Numérique (2024 - Présent)</h2>
+                        
+                        <h3>Contexte Professionnel</h3>
+                        <p>
+                            Fort de mes expériences en formation et en analyse de données, j'ai lancé mon activité de consultant 
+                            indépendant pour accompagner les entreprises dans leur transformation numérique et former les professionnels 
+                            aux compétences digitales de demain.
+                        </p>
+
+                        <h3>Activités Principales</h3>
+                        <ul>
+                            <li><i className="fas fa-laptop-code"></i>Formation en développement web et mobile pour Nepsod</li>
+                            <li><i className="fas fa-chart-pie"></i>Consulting en data analyse et business intelligence</li>
+                            <li><i className="fas fa-users-class"></i>Animation de sessions de formation professionnelle</li>
+                            <li><i className="fas fa-project-diagram"></i>Accompagnement à la transformation digitale des entreprises</li>
+                        </ul>
+
+                        <h3>Domaines d'Expertise</h3>
+                        <ul>
+                            <li><i className="fab fa-react"></i>Développement d'applications web modernes (React, Vue.js, Node.js)</li>
+                            <li><i className="fab fa-python"></i>Analyse de données et Machine Learning avec Python</li>
+                            <li><i className="fas fa-database"></i>Architecture de données et solutions BI</li>
+                            <li><i className="fas fa-mobile-alt"></i>Développement mobile cross-platform</li>
+                        </ul>
+
+                        <h3>Prestations Proposées</h3>
+                        <ul>
+                            <li><i className="fas fa-graduation-cap"></i>Formation sur mesure en entreprise</li>
+                            <li><i className="fas fa-hands-helping"></i>Accompagnement de projets data</li>
+                            <li><i className="fas fa-code-branch"></i>Audit et optimisation de code</li>
+                            <li><i className="fas fa-lightbulb"></i>Conseil en stratégie digitale</li>
+                        </ul>
+
+                        <h3>Approche Pédagogique</h3>
+                        <p>
+                            Ma méthode combine théorie et pratique intensive, avec des projets concrets adaptés au contexte 
+                            professionnel de chaque client. J'apporte une attention particulière à la transmission des bonnes 
+                            pratiques et à l'autonomisation des équipes.
+                        </p>
+                    </div>
+
+                    <hr style={{margin: '40px 0', borderColor: '#ddd'}} />
+
+                    <div className="experience-section">
                         <h2>Apprentis Data-Analyste - Airbus (2022-2024)</h2>
                         
                         <h3>Contexte & Mission</h3>
@@ -93,11 +132,11 @@ const Experiences = () => {
                             Cette expérience chez Airbus a été déterminante dans ma carrière, me permettant d'acquérir 
                             une vision 360° des enjeux de la transformation digitale dans l'industrie de pointe.
                         </p>
-                    </>
-                )}
+                    </div>
 
-                {selectedExperience === 'formateur' && (
-                    <>
+                    <hr style={{margin: '40px 0', borderColor: '#ddd'}} />
+
+                    <div className="experience-section">
                         <h2>Coach/Formateur DWWM (2020-2022)</h2>
                         
                         <h3>Formation Initiale</h3>
@@ -142,11 +181,11 @@ const Experiences = () => {
                             dans les 6 mois suivant la formation. Cette expérience m'a appris l'importance de la transmission 
                             de connaissances et m'a permis de consolider mes propres compétences techniques.
                         </p>
-                    </>
-                )}
+                    </div>
 
-                {selectedExperience === 'alstom' && (
-                    <>
+                    <hr style={{margin: '40px 0', borderColor: '#ddd'}} />
+
+                    <div className="experience-section">
                         <h2>Monteur-Câbleur - Alstom-Areva (2001-2009)</h2>
                         
                         <h3>Contexte Industriel</h3>
@@ -190,7 +229,7 @@ const Experiences = () => {
 
                         <h3>Évolution de Carrière</h3>
                         <p>
-                            Cette expérience initiale dans l'industrie nucléaire m'a donné des bases solides en rigueur industrielle 
+                            Cette expérience initiale dans l'industrie lourde m'a donné des bases solides en rigueur industrielle 
                             et en respect des procédures. Les compétences acquises en lecture de plans techniques et en résolution 
                             de problèmes complexes se sont révélées très utiles dans ma reconversion vers le développement logiciel.
                         </p>
@@ -199,8 +238,8 @@ const Experiences = () => {
                             Le passage du montage mécanique au code informatique peut sembler éloigné, mais les deux domaines 
                             partagent des similarités : précision, logique, débogage méthodique et travail en équipe.
                         </p>
-                    </>
-                )}
+                    </div>
+                </div>
             </FullPageModal>
         </>
     );
