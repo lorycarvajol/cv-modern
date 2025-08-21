@@ -1,212 +1,336 @@
 .home {
+  .homeContent {
+    margin: 0.5rem 0;
+    height: calc(90vh - 1rem);
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    
+    // Background complexe avec plusieurs couches
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(10, 255, 239, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(50, 150, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(10, 255, 239, 0.08) 0%, transparent 50%),
+      linear-gradient(135deg, 
+        rgba(5, 10, 20, 0.95) 0%, 
+        rgba(15, 25, 40, 0.9) 30%, 
+        rgba(25, 35, 50, 0.9) 70%, 
+        rgba(10, 20, 35, 0.95) 100%
+      );
+    
+    // Bordures avec effet glow
+    border: 1px solid rgba(10, 255, 239, 0.2);
+    box-shadow: 
+      0 0 30px rgba(10, 255, 239, 0.1),
+      inset 0 1px 0 rgba(10, 255, 239, 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.3);
 
-    .homeContent {
-      margin: 0.5rem 0;
-      background: linear-gradient(85deg, rgb(51, 51, 51) 35%, transparent 90%);
-      height: calc(90vh - 1rem);
-      width: 100%;
-      border-top: 0.3px solid rgba(255, 255, 240, 0.664);
-      border-left: 0.3px solid rgba(255, 255, 240, 0.685);
-      border-radius: $borderRadius;
-      position: relative;
-      overflow: hidden;
-     
-      
-      &:after {
-        content: '';
-        position: absolute;
-        height: 100%;
-        width: inherit;
-        background: url('../../media/matronche2.jpg') no-repeat center/cover;
-        filter: grayscale(100%);
-        background-position: 70px -200px;
-        z-index: -1;
-        filter: brightness(70%);
-      
-      }
-  
-      .content {
-        position: absolute;
-        top: 15%;
-        left: 10%;
-        font-family: $font-1;
-        
-        h1 {
-          font-size: 5rem;
-          font-family: $font-3;
-          color: $color-5;
-          text-transform: uppercase;
-          text-shadow: 3px 6px 2px $black;
-        }
-        h2 {
-          font-size: 2.5rem;
-          padding: 1.5rem 0 7rem;
-          color: $color-3;
-          text-shadow: 1px 4px 1px $black;
-        }
-        
-          a {
-            font-size: 1.2rem;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: $borderRadius;
-            box-shadow: 0 5px 1px rgb(15, 15, 15);
-            transition: 0.2s ease;
-            
-            &:hover {
-              background: $color-4;
-            }
-          
-        }
-      }
+    // Effet de particules en arrière-plan
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(10, 255, 239, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(10, 255, 239, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(10, 255, 239, 0.2), transparent);
+      background-repeat: repeat;
+      background-size: 200px 100px;
+      animation: particles 20s linear infinite;
+      opacity: 0.6;
+      z-index: -1;
     }
-  }
-  @media screen and (max-width: 850px){
-    .sidebar {
-      margin-bottom: 10px !important ;
+
+    // Effet de grille subtile
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(10, 255, 239, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 255, 239, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -2;
+      opacity: 0.4;
     }
-  }
-  @media screen and (max-width:580px){
-    .homeContent {
-      &:after {
-        background: url('../../media/matronche2.jpg') no-repeat 40% 30%/cover !important;
-        filter: grayscale(100%);
-      }
-      
-      .content {
-        left: 5%;
-        top: 10%;
-        
+
+    .hero-section {
+      display: flex;
+      gap: 2rem;
+      height: 100%;
+      align-items: center;
+
+      .hero-text {
+        flex: 2;
+        font-family: 'Montserrat', sans-serif;
+
+        .intro-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: rgba(10, 255, 239, 0.15);
+          border: 1px solid rgba(10, 255, 239, 0.3);
+          border-radius: 20px;
+          padding: 0.4rem 1rem;
+          margin-bottom: 1rem;
+          font-size: 0.8rem;
+          color: #0affef;
+          text-shadow: 0 0 5px rgba(10, 255, 239, 0.5);
+
+          i {
+            font-size: 0.9rem;
+          }
+        }
+
         h1 {
-          font-size: 2.5rem !important;
+          font-size: 4rem;
+          font-family: 'Orbitron', sans-serif;
+          margin: 0 0 0.5rem 0;
+          line-height: 1.1;
+          color: #fff;
+          text-shadow: 3px 6px 2px rgba(0, 0, 0, 0.8);
+
+          .name-highlight {
+            color: #0affef;
+            text-shadow: 0 0 20px rgba(10, 255, 239, 0.6);
+          }
         }
-        h2 {
-          font-size: 1.5rem !important;
-          padding: 1rem 0 4rem;
+
+        .tagline {
+          font-size: 2rem;
+          color: rgba(10, 255, 239, 0.9);
+          margin: 0 0 1rem 0;
+          font-weight: 300;
+          text-shadow: 1px 4px 1px rgba(0, 0, 0, 0.8);
         }
-        
-        a {
+
+        .description {
           font-size: 1rem;
-          padding: 0.8rem 1.5rem;
+          color: rgba(255, 255, 255, 0.9);
+          line-height: 1.5;
+          margin-bottom: 1.5rem;
+          max-width: 500px;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .key-highlights {
+          margin-bottom: 1.5rem;
+
+          .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem;
+            margin-bottom: 0.6rem;
+            background: rgba(10, 255, 239, 0.1);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: translateX(5px);
+              background: rgba(10, 255, 239, 0.15);
+            }
+
+            i {
+              font-size: 1.1rem;
+              color: #0affef;
+              width: 20px;
+              text-align: center;
+              text-shadow: 0 0 8px rgba(10, 255, 239, 0.5);
+            }
+
+            div {
+              strong {
+                color: #fff;
+                font-size: 0.9rem;
+                display: block;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+              }
+
+              span {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 0.8rem;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+              }
+            }
+          }
+        }
+
+        .cta-section {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+
+          .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+
+            i {
+              font-size: 1rem;
+            }
+          }
+
+          .btn-primary {
+            background: linear-gradient(135deg, rgba(10, 255, 239, 0.3), rgba(10, 255, 239, 0.1));
+            border: 2px solid rgba(10, 255, 239, 0.5);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(10, 255, 239, 0.2);
+
+            &:hover {
+              background: linear-gradient(135deg, rgba(10, 255, 239, 0.4), rgba(10, 255, 239, 0.2));
+              transform: translateY(-2px);
+              box-shadow: 0 6px 20px rgba(10, 255, 239, 0.3);
+            }
+          }
+
+          .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.2);
+              transform: translateY(-2px);
+              box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+            }
+          }
+        }
+      }
+
+      .hero-stats {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-self: center;
+
+        .stat-card {
+          background: rgba(10, 255, 239, 0.1);
+          border: 1px solid rgba(10, 255, 239, 0.3);
+          border-radius: 15px;
+          padding: 1.2rem 1rem;
+          text-align: center;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(10, 255, 239, 0.3);
+            border-color: rgba(10, 255, 239, 0.5);
+            background: rgba(10, 255, 239, 0.15);
+          }
+
+          .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0affef;
+            text-shadow: 0 0 15px rgba(10, 255, 239, 0.6);
+            margin-bottom: 0.3rem;
+            font-family: 'Orbitron', sans-serif;
+          }
+
+          .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+          }
+        }
+      }
+    }
+
+    // Responsive
+    @media (max-width: 768px) {
+      padding: 1rem;
+
+      .hero-section {
+        flex-direction: column;
+        gap: 1.5rem;
+        justify-content: center;
+
+        .hero-text {
+          h1 {
+            font-size: 2.5rem;
+          }
+
+          .tagline {
+            font-size: 1.5rem;
+          }
+
+          .key-highlights {
+            .highlight-item {
+              padding: 0.5rem;
+              margin-bottom: 0.5rem;
+            }
+          }
+        }
+
+        .hero-stats {
+          flex-direction: row;
+          align-self: stretch;
+
+          .stat-card {
+            flex: 1;
+            padding: 1rem 0.5rem;
+
+            .stat-number {
+              font-size: 1.8rem;
+            }
+
+            .stat-label {
+              font-size: 0.7rem;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-section {
+        .hero-text {
+          h1 {
+            font-size: 2rem;
+          }
+
+          .tagline {
+            font-size: 1.2rem;
+          }
+        }
+
+        .hero-stats {
+          flex-direction: column;
         }
       }
     }
   }
-  
-  @media screen and (max-width: 400px){
-    .homeContent {
-      .content {
-        left: 3%;
-        
-        h1 {
-          font-size: 2rem !important;
-        }
-        h2 {
-          font-size: 1.2rem !important;
-          padding: 0.8rem 0 3rem;
-        }
-        
-        a {
-          font-size: 0.9rem;
-          padding: 0.7rem 1.2rem;
-        }
-      }
-    }
-  }
-
-  @keyframes oscillateLight {
-    0% {
-        background-position: center center, 0 0, 0 0, 0 0;
-        opacity: 1;
-    }
-    50% {
-        background-position: center center, 50px 50px, 50px 50px, 50px 50px;
-        opacity: 0.8;
-    }
-    100% {
-        background-position: center center, 0 0, 0 0, 0 0;
-        opacity: 1;
-    }
 }
 
-// Animation subtile de scintillement du gradient
-@keyframes subtleShimmer {
-  0%, 100% {
-    background-position: 0% 50%;
-    filter: brightness(1) contrast(1) saturate(1);
-  }
-  25% {
-    background-position: 50% 100%;
-    filter: brightness(1.1) contrast(1.05) saturate(1.1);
-  }
-  50% {
-    background-position: 100% 50%;
-    filter: brightness(0.95) contrast(0.98) saturate(0.95);
-  }
-  75% {
-    background-position: 50% 0%;
-    filter: brightness(1.05) contrast(1.02) saturate(1.05);
-  }
-}
-
-
-
- html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  font-family: 'Arial', sans-serif;
-  background: radial-gradient(circle, #0099ff, #00ffcc, #8a2be2);
-  background-size: 200% 200%;
-  animation: subtleShimmer 8s infinite ease-in-out;
-}
-
-#root {
-  height: 100%;
-}
-
-.App::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../../media/hexa-back.png'); /* Image de fond uniquement */
-  
-  background-size: cover;
-  background-position: center;
-  
-  opacity: 0.8;
-  
-  z-index: -1;
-  pointer-events: none;
-}
-
-.App::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(25, 25, 25, 0.719); /* Semi-transparent dark overlay */
-  z-index: -1; /* Ensure the overlay is above the image but below the content */
-  pointer-events: none; /* Allows clicks to pass through the overlay */
-}
-
-/* Keyframes for smooth oscillating color transitions */
-@keyframes oscillateColors {
+// Animation pour les particules flottantes
+@keyframes particles {
   0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    transform: translateY(0px) rotate(0deg);
   }
   100% {
-    background-position: 0% 50%;
+    transform: translateY(-100px) rotate(360deg);
   }
 }
-

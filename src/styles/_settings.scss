@@ -44,6 +44,60 @@ body {
   justify-content: center;
   align-items: center;
   
+  // Background sombre avec effets visuels
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(10, 255, 239, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(50, 100, 200, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(10, 255, 239, 0.04) 0%, transparent 60%),
+    linear-gradient(135deg, 
+      rgba(5, 8, 15, 1) 0%, 
+      rgba(10, 15, 25, 1) 25%, 
+      rgba(15, 20, 30, 1) 50%, 
+      rgba(8, 12, 20, 1) 75%,
+      rgba(5, 8, 15, 1) 100%
+    );
+  
+  // Animation subtile du background
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  
+  // Effet de texture avec pseudo-élément
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(1px 1px at 25px 50px, rgba(10, 255, 239, 0.2), transparent),
+      radial-gradient(1px 1px at 75px 100px, rgba(255, 255, 255, 0.1), transparent),
+      radial-gradient(0.5px 0.5px at 150px 75px, rgba(10, 255, 239, 0.3), transparent),
+      radial-gradient(0.5px 0.5px at 200px 25px, rgba(255, 255, 255, 0.08), transparent);
+    background-size: 250px 200px;
+    animation: starField 25s linear infinite;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  // Grille subtile en arrière-plan
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(rgba(10, 255, 239, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 255, 239, 0.02) 1px, transparent 1px);
+    background-size: 100px 100px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -2;
+  }
+  
   @media screen and (max-width: 768px) {
     align-items: flex-start;
     padding-top: 5vh;
@@ -76,7 +130,7 @@ a:visited {
   margin: 0 auto;
   padding: 0.5rem;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible; // Permet aux ombrages de s'afficher
   
   // Centrage vertical automatique via body flex
 
@@ -93,7 +147,8 @@ a:visited {
   margin-left: .4rem;
   flex: 1;
   height: calc(90vh - 1rem); // 90% de hauteur moins padding
-  overflow: hidden;
+  overflow-y: auto; // Permet le scroll vertical seulement
+  overflow-x: hidden; // Évite le scroll horizontal
   box-sizing: border-box;
 
   @media screen and (max-width: 850px){
@@ -101,5 +156,27 @@ a:visited {
     margin-top: 0;
     height: calc(85vh - 60px - 1rem);
     overflow-y: auto;
+  }
+}
+
+// Animations pour le background
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes starField {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-200px) rotate(360deg);
   }
 }
