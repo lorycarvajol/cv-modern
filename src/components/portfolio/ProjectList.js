@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { portfolioData } from '../../data/portfolioData';
 import Project from './Project';
+import FullPageModal from '../common/FullPageModal';
 
 export default class ProjectList extends Component {
     state = {
@@ -15,7 +16,7 @@ export default class ProjectList extends Component {
         currentPage: 1,
         projectsPerPage: 6,
         selectedProject: null,
-        showDetails: false
+        showModal: false
     };
 
     handleRadio = (event) => {
@@ -45,19 +46,19 @@ export default class ProjectList extends Component {
     handleShowDetails = (project) => {
         this.setState({
             selectedProject: project,
-            showDetails: true
+            showModal: true
         });
     }
 
-    handleCloseDetails = () => {
+    handleCloseModal = () => {
         this.setState({
             selectedProject: null,
-            showDetails: false
+            showModal: false
         });
     }
 
     render() {
-        let {projects, radios, selectedRadio, currentPage, projectsPerPage} = this.state;
+        let {projects, radios, selectedRadio, currentPage, projectsPerPage, showModal, selectedProject} = this.state;
         
         // Filter projects by selected technology
         const filteredProjects = projects.filter(item => 
@@ -74,80 +75,6 @@ export default class ProjectList extends Component {
         const pageNumbers = [];
         for (let i = 1; i <= totalPages; i++) {
             pageNumbers.push(i);
-        }
-
-        let {showDetails, selectedProject} = this.state;
-
-        if (showDetails && selectedProject) {
-            return (
-                <>
-                    {/* Filters */}
-                    <ul className="radioDisplay">
-                        {radios.map((radio) => {
-                            return (
-                                <li key={radio.id}>
-                                    <input
-                                        type="radio"
-                                        name="radio"
-                                        checked={radio.value === selectedRadio}
-                                        value={radio.value}
-                                        id={radio.value}
-                                        onChange={this.handleRadio}
-                                    />
-                                    <label htmlFor={radio.value}>{radio.value}</label>
-                                </li>
-                            )
-                        })}
-                    </ul>
-
-                    {/* Project Details */}
-                    <div className="project-details">
-                        <div className="detail-header">
-                            <button className="close-detail-btn" onClick={this.handleCloseDetails}>
-                                <i className="fas fa-arrow-left"></i>
-                                Retour
-                            </button>
-                            <h2>{selectedProject.name}</h2>
-                            <div className="detail-tech">
-                                {selectedProject.languagesIcons.map(icon =>
-                                    <i className={icon} key={icon}></i>
-                                )}
-                            </div>
-                        </div>
-                        
-                        <div className="detail-content">
-                            <div className="detail-image">
-                                <img src={selectedProject.picture} alt={selectedProject.name} />
-                            </div>
-                            
-                            <div className="detail-info">
-                                <div className="detail-description">
-                                    <p>{selectedProject.info}</p>
-                                </div>
-                                
-                                <div className="detail-actions">
-                                    {selectedProject.website && (
-                                        <a href={selectedProject.website} target="_blank" rel="noopener noreferrer" className="action-btn primary">
-                                            <i className="fas fa-external-link-alt"></i>
-                                            Voir le projet
-                                        </a>
-                                    )}
-                                    {selectedProject.source && (
-                                        <a href={selectedProject.source} target="_blank" rel="noopener noreferrer" className="action-btn secondary">
-                                            <i className="fab fa-github"></i>
-                                            Code source
-                                        </a>
-                                    )}
-                                    <button onClick={this.handleCloseDetails} className="action-btn tertiary">
-                                        <i className="fas fa-times"></i>
-                                        Fermer
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            );
         }
 
         return (
@@ -218,8 +145,68 @@ export default class ProjectList extends Component {
                         </div>
                     </div>
                 )}
+
+                {/* Modal for project details */}
+                <FullPageModal 
+                    show={showModal} 
+                    onClose={this.handleCloseModal} 
+                    title={selectedProject ? selectedProject.name : ''}
+                    moduleType="Portfolio"
+                >
+                    {selectedProject && (
+                        <div className="project-modal-content">
+                            <div className="project-modal-header">
+                                <div className="project-modal-image">
+                                    <img src={selectedProject.picture} alt={selectedProject.name} />
+                                </div>
+                                <div className="project-modal-tech">
+                                    <h3>Technologies utilisées</h3>
+                                    <div className="tech-icons">
+                                        {selectedProject.languagesIcons.map(icon =>
+                                            <i className={icon} key={icon}></i>
+                                        )}
+                                    </div>
+                                    <div className="tech-list">
+                                        {selectedProject.languages.map(lang =>
+                                            <span key={lang} className="tech-tag">{lang}</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="project-modal-body">
+                                <h3>Description du projet</h3>
+                                <p className="project-description">{selectedProject.info}</p>
+
+                                <div className="project-modal-actions">
+                                    {selectedProject.website && (
+                                        <a 
+                                            href={selectedProject.website} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="modal-action-btn primary"
+                                        >
+                                            <i className="fas fa-external-link-alt"></i>
+                                            Voir le projet en ligne
+                                        </a>
+                                    )}
+                                    {selectedProject.source && (
+                                        <a 
+                                            href={selectedProject.source} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="modal-action-btn secondary"
+                                        >
+                                            <i className="fab fa-github"></i>
+                                              Voir le code source
+                                        </a>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </FullPageModal>
             </>
         );
     }
 }
-

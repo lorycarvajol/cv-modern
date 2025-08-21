@@ -281,20 +281,139 @@
         }
       }
       
-      // Project Details - Version ultra simple
-      .project-details {
-        flex: 1;
-        padding: 20px;
-        background: 
-          linear-gradient(135deg, rgba(0,153,255,0.05) 0%, rgba(0,255,204,0.03) 50%, transparent 100%),
-          linear-gradient(85deg, rgba(25,25,25,0.95) 20%, rgba(25,25,25,0.8) 60%, transparent 100%);
-        border: 1px solid rgba(10,255,239,0.2);
-        border-radius: 25px;
-        backdrop-filter: blur(15px);
-        box-shadow: 
-          0 8px 32px rgba(0,0,0,0.3),
-          inset 0 1px 0 rgba(255,255,255,0.1);
-        overflow-y: auto;
+      // Styles for modal content
+      .project-modal-content {
+        padding: 2rem;
+        
+        .project-modal-header {
+          display: flex;
+          gap: 2rem;
+          margin-bottom: 2rem;
+          padding-bottom: 1.5rem;
+          border-bottom: 1px solid rgba(10,255,239,0.2);
+          
+          .project-modal-image {
+            flex: 0 0 280px;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          
+          .project-modal-tech {
+            flex: 1;
+            
+            h3 {
+              color: #0affef;
+              font-size: 1.4rem;
+              margin-bottom: 1.5rem;
+              text-shadow: 0 0 10px rgba(10,255,239,0.4);
+            }
+            
+            .tech-icons {
+              display: flex;
+              gap: 1.5rem;
+              margin-bottom: 1.5rem;
+              
+              i {
+                font-size: 2.5rem;
+                color: rgba(10,255,239,0.8);
+                text-shadow: 0 0 15px rgba(10,255,239,0.5);
+                transition: all 0.3s ease;
+                
+                &:hover {
+                  transform: scale(1.2);
+                  color: #0affef;
+                }
+              }
+            }
+            
+            .tech-list {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.8rem;
+              
+              .tech-tag {
+                padding: 0.5rem 1rem;
+                background: rgba(10,255,239,0.1);
+                border: 1px solid rgba(10,255,239,0.3);
+                border-radius: 20px;
+                color: #0affef;
+                font-size: 0.9rem;
+                text-shadow: 0 0 5px rgba(10,255,239,0.3);
+              }
+            }
+          }
+        }
+        
+        .project-modal-body {
+          h3 {
+            color: #0affef;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(10,255,239,0.4);
+          }
+          
+          .project-description {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: rgba(10,255,239,0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(10,255,239,0.1);
+          }
+          
+          .project-modal-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            
+            .modal-action-btn {
+              padding: 1rem 2rem;
+              border-radius: 25px;
+              font-size: 1rem;
+              font-weight: 600;
+              text-decoration: none;
+              display: inline-flex;
+              align-items: center;
+              gap: 0.8rem;
+              transition: all 0.3s ease;
+              cursor: pointer;
+              
+              &.primary {
+                background: linear-gradient(135deg, rgba(10,255,239,0.3), rgba(10,255,239,0.1));
+                border: 2px solid rgba(10,255,239,0.5);
+                color: #fff;
+                
+                &:hover {
+                  background: linear-gradient(135deg, rgba(10,255,239,0.4), rgba(10,255,239,0.2));
+                  transform: translateY(-3px);
+                  box-shadow: 0 10px 25px rgba(10,255,239,0.3);
+                }
+              }
+              
+              &.secondary {
+                background: linear-gradient(135deg, rgba(100,100,100,0.8), rgba(80,80,80,0.9));
+                border: 2px solid rgba(200,200,200,0.5);
+                color: #fff;
+                
+                &:hover {
+                  background: linear-gradient(135deg, rgba(120,120,120,0.9), rgba(100,100,100,1));
+                  transform: translateY(-3px);
+                  box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+                }
+              }
+            }
+          }
+        }
         
         .detail-header {
           display: flex;
@@ -356,11 +475,12 @@
         
         .detail-content {
           display: flex;
-          gap: 30px;
+          gap: 20px;
+          align-items: flex-start;
           
           .detail-image {
-            width: 300px;
-            height: 250px;
+            width: 250px;
+            height: 180px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);

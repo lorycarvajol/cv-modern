@@ -1802,17 +1802,120 @@ html {
 .portfolio .projects .project-image:hover::after {
   opacity: 1;
 }
-.portfolio .projects .project-details {
-  flex: 1;
-  padding: 20px;
-  background: linear-gradient(135deg, rgba(0, 153, 255, 0.05) 0%, rgba(0, 255, 204, 0.03) 50%, transparent 100%), linear-gradient(85deg, rgba(25, 25, 25, 0.95) 20%, rgba(25, 25, 25, 0.8) 60%, transparent 100%);
-  border: 1px solid rgba(10, 255, 239, 0.2);
-  border-radius: 25px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  overflow-y: auto;
+.portfolio .projects .project-modal-content {
+  padding: 2rem;
 }
-.portfolio .projects .project-details .detail-header {
+.portfolio .projects .project-modal-content .project-modal-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(10, 255, 239, 0.2);
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-image {
+  flex: 0 0 280px;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech {
+  flex: 1;
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech h3 {
+  color: #0affef;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(10, 255, 239, 0.4);
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech .tech-icons {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech .tech-icons i {
+  font-size: 2.5rem;
+  color: rgba(10, 255, 239, 0.8);
+  text-shadow: 0 0 15px rgba(10, 255, 239, 0.5);
+  transition: all 0.3s ease;
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech .tech-icons i:hover {
+  transform: scale(1.2);
+  color: #0affef;
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech .tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+.portfolio .projects .project-modal-content .project-modal-header .project-modal-tech .tech-list .tech-tag {
+  padding: 0.5rem 1rem;
+  background: rgba(10, 255, 239, 0.1);
+  border: 1px solid rgba(10, 255, 239, 0.3);
+  border-radius: 20px;
+  color: #0affef;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px rgba(10, 255, 239, 0.3);
+}
+.portfolio .projects .project-modal-content .project-modal-body h3 {
+  color: #0affef;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(10, 255, 239, 0.4);
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: rgba(10, 255, 239, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(10, 255, 239, 0.1);
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-modal-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-modal-actions .modal-action-btn {
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-modal-actions .modal-action-btn.primary {
+  background: linear-gradient(135deg, rgba(10, 255, 239, 0.3), rgba(10, 255, 239, 0.1));
+  border: 2px solid rgba(10, 255, 239, 0.5);
+  color: #fff;
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-modal-actions .modal-action-btn.primary:hover {
+  background: linear-gradient(135deg, rgba(10, 255, 239, 0.4), rgba(10, 255, 239, 0.2));
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(10, 255, 239, 0.3);
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-modal-actions .modal-action-btn.secondary {
+  background: linear-gradient(135deg, rgba(100, 100, 100, 0.8), rgba(80, 80, 80, 0.9));
+  border: 2px solid rgba(200, 200, 200, 0.5);
+  color: #fff;
+}
+.portfolio .projects .project-modal-content .project-modal-body .project-modal-actions .modal-action-btn.secondary:hover {
+  background: linear-gradient(135deg, rgba(120, 120, 120, 0.9), rgb(100, 100, 100));
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+}
+.portfolio .projects .project-modal-content .detail-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1820,7 +1923,7 @@ html {
   border-bottom: 1px solid rgba(10, 255, 239, 0.2);
   margin-bottom: 20px;
 }
-.portfolio .projects .project-details .detail-header .close-detail-btn {
+.portfolio .projects .project-modal-content .detail-header .close-detail-btn {
   padding: 10px 20px;
   background: linear-gradient(135deg, rgba(255, 100, 100, 0.3), rgba(200, 50, 50, 0.1));
   border: 2px solid rgba(255, 150, 150, 0.5);
@@ -1834,11 +1937,11 @@ html {
   align-items: center;
   gap: 8px;
 }
-.portfolio .projects .project-details .detail-header .close-detail-btn:hover {
+.portfolio .projects .project-modal-content .detail-header .close-detail-btn:hover {
   background: linear-gradient(135deg, rgba(255, 150, 150, 0.4), rgba(255, 100, 100, 0.3));
   transform: translateY(-2px);
 }
-.portfolio .projects .project-details .detail-header h2 {
+.portfolio .projects .project-modal-content .detail-header h2 {
   color: #fff;
   font-size: 24px;
   font-weight: 700;
@@ -1850,46 +1953,47 @@ html {
   text-align: center;
   flex: 1;
 }
-.portfolio .projects .project-details .detail-header .detail-tech {
+.portfolio .projects .project-modal-content .detail-header .detail-tech {
   display: flex;
   gap: 10px;
 }
-.portfolio .projects .project-details .detail-header .detail-tech i {
+.portfolio .projects .project-modal-content .detail-header .detail-tech i {
   font-size: 20px;
   color: rgba(10, 255, 239, 0.8);
   transition: all 0.3s ease;
 }
-.portfolio .projects .project-details .detail-header .detail-tech i:hover {
+.portfolio .projects .project-modal-content .detail-header .detail-tech i:hover {
   color: rgb(10, 255, 239);
   transform: scale(1.1);
 }
-.portfolio .projects .project-details .detail-content {
+.portfolio .projects .project-modal-content .detail-content {
   display: flex;
-  gap: 30px;
+  gap: 20px;
+  align-items: flex-start;
 }
-.portfolio .projects .project-details .detail-content .detail-image {
-  width: 300px;
-  height: 250px;
+.portfolio .projects .project-modal-content .detail-content .detail-image {
+  width: 250px;
+  height: 180px;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   flex-shrink: 0;
 }
-.portfolio .projects .project-details .detail-content .detail-image img {
+.portfolio .projects .project-modal-content .detail-content .detail-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.portfolio .projects .project-details .detail-content .detail-info {
+.portfolio .projects .project-modal-content .detail-content .detail-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-description {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-description {
   flex: 1;
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-description p {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-description p {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
   font-size: 16px;
@@ -1900,7 +2004,7 @@ html {
   border-radius: 15px;
   border: 1px solid rgba(10, 255, 239, 0.1);
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions {
   display: flex;
   gap: 15px;
   justify-content: center;
@@ -1908,7 +2012,7 @@ html {
   padding-top: 20px;
   border-top: 1px solid rgba(10, 255, 239, 0.2);
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn {
   padding: 12px 24px;
   border: 2px solid;
   border-radius: 25px;
@@ -1923,66 +2027,66 @@ html {
   min-width: 140px;
   justify-content: center;
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn.primary {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn.primary {
   background: linear-gradient(135deg, rgba(10, 255, 239, 0.3), rgba(10, 255, 239, 0.1));
   border-color: rgba(10, 255, 239, 0.5);
   color: #fff;
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn.primary:hover {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn.primary:hover {
   background: linear-gradient(135deg, rgba(10, 255, 239, 0.5), rgba(10, 255, 239, 0.3));
   transform: translateY(-2px);
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn.secondary {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn.secondary {
   background: linear-gradient(135deg, rgba(100, 100, 100, 0.3), rgba(50, 50, 50, 0.1));
   border-color: rgba(150, 150, 150, 0.5);
   color: #fff;
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn.secondary:hover {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn.secondary:hover {
   background: linear-gradient(135deg, rgba(150, 150, 150, 0.4), rgba(100, 100, 100, 0.3));
   transform: translateY(-2px);
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn.tertiary {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn.tertiary {
   background: linear-gradient(135deg, rgba(255, 100, 100, 0.3), rgba(200, 50, 50, 0.1));
   border-color: rgba(255, 150, 150, 0.5);
   color: #fff;
 }
-.portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn.tertiary:hover {
+.portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn.tertiary:hover {
   background: linear-gradient(135deg, rgba(255, 150, 150, 0.4), rgba(255, 100, 100, 0.3));
   transform: translateY(-2px);
 }
 @media (max-width: 768px) {
-  .portfolio .projects .project-details .detail-header {
+  .portfolio .projects .project-modal-content .detail-header {
     flex-direction: column;
     gap: 10px;
     text-align: center;
   }
-  .portfolio .projects .project-details .detail-header h2 {
+  .portfolio .projects .project-modal-content .detail-header h2 {
     font-size: 20px;
   }
-  .portfolio .projects .project-details .detail-content {
+  .portfolio .projects .project-modal-content .detail-content {
     flex-direction: column;
     gap: 20px;
   }
-  .portfolio .projects .project-details .detail-content .detail-image {
+  .portfolio .projects .project-modal-content .detail-content .detail-image {
     width: 100%;
     height: 200px;
   }
-  .portfolio .projects .project-details .detail-content .detail-info .detail-actions .action-btn {
+  .portfolio .projects .project-modal-content .detail-content .detail-info .detail-actions .action-btn {
     min-width: 120px;
     font-size: 13px;
   }
 }
 @media (max-width: 480px) {
-  .portfolio .projects .project-details {
+  .portfolio .projects .project-modal-content {
     padding: 15px;
   }
-  .portfolio .projects .project-details .detail-header h2 {
+  .portfolio .projects .project-modal-content .detail-header h2 {
     font-size: 18px;
   }
-  .portfolio .projects .project-details .detail-content .detail-image {
+  .portfolio .projects .project-modal-content .detail-content .detail-image {
     height: 180px;
   }
-  .portfolio .projects .project-details .detail-info .detail-actions .action-btn {
+  .portfolio .projects .project-modal-content .detail-info .detail-actions .action-btn {
     min-width: 100px;
     padding: 10px 16px;
     font-size: 12px;
@@ -2166,7 +2270,7 @@ html {
   font-family: "Nova Round", cursive;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 240px 1fr 120px;
+  grid-template-rows: 250px 1fr 120px;
   grid-template-areas: "1" "2" "3";
   transition: all 0.3s ease;
   z-index: 1000;
@@ -2179,32 +2283,38 @@ html {
   grid-area: 1;
   text-align: center;
   user-select: none;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
 }
 .sidebar .id .idContent {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 .sidebar .id .idContent img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
   border-radius: 30%;
   filter: grayscale(100%);
   box-shadow: 4px 4px 10px #1a1a1a, -4px -4px 10px #3a3a3a;
   transition: transform 0.3s ease;
 }
+.sidebar .id .idContent img:hover {
+  transform: scale(1.1);
+}
 .sidebar .id .idContent h3 {
   font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
-  margin-top: 1.5rem;
+  margin: 0;
   color: #0affef;
   font-family: "Orbitron", sans-serif;
   text-shadow: 0 0 10px rgba(10, 255, 239, 0.8);
-}
-.sidebar .id img:hover {
-  transform: scale(1.1);
 }
 .sidebar .navigation {
   grid-area: 2;
@@ -2832,6 +2942,36 @@ html {
   color: #fff;
   font-size: 1.1rem;
   line-height: 1.8;
+}
+.fullpage-modal-content .project-modal-content .project-modal-header .project-modal-image {
+  max-width: 280px !important;
+  width: 280px !important;
+  height: 200px !important;
+  flex-shrink: 0 !important;
+}
+.fullpage-modal-content .project-modal-content .project-modal-header .project-modal-image img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+}
+.fullpage-modal-content .project-modal-content .project-modal-actions .modal-action-btn {
+  padding: 5px;
+  opacity: 1 !important;
+  border-radius: 10px;
+}
+.fullpage-modal-content .project-modal-content .project-modal-actions .modal-action-btn.secondary {
+  background: linear-gradient(135deg, rgb(60, 60, 60), rgb(40, 40, 40)) !important;
+  border: 2px solid rgba(10, 255, 239, 0.4) !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+.fullpage-modal-content .project-modal-content .project-modal-actions .modal-action-btn.secondary:hover {
+  background: linear-gradient(135deg, rgb(80, 80, 80), rgb(60, 60, 60)) !important;
+  border-color: rgba(10, 255, 239, 0.7) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(10, 255, 239, 0.3) !important;
 }
 .fullpage-modal-content::-webkit-scrollbar {
   width: 8px;
