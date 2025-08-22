@@ -14,7 +14,8 @@
       "Bash(npm start)",
       "Bash(grep:*)",
       "Bash(tasklist:*)",
-      "Bash(npx kill-port:*)"
+      "Bash(npx kill-port:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }
