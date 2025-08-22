@@ -18,12 +18,12 @@ const Hobbies = () => {
                         <span>Cuisine</span>
                     </li>
                     <li className="hobby">
-                        <i className="fas fa-fish"></i>
-                        <span>Aquaplaning</span>
+                        <i className="fas fa-bicycle"></i>
+                        <span>Cyclisme</span>
                     </li>
                     <li className="hobby">
-                        <i className="fas fa-book"></i>
-                        <span>Lecture</span>
+                        <i className="fas fa-dumbbell"></i>
+                        <span>Fitness</span>
                     </li>
                     <li className="hobby">
                         <i className="fas fa-water"></i>
@@ -56,28 +56,29 @@ const Hobbies = () => {
                     <li><i className="fas fa-seedling"></i>Cuisine saine et équilibrée</li>
                 </ul>
 
-                <h3>Sports Aquatiques</h3>
+                <h3>Sport & Bien-être</h3>
                 <p>
-                    Les activités aquatiques occupent une place importante dans ma vie. La natation et l'aquaplaning 
-                    me permettent de maintenir un équilibre physique et mental, tout en développant ma discipline personnelle.
+                    Le sport fait partie intégrante de ma routine quotidienne. Entre cyclisme, fitness et natation, 
+                    je maintiens un équilibre physique et mental qui me permet d'être plus efficace dans mon travail.
                 </p>
                 <ul>
                     <li><i className="fas fa-swimmer"></i>Natation - 3 séances par semaine, perfectionnement technique</li>
-                    <li><i className="fas fa-ship"></i>Aquaplaning - Sports nautiques et sensations fortes</li>
-                    <li><i className="fas fa-waves"></i>Plongée sous-marine - Exploration des fonds marins</li>
+                    <li><i className="fas fa-bicycle"></i>Cyclisme - Sorties route et VTT, exploration des environs</li>
+                    <li><i className="fas fa-dumbbell"></i>Fitness - Musculation et cardio, renforcement général</li>
+                    <li><i className="fas fa-running"></i>Course à pied - Endurance et dépassement de soi</li>
                 </ul>
 
-                <h3>Lecture & Développement Personnel</h3>
+                <h3>Lecture & Culture Générale</h3>
                 <p>
-                    Grand amateur de lecture, je lis régulièrement des ouvrages techniques, de science-fiction 
-                    et de développement personnel. Cette habitude m'aide à rester curieux et à continuellement 
-                    apprendre de nouvelles choses.
+                    La lecture est un pilier de mon développement personnel et professionnel. Je privilégie 
+                    les ouvrages techniques, les biographies inspirantes et les romans qui nourrissent ma créativité 
+                    et ma vision du monde.
                 </p>
                 <ul>
                     <li><i className="fas fa-code"></i>Littérature technique - Développement, IA, nouvelles technologies</li>
-                    <li><i className="fas fa-rocket"></i>Science-fiction - Isaac Asimov, Philip K. Dick</li>
+                    <li><i className="fas fa-rocket"></i>Science-fiction - Exploration des futurs possibles</li>
                     <li><i className="fas fa-brain"></i>Développement personnel - Productivité, leadership</li>
-                    <li><i className="fas fa-history"></i>Histoire des sciences et technologies</li>
+                    <li><i className="fas fa-book-open"></i>Biographies - Parcours inspirants d'entrepreneurs</li>
                 </ul>
 
                 <h3>Impact sur ma Vie Professionnelle</h3>
@@ -85,10 +86,10 @@ const Hobbies = () => {
                     Ces activités enrichissent ma personnalité et apportent des compétences complémentaires à mon profil technique :
                 </p>
                 <ul>
-                    <li><i className="fas fa-puzzle-piece"></i>Créativité et résolution de problèmes</li>
-                    <li><i className="fas fa-clock"></i>Gestion du temps et discipline</li>
-                    <li><i className="fas fa-users"></i>Travail d'équipe (sports collectifs)</li>
-                    <li><i className="fas fa-graduation-cap"></i>Apprentissage continu et curiosité</li>
+                    <li><i className="fas fa-puzzle-piece"></i>Créativité et résolution de problèmes (cuisine)</li>
+                    <li><i className="fas fa-clock"></i>Gestion du temps et discipline (sport régulier)</li>
+                    <li><i className="fas fa-target"></i>Persévérance et dépassement de soi (fitness/cyclisme)</li>
+                    <li><i className="fas fa-graduation-cap"></i>Apprentissage continu et curiosité (lecture)</li>
                 </ul>
             </FullPageModal>
         </>
