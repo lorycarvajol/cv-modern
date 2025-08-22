@@ -12,7 +12,7 @@ export default class Project extends Component {
     
 
     render() {
-        let {name, languagesIcons, source, info, picture, website} = this.props.item;
+        let {name, languagesIcons, picture} = this.props.item;
         
         return (
             <div className="project">
