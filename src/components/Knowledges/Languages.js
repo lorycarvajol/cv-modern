@@ -5,16 +5,16 @@ import FullPageModal from '../common/FullPageModal';
 class Languages extends Component {
     state = {
         languages: [
-            { id: 1, value: "Python", xp: 1.5 },
-            { id: 2, value: "SQL", xp: 1.5 },
-            { id: 3, value: "php", xp: 1.2 },
-            { id: 4, value: "javascript", xp: 1 }
+            { id: 1, value: "Python", xp: 2 },
+            { id: 2, value: "SQL", xp: 5 },
+            { id: 3, value: "php", xp: 5 },
+            { id: 4, value: "javascript", xp: 5 }
         ],
         frameworks: [
-            { id: 1, value: "Django", xp: 1.1 },
-            { id: 2, value: "Bootstrap", xp: 1.1 },
-            { id: 3, value: "Symfony", xp: 0.9 },
-            { id: 4, value: "React", xp: 0.6 }
+            { id: 1, value: "Django", xp: 2 },
+            { id: 2, value: "Bootstrap", xp: 5 },
+            { id: 3, value: "Symfony", xp: 2 },
+            { id: 4, value: "React", xp: 5 }
         ],
         isModalOpen: false,
     };
@@ -40,19 +40,17 @@ class Languages extends Component {
                     <h3>Langages & Frameworks</h3>
                     
                     <div className="content-wrapper">
-                        <div className="languagesDisplay">
-                            <ProgressBar
-                                languages={languages}
-                                title="Languages"
-                            />
-                        </div>
+                        <ProgressBar
+                            className="languagesDisplay"
+                            languages={languages}
+                            title="Languages"
+                        />
 
-                        <div className="frameworksDisplay">
-                            <ProgressBar
-                                languages={frameworks}
-                                title="Frameworks & Bibliothèques"
-                            />
-                        </div>
+                        <ProgressBar
+                            className="frameworksDisplay"
+                            languages={frameworks}
+                            title="Frameworks & Bibliothèques"
+                        />
                     </div>
 
                     <button className="small-button" onClick={this.openModal}>
@@ -72,20 +70,20 @@ class Languages extends Component {
                         <div>
                             <h3>Langages de Programmation</h3>
                             <ul>
-                                <li><i className="fab fa-python"></i><strong>Python (1.5 ans)</strong> - Django, FastAPI, Data Science</li>
-                                <li><i className="fas fa-database"></i><strong>SQL (1.5 ans)</strong> - PostgreSQL, MySQL, optimisation</li>
-                                <li><i className="fab fa-php"></i><strong>PHP (1.2 ans)</strong> - MVC, sécurité, APIs REST</li>
-                                <li><i className="fab fa-js-square"></i><strong>JavaScript (1 an)</strong> - ES6+, Node.js, async</li>
+                                <li><i className="fab fa-python"></i><strong>Python (2 ans)</strong> - Django, FastAPI, Data Science</li>
+                                <li><i className="fas fa-database"></i><strong>SQL (5 ans)</strong> - PostgreSQL, MySQL, optimisation</li>
+                                <li><i className="fab fa-php"></i><strong>PHP (5 ans)</strong> - MVC, sécurité, APIs REST</li>
+                                <li><i className="fab fa-js-square"></i><strong>JavaScript (5 ans)</strong> - ES6+, Node.js, async</li>
                             </ul>
                         </div>
                         
                         <div>
                             <h3>Frameworks & Bibliothèques</h3>
                             <ul>
-                                <li><i className="fab fa-python"></i><strong>Django (1.1 ans)</strong> - ORM, API REST, déploiement</li>
-                                <li><i className="fab fa-bootstrap"></i><strong>Bootstrap (1.1 ans)</strong> - Responsive, SASS</li>
-                                <li><i className="fab fa-symfony"></i><strong>Symfony (0.9 ans)</strong> - MVC, Twig, Doctrine</li>
-                                <li><i className="fab fa-react"></i><strong>React (0.6 ans)</strong> - Hooks, SPA, styling</li>
+                                <li><i className="fab fa-python"></i><strong>Django (2 ans)</strong> - ORM, API REST, déploiement</li>
+                                <li><i className="fab fa-bootstrap"></i><strong>Bootstrap (5 ans)</strong> - Responsive, SASS</li>
+                                <li><i className="fab fa-symfony"></i><strong>Symfony (2 ans)</strong> - MVC, Twig, Doctrine</li>
+                                <li><i className="fab fa-react"></i><strong>React (5 ans)</strong> - Hooks, SPA, styling</li>
                             </ul>
                         </div>
                     </div>

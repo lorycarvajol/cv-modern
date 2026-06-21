@@ -49,7 +49,7 @@ const Home = () => {
                         </div>
 
                         <div className="cta-section">
-                            <a href="./media/CV pro.pdf" target="_blank" className="btn-primary">
+                            <a href="./media/CV_carvajol_lory_24-02-26.pdf" target="_blank" className="btn-primary">
                                 <i className="fas fa-download"></i>
                                 Télécharger mon CV
                             </a>

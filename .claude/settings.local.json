@@ -15,7 +15,19 @@
       "Bash(grep:*)",
       "Bash(tasklist:*)",
       "Bash(npx kill-port:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(BROWSER=none CI=true timeout 60 npm start)",
+      "Bash(tee /tmp/cra-dev2.log)",
+      "Bash(cygpath -w /tmp/cra-dev2.log)",
+      "Bash(BROWSER=none timeout 40 node ./node_modules/react-scripts/bin/react-scripts.js start)",
+      "Bash(tee /tmp/cra-dev3.log)",
+      "Bash(xxd /tmp/cra-dev3.log)",
+      "PowerShell(Get-Process *)",
+      "Bash(node -e \"require\\('eslint-plugin-jsx-a11y'\\)\")",
+      "PowerShell(attrib *)",
+      "Bash(npx eslint *)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)"
     ],
     "deny": []
   }

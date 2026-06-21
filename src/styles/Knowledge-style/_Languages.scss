@@ -157,10 +157,11 @@
 
   .languagesDisplay,
   .frameworksDisplay {
-    margin-bottom: 8px;
     flex: 1;
     min-height: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     h4 {
       font-size: 0.85rem;
@@ -174,55 +175,59 @@
   .years {
     font-size: .55rem;
     display: flex;
-    justify-content: space-between;
     color: $white;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+    padding-left: 72px;
 
     span {
-      width: 18%;
-      text-align: center;
-
-      &:first-child {
-        width: 36%;
-        text-align: left;
-      }
+      flex: 1;
+      text-align: right;
     }
   }
 
-  .languagesList {
-    padding-top: 0.2rem;
-    margin-bottom: 4px;
-    overflow: hidden;
+  .languagesItems {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .languagesList {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
     li {
+      flex: 0 0 72px;
       color: $white;
-      margin-bottom: 4px;
       font-size: 0.8rem;
       line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .progressTrack {
+      flex: 1;
+      height: .2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      position: relative;
+      overflow: hidden;
     }
 
     .progressBar {
       height: .2rem;
-      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: $color-3;
       border-radius: 50px;
-      margin-top: 0.05rem;
-      position: relative;
+      animation: line 1s ease-out;
 
-      &:after {
-        content: '';
-        position: absolute;
-        background: $color-3;
-        border-radius: 50px;
-        height: .2rem;
-        width: 0;
-        animation: line 2s ease-out forwards;
-
-        @keyframes line {
-          to {
-            width: 100%;
-          }
+      @keyframes line {
+        from {
+          width: 0;
         }
       }
     }

@@ -45,9 +45,7 @@ const Hobbies = () => {
                 
                 <h3>Cuisine & Gastronomie</h3>
                 <p>
-                    Passionné de cuisine depuis plusieurs années, j'aime explorer les saveurs du monde et 
-                    créer de nouveaux plats. Cette passion m'a appris la patience, la précision et l'importance 
-                    de bien suivre un processus - des qualités directement transférables dans le développement logiciel.
+                    Je cuisine au quotidien à partir de produits frais et de saison, avec le plaisir de transformer de bons ingrédients en plats simples et savoureux. Une pratique qui m'a appris patience, précision et rigueur — des qualités que je retrouve dans le développement logiciel.
                 </p>
                 <ul>
                     <li><i className="fas fa-utensils"></i>Cuisine française traditionnelle et moderne</li>
@@ -62,7 +60,7 @@ const Hobbies = () => {
                     je maintiens un équilibre physique et mental qui me permet d'être plus efficace dans mon travail.
                 </p>
                 <ul>
-                    <li><i className="fas fa-swimmer"></i>Natation - 3 séances par semaine, perfectionnement technique</li>
+                    <li><i className="fas fa-swimmer"></i>Natation - 1-2 séances par semaine, accompagnant mon fils</li>
                     <li><i className="fas fa-bicycle"></i>Cyclisme - Sorties route et VTT, exploration des environs</li>
                     <li><i className="fas fa-dumbbell"></i>Fitness - Musculation et cardio, renforcement général</li>
                     <li><i className="fas fa-running"></i>Course à pied - Endurance et dépassement de soi</li>
@@ -70,9 +68,10 @@ const Hobbies = () => {
 
                 <h3>Lecture & Culture Générale</h3>
                 <p>
-                    La lecture est un pilier de mon développement personnel et professionnel. Je privilégie 
-                    les ouvrages techniques, les biographies inspirantes et les romans qui nourrissent ma créativité 
-                    et ma vision du monde.
+                    La veille technologique fait partie de mon quotidien. Je suis régulièrement 
+l'actualité du secteur, les évolutions des langages et frameworks, ainsi que 
+les nouvelles pratiques du développement, afin de rester à jour et d'enrichir 
+en continu mes compétences et ma vision du métier.
                 </p>
                 <ul>
                     <li><i className="fas fa-code"></i>Littérature technique - Développement, IA, nouvelles technologies</li>
@@ -88,7 +87,7 @@ const Hobbies = () => {
                 <ul>
                     <li><i className="fas fa-puzzle-piece"></i>Créativité et résolution de problèmes (cuisine)</li>
                     <li><i className="fas fa-clock"></i>Gestion du temps et discipline (sport régulier)</li>
-                    <li><i className="fas fa-target"></i>Persévérance et dépassement de soi (fitness/cyclisme)</li>
+                    <li><i className="fa fa-balance-scale"></i>Persévérance et dépassement de soi (fitness/cyclisme)</li>
                     <li><i className="fas fa-graduation-cap"></i>Apprentissage continu et curiosité (lecture)</li>
                 </ul>
             </FullPageModal>

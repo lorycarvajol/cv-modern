@@ -34,17 +34,14 @@ const Contact = () => {
                         </li>
                         <li>
                             <i className="far fa-envelope"></i>
-                            <span
+                            <a
                                 className="clickInput"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    // Ouvrir le client mail dans une nouvelle fenêtre/onglet
-                                    window.open("mailto:lorycarvajolwebdev@gmail.com?subject=Contact%20Professionnel&body=Bonjour%20Lory,%0D%0A%0D%0AJe%20vous%20contacte%20suite%20à%20la%20consultation%20de%20votre%20CV%20en%20ligne.%0D%0A%0D%0ACordialement", '_blank');
-                                    alert('Client mail ouvert !');
-                                }}
+                                href={`https://mail.google.com/mail/?view=cm&fs=1&to=lorycarvajolwebdev@gmail.com&su=${encodeURIComponent('Contact Professionnel')}&body=${encodeURIComponent('Bonjour Lory,\r\n\r\nJe vous contacte suite à la consultation de votre CV en ligne.\r\n\r\nCordialement')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 lorycarvajolwebdev@gmail.com
-                            </span>
+                            </a>
                         </li>
                     </ul>
                     
