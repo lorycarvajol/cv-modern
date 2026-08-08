@@ -6,9 +6,7 @@
   padding: 24px;
   backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
   -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  border: $border-base;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     0 2px 8px rgba(0, 0, 0, 0.1),
@@ -31,7 +29,7 @@
     height: 1px;
     background: linear-gradient(90deg,
         transparent,
-        rgba(0, 175, 239, 0.6) 50%,
+        rgba($accent, 0.6) 50%,
         transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -41,12 +39,12 @@
     background: linear-gradient(135deg,
         rgba(255, 255, 255, 0.2) 0%,
         rgba(255, 255, 255, 0.12) 100%);
-    border-color: rgba(0, 175, 239, 0.4);
+    border-color: rgba($accent, 0.4);
     box-shadow:
       0 16px 48px rgba(0, 0, 0, 0.4),
-      0 4px 16px rgba(0, 175, 239, 0.15),
+      0 4px 16px rgba($accent, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 0 20px rgba(0, 175, 239, 0.2);
+      0 0 20px rgba($accent, 0.2);
     transform: translateY(-8px) scale(1.02);
 
     &::before {

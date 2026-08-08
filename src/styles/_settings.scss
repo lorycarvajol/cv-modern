@@ -17,6 +17,79 @@ $borderRadius: 25px;
 $shadow: 0 1px 3px #333;
 $minHeight: 94vh;
 
+// ---------------------------------------------------------------------------
+// Jetons visuels
+//
+// Valeurs deduites de l'existant : on retient a chaque fois la variante deja
+// dominante, de sorte que le style de l'application ne change pas — seules
+// les divergences ponctuelles sont ramenees dans le rang.
+// ---------------------------------------------------------------------------
+
+// Accent unique. Le bleu ciel #00afef qui coexistait dans 4 fichiers faisait
+// virer certains survols au bleu alors que le reste virait au turquoise.
+$accent: #0affef;
+
+// Bordures : trois niveaux, du plus discret au plus affirme.
+$border-soft: 1px solid rgba($accent, 0.12); // separations internes
+$border-base: 1px solid rgba($accent, 0.2); // panneaux et cartes (dominant)
+$border-strong: 1px solid rgba($accent, 0.4); // survol et etat actif
+
+// Rayons : 20px est la valeur la plus repandue, elle devient la reference.
+$radius-sm: 12px; // petits controles, puces
+$radius-md: 20px; // cartes et panneaux
+$radius-pill: 50px; // boutons pilule
+
+// Verre depoli : une seule recette au lieu des huit variantes constatees.
+@mixin glass($blur: 20px) {
+  backdrop-filter: blur($blur) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur($blur) saturate(180%) brightness(1.1);
+}
+
+// Elevation : profondeur sombre + halo d'accent, la signature de l'app.
+$shadow-card:
+  0 8px 32px rgba(0, 0, 0, 0.3),
+  0 2px 8px rgba(0, 0, 0, 0.15),
+  inset 0 1px 0 rgba($accent, 0.1);
+
+$shadow-card-hover:
+  0 12px 40px rgba(0, 0, 0, 0.4),
+  0 4px 16px rgba($accent, 0.15),
+  0 0 24px rgba($accent, 0.2),
+  inset 0 1px 0 rgba($accent, 0.2);
+
+// Elevation des grands panneaux de page : halo d'accent + profondeur.
+// Recette reprise du panneau de l'accueil, qui sert de reference.
+$shadow-panel:
+  0 0 30px rgba($accent, 0.1),
+  inset 0 1px 0 rgba($accent, 0.1),
+  0 8px 32px rgba(0, 0, 0, 0.3);
+
+// Cadre commun aux quatre panneaux de page. Fond volontairement discret :
+// le degrade anime du body doit rester lisible au travers.
+@mixin panel-surface {
+  background: rgba(10, 15, 25, 0.35);
+  border: $border-base;
+  border-radius: $radius-md;
+  box-shadow: $shadow-panel;
+}
+
+// Surface de carte standard : fond, bordure, rayon, verre et elevation.
+@mixin card-surface {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 100%);
+  border: $border-base;
+  border-radius: $radius-md;
+  @include glass();
+  box-shadow: $shadow-card;
+}
+
+// Bascule "coquille d'application" (desktop) -> "document qui defile" (mobile).
+// Au-dela de cette largeur la page ne defile pas ; en dessous, si.
+$mobileBreakpoint: 850px;
+$mobileHeaderH: 56px;   // en-tete compact fixe (photo + nom)
+$mobileTabBarH: 64px;   // barre d'onglets fixe en bas
+
 @mixin verticalCenter {
   display: flex;
   justify-content: center;
@@ -28,12 +101,23 @@ $minHeight: 94vh;
   padding: 0;
 }
 
+// 100% et non 100vw : 100vw ignore la barre de defilement et provoque
+// un debordement horizontal.
 html, body {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
   font-family: $font-1;
   color: $black;
+}
+
+// Le blocage du defilement est reserve au desktop, ou la mise en page
+// tient en un ecran. Sur mobile la page doit defiler, sans quoi tout le
+// contenu situe sous la ligne de flottaison devient inatteignable.
+@media screen and (min-width: #{$mobileBreakpoint + 1}) {
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 
 body {
@@ -98,15 +182,20 @@ body {
     z-index: -2;
   }
   
-  @media screen and (max-width: 768px) {
+  // L'espacement vertical est desormais gere par l'en-tete et la barre
+  // d'onglets fixes (voir _navigation.scss), plus par un padding en vh.
+  @media screen and (max-width: $mobileBreakpoint) {
     align-items: flex-start;
-    padding-top: 5vh;
-  }
-  
-  @media screen and (max-width: 480px) {
-    padding-top: 2vh;
+    padding-top: 0;
   }
 }
+// #root est l'element flex de body. Sans largeur explicite il se dimensionne
+// sur son contenu, et toute la chaine d'enfants en `width: 100%` s'effondre
+// avec lui (page Contact reduite a 337px sur un ecran de 765px).
+#root {
+  width: 100%;
+}
+
 button {
   cursor: pointer;
 }
@@ -134,16 +223,22 @@ a:visited {
   
   // Centrage vertical automatique via body flex
 
-  @media screen and (max-width: 850px){
+  @media screen and (max-width: $mobileBreakpoint){
     display: block !important;
     gap: 0;
-    width: 95vw;
-    height: 85vh; // Réduit sur mobile
-    padding-top: 60px;
+    width: 100%;
+    // hauteur libre : c'est la page qui defile, plus un bloc de 85vh
+    // dont le contenu excedentaire etait perdu.
+    height: auto;
+    min-height: 100vh;
+    padding: calc(#{$mobileHeaderH} + 1rem) 0.75rem calc(#{$mobileTabBarH} + 1.5rem);
     margin-top: 0;
   }
 }
-.homeContent, .knowledgesContent, .portfolioContent, .contactContent {
+// `.portfolioContent` figurait ici mais n'existe pas dans le JSX : le conteneur
+// du portfolio s'appelle `.portfolio-container`. La regle ne s'y appliquait donc
+// pas, et _portfolio.scss redeclarait les memes proprietes de son cote.
+.homeContent, .knowledgesContent, .portfolio-container, .contactContent {
   margin-left: .4rem;
   flex: 1;
   height: calc(90vh - 1rem); // 90% de hauteur moins padding
@@ -151,11 +246,13 @@ a:visited {
   overflow-x: hidden; // Évite le scroll horizontal
   box-sizing: border-box;
 
-  @media screen and (max-width: 850px){
+  @media screen and (max-width: $mobileBreakpoint){
     margin-left: 0 !important;
     margin-top: 0;
-    height: calc(85vh - 60px - 1rem);
-    overflow-y: auto;
+    // Pas de conteneur a defilement imbrique sur mobile : un seul
+    // defilement, celui de la page.
+    height: auto;
+    overflow: visible;
   }
 }
 

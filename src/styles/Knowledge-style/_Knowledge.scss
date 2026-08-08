@@ -8,7 +8,7 @@
     overflow: visible;
     display: grid;
     gap: 8px;
-    padding: 0;
+    padding: 1rem;
     grid-template-columns: 38% 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas:
@@ -16,8 +16,8 @@
       "L E E"
       "O O H";
 
-    // Pas d'effet glassbox sur le conteneur
-    background: transparent;
+    // Cadre commun aux quatre pages (accueil, competences, portfolio, contact).
+    @include panel-surface;
 
     // Les 4 divs enfants occupent exactement la hauteur disponible
     .languagesFrameworks,
@@ -28,6 +28,36 @@
       height: 100%;
       box-sizing: border-box;
       margin: 0;
+    }
+  }
+}
+// Mobile / tablette : liberer la hauteur et sortir de la grille 3 colonnes.
+// La plage 769-850px n'avait aucune regle de grille et gardait les colonnes
+// `38% 1fr 1fr` du desktop comprimees, dans une boite figee a 90vh — d'ou des
+// cartes tronquees en milieu de ligne. Specificite alignee sur la regle de
+// base (0,2,0 / 0,3,0), sans quoi l'override serait ignore.
+@media screen and (max-width: $mobileBreakpoint) {
+  .knowledges .knowledgesContent {
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: none;
+
+    .languagesFrameworks,
+    .experience,
+    .otherSkills,
+    .hobbies {
+      height: auto;
+      // Les cartes portent `grid-area: L/E/O/H`. Sans grid-template-areas ces
+      // noms deviennent des noms de lignes inexistants et le navigateur cree
+      // des pistes implicites (4 colonnes au lieu de 2 a 820px).
+      grid-area: auto;
+    }
+
+    // Les deux blocs denses prennent toute la largeur.
+    .languagesFrameworks,
+    .experience {
+      grid-column: 1 / -1;
     }
   }
 }

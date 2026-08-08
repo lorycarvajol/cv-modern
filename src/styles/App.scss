@@ -5,8 +5,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    max-width: 100vw;
-    // overflow-x: hidden; // Prevent horizontal scrolling
+    // .App est un element flex de body : sans largeur explicite il se
+    // dimensionne sur son contenu, et tout enfant en `width: 100%` s'effondre.
+    width: 100%;
+    max-width: 100%; // 100vw deborderait de la largeur de la barre de defilement
 
     padding: 10px;
     box-sizing: border-box;
@@ -21,14 +23,22 @@
         padding: 30px;
     }
 
-    // For small screens (mobiles)
-    @media (max-width: 767px) {
-        padding: 15px;
+    // Sur mobile le conteneur de page porte deja son propre padding
+    // (en-tete + barre d'onglets) : en ajouter ici le decalerait deux fois.
+    @media (max-width: $mobileBreakpoint) {
+        padding: 0;
     }
 
     // Ensuring the content fits well within the viewport
     >* {
         flex: 1; // Allowing children to grow to fill available space
         overflow-y: auto; // Ensure content scrolls within its own area
+    }
+
+    // Un seul defilement sur mobile : celui de la page.
+    @media (max-width: $mobileBreakpoint) {
+        >* {
+            overflow-y: visible;
+        }
     }
 }

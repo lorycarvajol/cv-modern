@@ -1,5 +1,7 @@
-@import './App.scss';
+// settings en premier : il definit les variables ($mobileBreakpoint, couleurs,
+// mixins) utilisees par toutes les feuilles importees ensuite.
 @import './settings';
+@import './App.scss';
 @import './responsive';
 
 @import './pages/contact';
