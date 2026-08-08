@@ -31,14 +31,13 @@
     }
   }
 }
-// Mobile / tablette : liberer la hauteur et sortir de la grille 3 colonnes.
-// La plage 769-850px n'avait aucune regle de grille et gardait les colonnes
-// `38% 1fr 1fr` du desktop comprimees, dans une boite figee a 90vh — d'ou des
-// cartes tronquees en milieu de ligne. Specificite alignee sur la regle de
-// base (0,2,0 / 0,3,0), sans quoi l'override serait ignore.
-@media screen and (max-width: $mobileBreakpoint) {
+// Grille : 2 colonnes tant que la largeur ne permet pas d'en tenir 3.
+// Le seuil est $denseGridBreakpoint (1250px) et non $mobileBreakpoint : repasser
+// en mode desktop a 851px ne donne pas la place pour 3 colonnes, la grille n'y
+// dispose que de ~416px. Specificite alignee sur la regle de base (0,2,0 / 0,3,0),
+// sans quoi l'override serait ignore.
+@media screen and (max-width: $denseGridBreakpoint) {
   .knowledges .knowledgesContent {
-    height: auto;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas: none;
@@ -58,6 +57,45 @@
     .languagesFrameworks,
     .experience {
       grid-column: 1 / -1;
+    }
+  }
+}
+
+// Hauteur, selon que la page defile ou non.
+//
+// <= 850px : coquille abandonnee, c'est la page qui defile -> hauteur libre.
+@media screen and (max-width: $mobileBreakpoint) {
+  .knowledges .knowledgesContent {
+    height: auto;
+  }
+}
+
+// 851px - 1250px : on est en mode desktop, `html, body` sont en overflow hidden
+// et la page ne defile pas. La grille 2 colonnes rend le contenu plus haut que
+// les 90vh du panneau : sans defilement interne, le bas deviendrait
+// inatteignable — exactement le defaut corrige sur mobile.
+@media screen and (min-width: #{$mobileBreakpoint + 1}) and (max-width: $denseGridBreakpoint) {
+  .knowledges .knowledgesContent {
+    overflow-y: auto;
+    overflow-x: hidden;
+    // Barre de defilement discrete, alignee sur celle de `.projects`.
+    scrollbar-width: thin;
+    scrollbar-color: rgba($accent, 0.3) transparent;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba($accent, 0.3);
+      border-radius: 10px;
+
+      &:hover {
+        background: rgba($accent, 0.5);
+      }
     }
   }
 }

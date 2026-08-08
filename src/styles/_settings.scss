@@ -120,6 +120,21 @@ $mobileBreakpoint: 850px;
 $mobileHeaderH: 56px;   // en-tete compact fixe (photo + nom)
 $mobileTabBarH: 64px;   // barre d'onglets fixe en bas
 
+// Seuil propre aux grilles denses (page Competences). Il est plus haut que
+// $mobileBreakpoint car repasser en mode desktop a 851px ne signifie pas qu'il
+// y a la place pour 3 colonnes : a 900px de viewport, la grille ne dispose que
+// de ~416px une fois la sidebar deduite, soit des colonnes de 130 a 158px.
+//
+// Cale a 1450px et non 1250px, d'apres les largeurs de colonne mesurees :
+//   1250px -> 2 colonnes de 337px
+//   1300px -> 3 colonnes, la plus etroite a 219px  (donc PIRE qu'a 1250)
+//   1450px -> 3 colonnes, la plus etroite a 257px
+//   1600px -> 3 colonnes, la plus etroite a 269px  (plafond, .knowledges etant
+//             borne a max-width: 1200px)
+// A 1250 le passage a 3 colonnes retrecissait les colonnes au lieu de les
+// elargir. A 1450 la bascule se fait a 257px, proche du plafond de 269px.
+$denseGridBreakpoint: 1450px;
+
 @mixin verticalCenter {
   display: flex;
   justify-content: center;

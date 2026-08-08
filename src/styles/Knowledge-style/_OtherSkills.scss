@@ -214,3 +214,21 @@
     }
   }
 }
+// Les deux colonnes de competences s'empilent des que la carte est trop etroite.
+//
+// `.list` est un flex en ligne contenant deux <ul>. Sans base minimale, ils se
+// partageaient la largeur quoi qu'il arrive : 131px par colonne a 390px de
+// viewport, et jusqu'a 73px lorsque la carte se retrouve dans une cellule etroite
+// de la grille 2 colonnes — alors que le libelle le plus long
+// (« Developpement d'API RESTful ») en reclame 136.
+//
+// Pas de media query ici : la largeur de cette carte depend de la grille, pas
+// seulement du viewport. Une base de 160px avec `flex-wrap` laisse les deux
+// colonnes cote a cote quand la place existe, et les empile sinon.
+.otherSkills .list {
+  flex-wrap: wrap;
+
+  ul {
+    flex: 1 1 160px;
+  }
+}
