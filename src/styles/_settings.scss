@@ -78,10 +78,28 @@ $shadow-card-hover:
 // Elevation des grands panneaux de page. Recette reprise de la sidebar, dont
 // le rendu servait de reference : halo d'accent plus franc (0.15) et ombre
 // portee plus profonde (0.4) que ce que les panneaux avaient.
+// Trois couches de flou croissant plutot qu'une seule.
+//
+// Un `0 0 30px` unique dessine une bande d'epaisseur constante qui epouse le
+// rectangle arrondi et s'arrete net : le halo se lisait comme un contour carre
+// pose sur le fond, sans fondu. En superposant des rayons de 22, 60 et 130px
+// d'opacite decroissante, la lumiere decroit progressivement ; l'etalement de
+// 24px sur la couche la plus large la detache de la forme du panneau, de sorte
+// qu'elle se fond dans le degrade du fond au lieu d'en redessiner les bords.
 $shadow-panel:
-  0 0 30px rgba($accent, 0.15),
-  0 8px 32px rgba(0, 0, 0, 0.4),
+  0 0 22px rgba($accent, 0.10),
+  0 0 60px rgba($accent, 0.07),
+  0 0 130px 24px rgba($accent, 0.045),
+  0 18px 55px rgba(0, 0, 0, 0.45),
   inset 0 1px 0 rgba($accent, 0.1);
+
+// Meme construction, intensifiee : utilisee au survol de la sidebar.
+$shadow-panel-hover:
+  0 0 26px rgba($accent, 0.16),
+  0 0 75px rgba($accent, 0.11),
+  0 0 160px 30px rgba($accent, 0.07),
+  0 22px 65px rgba(0, 0, 0, 0.5),
+  inset 0 1px 0 rgba($accent, 0.2);
 
 // Cadre commun aux quatre panneaux de page, cale sur la sidebar : liseré
 // lumineux, halos d'accent, base bleu-gris et verre depoli. Un aplat sombre

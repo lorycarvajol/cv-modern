@@ -9,7 +9,7 @@
     // dimensionne sur son contenu, et tout enfant en `width: 100%` s'effondre.
     width: 100%;
     max-width: 100%; // 100vw deborderait de la largeur de la barre de defilement
-
+     // Pas de bordure arrondie sur le conteneur principal
     padding: 10px;
     box-sizing: border-box;
 
@@ -29,16 +29,24 @@
         padding: 0;
     }
 
-    // Ensuring the content fits well within the viewport
     >* {
         flex: 1; // Allowing children to grow to fill available space
-        overflow-y: auto; // Ensure content scrolls within its own area
-    }
 
-    // Un seul defilement sur mobile : celui de la page.
-    @media (max-width: $mobileBreakpoint) {
-        >* {
-            overflow-y: visible;
-        }
+        // PAS d'`overflow` ici.
+        //
+        // Un `overflow-y: auto` y trainait « pour que le contenu defile dans sa
+        // propre zone ». Il faisait deux degats :
+        //
+        // 1. Il annulait le `overflow: visible` que _settings.scss pose sur ces
+        //    memes conteneurs, avec pourtant le commentaire « Permet aux
+        //    ombrages de s'afficher » — meme specificite (0,1,0), mais declare
+        //    plus tard dans la cascade, donc gagnant.
+        // 2. Or un overflow different de `visible` fait de l'element une zone
+        //    de defilement, qui ROGNE les ombres portees de ses enfants. Le
+        //    halo des panneaux etait donc sectionne net au ras d'un rectangle
+        //    a angles droits, au lieu de se diffuser dans le fond.
+        //
+        // Le defilement est de toute facon gere un cran plus bas, par
+        // `.homeContent`, `.portfolio-container` et consorts.
     }
 }
