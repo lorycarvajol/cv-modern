@@ -3,16 +3,40 @@ import { portfolioData } from '../../data/portfolioData';
 import Project from './Project';
 import FullPageModal from '../common/FullPageModal';
 
+// Libelle affiche quand un filtre ne contient encore aucun projet. Une entree
+// par theme : plusieurs sections se remplissent au fil de l'eau, un message
+// generique ne dirait pas ce qui est attendu a cet endroit.
+const EMPTY_STATES = {
+    Cursus: {
+        icon: 'fas fa-graduation-cap',
+        text: 'Les projets réalisés pendant mes formations arrivent ici.'
+    },
+    Formateur: {
+        icon: 'fas fa-chalkboard-teacher',
+        text: 'Les projets menés en tant que formateur arrivent ici.'
+    },
+    Vitrine: {
+        icon: 'fas fa-store',
+        text: 'Les sites vitrine et e-commerce arrivent ici.'
+    },
+    Labo: {
+        icon: 'fas fa-flask',
+        text: 'Les expérimentations, jeux et prototypes arrivent ici.'
+    }
+};
+
 export default class ProjectList extends Component {
     state = {
         projects: portfolioData,
+        // Filtrage par theme et non plus par langage. Les themes sont portes
+        // par `themes` dans portfolioData.js ; un projet peut en avoir plusieurs.
         radios: [
-            {id: 1, value: "Python"},
-            {id: 2, value: "php"},
-            {id: 3, value: "React"},
-            {id: 4, value: "symfony"}
+            {id: 1, value: "Cursus"},
+            {id: 2, value: "Formateur"},
+            {id: 3, value: "Vitrine"},
+            {id: 4, value: "Labo"}
         ],
-        selectedRadio: 'React',
+        selectedRadio: 'Cursus',
         currentPage: 1,
         projectsPerPage: 6,
         selectedProject: null,
@@ -60,9 +84,9 @@ export default class ProjectList extends Component {
     render() {
         let {projects, radios, selectedRadio, currentPage, projectsPerPage, showModal, selectedProject} = this.state;
         
-        // Filter projects by selected technology
-        const filteredProjects = projects.filter(item => 
-            item.languages.includes(selectedRadio)
+        // Filtrage par theme
+        const filteredProjects = projects.filter(item =>
+            (item.themes || []).includes(selectedRadio)
         );
         
         // Calculate pagination
@@ -99,17 +123,28 @@ export default class ProjectList extends Component {
                 </ul>
 
                 {/* Projects Grid */}
-                <div className="projects">
-                    {currentProjects.map(item => {
-                        return (
-                            <Project 
-                                key={item.id}
-                                item={item}
-                                onShowDetails={this.handleShowDetails}
-                            />
-                        )
-                    })}
-                </div>
+                {filteredProjects.length === 0 ? (
+                    // Une grille vide passerait pour un bug : on annonce
+                    // explicitement que la section se remplit, avec un libelle
+                    // propre au filtre concerne.
+                    <div className="projects-empty">
+                        <i className={EMPTY_STATES[selectedRadio].icon}></i>
+                        <p>Bientôt</p>
+                        <span>{EMPTY_STATES[selectedRadio].text}</span>
+                    </div>
+                ) : (
+                    <div className="projects">
+                        {currentProjects.map(item => {
+                            return (
+                                <Project
+                                    key={item.id}
+                                    item={item}
+                                    onShowDetails={this.handleShowDetails}
+                                />
+                            )
+                        })}
+                    </div>
+                )}
 
                 {/* Pagination */}
                 {totalPages > 1 && (
