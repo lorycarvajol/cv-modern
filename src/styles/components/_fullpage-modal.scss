@@ -161,11 +161,23 @@
   .project-modal-content {
     .project-modal-header {
       .project-modal-image {
-        max-width: 280px !important;
-        width: 280px !important;
-        height: 200px !important;
-        flex-shrink: 0 !important;
-        
+        // Taille fixe reservee au desktop. Ces `!important` s'appliquaient a
+        // toutes les largeurs et bloquaient toute adaptation : l'image restait
+        // a 280px meme sur un ecran de 390px.
+        @media screen and (min-width: #{$mobileBreakpoint + 1}) {
+          max-width: 280px !important;
+          width: 280px !important;
+          height: 200px !important;
+          flex-shrink: 0 !important;
+        }
+
+        @media screen and (max-width: $mobileBreakpoint) {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: 180px !important;
+          flex: 0 0 auto !important;
+        }
+
         img {
           width: 100% !important;
           height: 100% !important;

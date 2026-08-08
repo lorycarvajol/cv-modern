@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@800&family=Josefin+Sans:wght@100&family=Nova+Round&display=swap');
+// Orbitron etait declaree dans 8 fichiers (titres de cartes, nom de la sidebar,
+// titres de modale) mais n'etait chargee nulle part : tous ces textes tombaient
+// silencieusement sur le sans-serif par defaut. Plage 400..700, la police est
+// variable donc cela reste un seul fichier.
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@800&family=Josefin+Sans:wght@100&family=Nova+Round&family=Orbitron:wght@400..700&display=swap');
 
 
 $font-1: 'Nova Round', cursive;

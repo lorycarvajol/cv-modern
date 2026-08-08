@@ -276,12 +276,29 @@
       }
       
       // Styles for modal content
-      .project-modal-content {
+      //
+      // `@at-root` est indispensable ici : ce bloc etait imbrique sous
+      // `.portfolio > .projects`, or la modale est rendue par FullPageModal,
+      // *soeur* de `.projects` et non descendante. Le selecteur ne matchait donc
+      // jamais et ces regles etaient mortes — la modale s'affichait sans mise en
+      // forme (tout empile, technos collees). @at-root les remonte a la racine
+      // sans avoir a deplacer le bloc.
+      @at-root .project-modal-content {
         padding: 2rem;
-        
+
         .project-modal-header {
           display: flex;
           gap: 2rem;
+
+          // Sur mobile l'image et le bloc technos s'empilent : 280px de visuel
+          // plus les technos cote a cote ne tiennent pas sous 850px.
+          @media screen and (max-width: $mobileBreakpoint) {
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+          }
+
           margin-bottom: 2rem;
           padding-bottom: 1.5rem;
           border-bottom: 1px solid rgba(10,255,239,0.2);
@@ -821,5 +838,43 @@
     font-size: 0.9rem;
     max-width: 32ch;
     line-height: 1.5;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Modale de detail projet : elle occupe l'emplacement exact du panneau au lieu
+// de recouvrir tout l'ecran. En plein ecran elle mesurait 95vw x 90vh, plus
+// 20px de padding d'overlay, dans une page deja bornee a 90vh — d'ou un
+// depassement en haut et en bas et une barre de defilement.
+//
+// Portee volontairement limitee a `.portfolio-container` : FullPageModal sert
+// aussi aux cartes de Competences, qui doivent rester en plein ecran (sinon la
+// modale serait enfermee dans la carte, son plus proche ancetre positionne).
+//
+// Desktop uniquement : sous 850px le panneau a une hauteur libre et la page
+// defile, un ancrage sur le panneau donnerait une modale demesuree.
+@media screen and (min-width: 851px) {
+  .portfolio-container {
+    // Ancre de positionnement pour la modale.
+    position: relative;
+
+    .fullpage-modal-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 0;
+      border-radius: $radius-md;
+      // Contient l'animation d'ouverture, qui deborderait sinon du panneau.
+      overflow: hidden;
+    }
+
+    .fullpage-modal-container {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      // Le panneau porte deja bordure et rayon : les redoubler ferait un
+      // cadre dans un cadre.
+      border: none;
+      border-radius: $radius-md;
+    }
   }
 }
