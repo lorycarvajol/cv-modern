@@ -7,17 +7,59 @@
   width: 240px;
   flex-shrink: 0;
   
-  // Design moderne avec background sombre
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(10, 255, 239, 0.12) 0%, transparent 60%),
-    radial-gradient(circle at 80% 70%, rgba(50, 150, 255, 0.08) 0%, transparent 60%),
-    linear-gradient(135deg, 
-      rgba(15, 25, 40, 0.95) 0%, 
-      rgba(25, 35, 50, 0.9) 30%, 
-      rgba(35, 45, 60, 0.9) 70%, 
+  // Fond « lampe a lave » : trois masses lumineuses qui derivent lentement sur
+  // la base sombre.
+  //
+  // Les halos etaient auparavant figes (`circle at 20% 30%` / `at 80% 70%`).
+  // Ils sont desormais centres dans leur propre couche, chacune plus petite que
+  // la sidebar, ce qui permet de les deplacer via `background-position` — sans
+  // pseudo-element supplementaire, les deux disponibles etant deja pris par les
+  // particules et le lisere.
+  //
+  // Chaque masse a une taille, une couleur et une trajectoire differentes : sans
+  // cela on verrait un motif se translater en bloc au lieu de formes qui vivent
+  // les unes par rapport aux autres.
+  background:
+    radial-gradient(closest-side circle, rgba(10, 255, 239, 0.13), transparent 100%),
+    radial-gradient(closest-side circle, rgba(50, 150, 255, 0.11), transparent 100%),
+    radial-gradient(closest-side circle, rgba(10, 255, 239, 0.09), transparent 100%),
+    radial-gradient(closest-side circle, rgba(10, 255, 239, 0.11), transparent 100%),
+    radial-gradient(closest-side circle, rgba(90, 180, 255, 0.10), transparent 100%),
+    radial-gradient(closest-side circle, rgba(10, 255, 239, 0.08), transparent 100%),
+    linear-gradient(135deg,
+      rgba(15, 25, 40, 0.95) 0%,
+      rgba(25, 35, 50, 0.9) 30%,
+      rgba(35, 45, 60, 0.9) 70%,
       rgba(20, 30, 45, 0.95) 100%
     );
-  
+  background-repeat: no-repeat;
+  // Six bulles, de la grande masse a la petite : 456x336px pour la premiere,
+  // 100x55px pour la derniere. Les tailles variees evitent qu'on identifie
+  // « trois taches » et brouillent la lecture du mouvement.
+  background-size:
+    190% 40%,
+    150% 30%,
+    115% 21%,
+    78% 13%,
+    58% 9%,
+    42% 6.5%,
+    100% 100%;
+
+  // DEUX animations de periodes premieres entre elles, sur deux proprietes
+  // differentes : la derive (position, 41s) et la respiration (taille, 67s).
+  //
+  // C'est ce qui casse le motif. Une animation unique en `alternate` retracait
+  // exactement le meme chemin a l'envers, et l'oeil le repere en deux cycles.
+  // Ici les deux rythmes ne retombent ensemble qu'au bout de 41 x 67 secondes,
+  // soit environ 46 minutes : en pratique, aucune repetition perceptible.
+  //
+  // La derive est en boucle franche (pas d'`alternate`) : sa derniere image est
+  // identique a la premiere, elle reboucle donc sans retour en arriere visible.
+  animation:
+    lavaDerive 41s linear infinite,
+    lavaRespire 67s ease-in-out infinite alternate;
+
+
   backdrop-filter: blur(25px) saturate(150%) brightness(1.1);
   border: 1px solid rgba(10, 255, 239, 0.2);
   border-radius: 20px;
@@ -442,6 +484,10 @@
     // n'ont plus de boite a habiller.
     &::before, &::after { content: none; }
 
+    // `display: contents` ne genere aucune boite : le fond « lampe a lave »
+    // n'est plus peint, mais l'animation continuerait de tourner pour rien.
+    animation: none;
+
     // --- En-tete compact : photo miniature + nom, en haut ---
     .id {
       position: fixed;
@@ -559,6 +605,47 @@
       display: none;
     }
   }
+}
+
+// Derive des bulles. Chacune suit une trajectoire propre — certaines montent,
+// d'autres traversent en diagonale ou reviennent sur elles-memes — de sorte
+// qu'on ne percoive pas un motif se translatant en bloc.
+// La derniere valeur reste a `0 0` : c'est le degrade de base, il ne bouge pas.
+@keyframes lavaDerive {
+  0% {
+    background-position: -40% 105%, 115% -12%, 25% 60%, 70% 20%, -10% 45%, 50% 85%, 0 0;
+  }
+  25% {
+    background-position: 20% 62%, 30% 70%, -20% 15%, 10% 80%, 60% 8%, -15% 35%, 0 0;
+  }
+  50% {
+    background-position: -25% 15%, 85% 40%, 65% 88%, 85% 48%, 15% 75%, 75% 10%, 0 0;
+  }
+  75% {
+    background-position: 45% 80%, -15% 18%, 10% 35%, 35% 5%, 85% 30%, 20% 60%, 0 0;
+  }
+  // Identique a 0% : la boucle se referme sans a-coup.
+  100% {
+    background-position: -40% 105%, 115% -12%, 25% 60%, 70% 20%, -10% 45%, 50% 85%, 0 0;
+  }
+}
+
+// Respiration : les bulles enflent et se resserrent, sur un rythme sans rapport
+// avec celui de la derive. Les grandes et les petites ne varient pas dans le
+// meme sens, ce qui empeche l'ensemble de « pulser » d'un seul tenant.
+@keyframes lavaRespire {
+  0% {
+    background-size: 190% 40%, 150% 30%, 115% 21%, 78% 13%, 58% 9%, 42% 6.5%, 100% 100%;
+  }
+  100% {
+    background-size: 162% 33%, 178% 37%, 138% 27%, 64% 10%, 74% 12%, 33% 5%, 100% 100%;
+  }
+}
+
+// Le fond anime est purement decoratif : il disparait si l'utilisateur a
+// demande la reduction des animations.
+@media (prefers-reduced-motion: reduce) {
+  .sidebar { animation: none; }
 }
 
 // Animation pour les particules de la sidebar
