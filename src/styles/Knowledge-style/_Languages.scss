@@ -9,10 +9,7 @@
   backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
   -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
   border: $border-base;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: $shadow-card;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   grid-area: L;
   position: relative;
@@ -31,7 +28,7 @@
         transparent,
         rgba($accent, 0.6) 50%,
         transparent);
-    opacity: 0;
+    opacity: 0.5;
     transition: opacity 0.3s ease;
   }
 
@@ -40,11 +37,7 @@
         rgba(255, 255, 255, 0.2) 0%,
         rgba(255, 255, 255, 0.12) 100%);
     border-color: rgba($accent, 0.4);
-    box-shadow:
-      0 16px 48px rgba(0, 0, 0, 0.4),
-      0 4px 16px rgba($accent, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 0 20px rgba($accent, 0.2);
+    box-shadow: $shadow-card-hover;
     transform: translateY(-8px) scale(1.02);
 
     &::before {
