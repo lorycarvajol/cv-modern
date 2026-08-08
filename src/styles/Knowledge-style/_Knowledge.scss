@@ -99,3 +99,54 @@
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// Projecteur suivant le curseur.
+//
+// Effet volontairement absent du reste de l'application : partout ailleurs les
+// animations sont soit ambiantes (lampe a lave, particules, vague), soit
+// binaires (survol tout ou rien, balayages). C'est ici la seule qui reagisse a
+// la POSITION du pointeur, ce qui donne a cette page sa propre signature — et
+// sert son propos : on eclaire la competence qu'on examine.
+//
+// Les coordonnees viennent de Knowledges.js (variables --sx / --sy).
+//
+// `hover: hover` et `pointer: fine` : sur ecran tactile il n'y a pas de
+// curseur, l'effet n'aurait aucun sens et resterait fige au dernier appui.
+// ---------------------------------------------------------------------------
+@media (hover: hover) and (pointer: fine) {
+  .knowledgesContent {
+    .languagesFrameworks,
+    .experience,
+    .otherSkills,
+    .hobbies {
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+
+        // Halo centre sur le pointeur. Valeurs de repli au centre : si le CSS
+        // s'affiche avant le premier mouvement de souris, rien ne saute.
+        background: radial-gradient(
+          260px circle at var(--sx, 50%) var(--sy, 50%),
+          rgba($accent, 0.17) 0%,
+          rgba($accent, 0.06) 35%,
+          transparent 68%
+        );
+
+        // Sous le texte, au-dessus du fond de la carte. Les cartes portent un
+        // `backdrop-filter`, donc un contexte d'empilement : le -1 reste
+        // confine a la carte au lieu de passer derriere elle.
+        z-index: -1;
+      }
+
+      &:hover::after {
+        opacity: 1;
+      }
+    }
+  }
+}
