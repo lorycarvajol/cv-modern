@@ -20,6 +20,33 @@ services:
       - "traefik.http.middlewares.cv-www.redirectregex.permanent=true"
       - "traefik.http.routers.cv-web.middlewares=cv-www"
 
+  # Detient la cle Resend et envoie les messages du formulaire de contact.
+  # Un service distinct plutot qu'un appel depuis le React : la cle autorise
+  # l'envoi au nom du domaine, elle ne doit jamais partir dans le navigateur.
+  mailer:
+    build: ./mailer
+    container_name: cv-mailer
+    restart: unless-stopped
+    # Renseigne dans .env, non versionne (voir .env.example).
+    environment:
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - MAIL_FROM=${MAIL_FROM:-contact@lorycarvajol.dev}
+      - MAIL_TO=${MAIL_TO:-lorycarvajolwebdev@gmail.com}
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      # Meme hote que le site, mais sur /api. La regle etant plus specifique
+      # que celle du frontend, Traefik la fait gagner ; la priorite explicite
+      # evite d'en dependre.
+      - "traefik.http.routers.cv-api.rule=(Host(`lorycarvajol.dev`) || Host(`www.lorycarvajol.dev`)) && PathPrefix(`/api`)"
+      - "traefik.http.routers.cv-api.priority=100"
+      - "traefik.http.routers.cv-api.entrypoints=websecure"
+      - "traefik.http.routers.cv-api.tls.certresolver=myresolver"
+      - "traefik.http.services.cv-api.loadbalancer.server.port=8000"
+      - "traefik.http.routers.cv-api.middlewares=cv-www"
+
 networks:
   proxy:
     external: true

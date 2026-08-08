@@ -357,3 +357,61 @@
     font-size: 0.9rem;
   }
 }
+// ---------------------------------------------------------------------------
+// Variante compacte : la modale se dimensionne a son contenu au lieu d'occuper
+// l'ecran. Utilisee par le formulaire de contact — 95vw x 90vh de vide autour
+// de quatre champs n'aurait aucun sens.
+//
+// Placee en fin de fichier a dessein : les media queries ci-dessus reglent
+// `.fullpage-modal-container` en 95vh sur mobile et l'emporteraient sinon.
+// ---------------------------------------------------------------------------
+.fullpage-modal-container--compact {
+  width: min(560px, 92vw);
+  height: auto;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+
+  .fullpage-modal-header {
+    flex-shrink: 0;
+    padding: 20px 24px 16px;
+
+    .header-content {
+      .module-type {
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .close-button {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+  }
+
+  // `height: calc(100% - 120px)` de la regle de base supposait une modale
+  // pleine hauteur : ici le contenu commande.
+  .fullpage-modal-content {
+    height: auto;
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  @media screen and (max-width: $mobileBreakpoint) {
+    width: 94vw;
+    max-height: 92vh;
+
+    .fullpage-modal-header {
+      padding: 16px 18px 12px;
+
+      .header-content h1 { font-size: 1.2rem; }
+    }
+
+    .fullpage-modal-content { padding: 18px; }
+  }
+}

@@ -42,7 +42,12 @@
 // Definition unique. `.close-button` etait declare deux fois dans ce fichier :
 // le second bloc ne remplacait que le fond et la couleur, laissant l'ombre
 // neumorphique du premier flotter sous un bouton devenu transparent.
-.close-button {
+// Portee limitee a `.modal-overlay`, le conteneur de CE composant.
+// Sans cela la regle s'appliquait a tous les `.close-button` du site, y compris
+// celui de FullPageModal : son `top: 20px / right: 20px` s'y ajoutait au
+// positionnement relatif et decalait la croix de 20px vers le bas et vers
+// l'interieur, jusqu'a la faire deborder sous la bordure de l'en-tete.
+.modal-overlay .close-button {
     display: flex;
     align-items: center;
     justify-content: center;

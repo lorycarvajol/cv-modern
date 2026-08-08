@@ -1,376 +1,516 @@
+// Page Contact.
+// Volontairement sobre : une colonne, un seul appel a l'action. Le formulaire
+// vit dans une modale (voir Contact.js), il n'encombre plus la page.
+// Aucun nouveau jeton : tout vient de _settings.scss.
+
 .contactContent {
   margin: 0.5rem 0;
-  // Cadre commun aux quatre pages. Auparavant : rayon 25px et une bordure
-  // blanc chaud de 0.3px posee uniquement en haut et a gauche, ce qui se
-  // lisait comme un defaut plutot que comme un parti pris.
   @include panel-surface;
   width: 100%;
-  height: calc(90vh - 1rem);
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 20% 45% 35%;
-  grid-template-areas:
-    "1"
-    "2"
-    "3";
-
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative; // ancre la couche de particules
 
+  // Couche de particules, reprise de la sidebar. Contact etait le seul panneau
+  // a ne pas en avoir — une incoherence qui m'avait echappe lors de
+  // l'harmonisation.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, rgba($accent, 0.3), transparent),
+      radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.1), transparent),
+      radial-gradient(0.5px 0.5px at 60px 40px, rgba($accent, 0.4), transparent),
+      radial-gradient(0.5px 0.5px at 80px 80px, rgba(255, 255, 255, 0.08), transparent);
+    background-repeat: repeat;
+    background-size: 100px 100px;
+    // Deplacement du FOND, et non de l'element : `sidebarParticles` anime un
+    // `transform` dont la boite transformee deborde du conteneur. La sidebar
+    // l'absorbe (overflow: hidden), pas ce panneau (overflow-y: auto) — on y
+    // gagnait 100px de defilement fantome. Deux tuiles de 100px : boucle nette.
+    animation: particulesFond 20s linear infinite;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-  .header {
-    grid-area: 1;
-    width: 100%;
+  // Le contenu passe devant les particules.
+  > * {
     position: relative;
-    height: 440px;
-    background: rgba(0, 0, 0, 0.116);
-    border-radius: 15px;
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(50, 50, 50, 0.3);
+    z-index: 1;
+  }
 
-    .image {
-      height: 60%;
-      width: 100%;
-      border-radius: 15px;
-    }
+  // --- Bandeau photo (Savoie), decoupe en vague --------------------------
+  //
+  // La courbe est appliquee en MASQUE, pas en calque colore comme autrefois
+  // (shape.svg etait rempli en rgb(44,44,44), un gris qui jurerait sur le
+  // panneau bleu nuit). En masque, c'est le panneau lui-meme qui apparait sous
+  // la vague : le rendu reste juste meme si la teinte du panneau change.
+  //
+  // Le trace est celui de shape.svg, referme vers le haut pour masquer
+  // l'au-dessus de la courbe au lieu de l'en-dessous.
+  .header {
+    position: relative;
+    width: 100%;
+    // Partage 50/50 : le bandeau occupe la moitie du panneau, le texte l'autre.
+    // Exprime en % du panneau plutot qu'en vh — c'est le panneau qu'on partage,
+    // pas la fenetre.
+    //
+    // Le `min()` est le garde-fou : le bloc texte mesure ~390px quelle que soit
+    // la hauteur d'ecran. Sur un panneau court, lui laisser seulement 50% le
+    // ferait deborder (73px de defilement sur un portable de 760px). On reserve
+    // donc 400px au texte, et la photo prend tout le reste — soit exactement la
+    // moitie des que l'ecran est assez haut.
+    height: min(50%, calc(100% - 400px));
+    min-height: 260px;
+    flex-shrink: 0;
+    border-radius: $radius-md $radius-md 0 0;
+    overflow: hidden;
+
+    // DEUX vagues superposees plutot qu'une seule.
+    //
+    // Une forme unique qui se translate se lit comme un motif qui defile, pas
+    // comme de l'eau. Ici deux ondes de longueurs d'onde differentes (1400px et
+    // 1000px) derivent en sens OPPOSES et sont combinees par `mask-composite`.
+    // Le bord visible suit a chaque instant la plus haute des deux : leur
+    // interference fait monter et descendre les cretes sur place — c'est ce qui
+    // produit la sensation d'ondulation.
+    //
+    // Une seule periode par motif (contre deux auparavant) : les cretes sont
+    // bien plus longues, donc plus douces.
+    //
+    // Les deux motifs commencent et finissent a la meme hauteur (y=272), ce qui
+    // les rend raccordables ; et chacun parcourt exactement une de ses tuiles
+    // par cycle, donc l'ensemble reboucle sans rupture.
+    $vagueA: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 320' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M0,272C233,242,467,242,700,272C933,302,1167,302,1400,272L1400,0L0,0Z'/%3E%3C/svg%3E");
+    $vagueB: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 320' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M0,272C167,250,333,250,500,272C667,294,833,294,1000,272L1000,0L0,0Z'/%3E%3C/svg%3E");
+
+    mask-image: $vagueA, $vagueB;
+    -webkit-mask-image: $vagueA, $vagueB;
+    mask-size: 1400px 100%, 1000px 100%;
+    -webkit-mask-size: 1400px 100%, 1000px 100%;
+    mask-repeat: repeat-x, repeat-x;
+    -webkit-mask-repeat: repeat-x, repeat-x;
+    // Intersection : le bord suit la plus haute des deux ondes.
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+
+    animation: ondule 48s linear infinite;
 
     &:before {
       content: '';
-      width: 100%;
-      height: 90%;
       position: absolute;
-      background: url(../../media/imgslider2.jpg) no-repeat center top/cover;
-      background-position: 0px -180px;
+      inset: 0;
+      background: url(../../media/imgslider2.jpg) no-repeat center 30% / cover;
       filter: grayscale(100%);
-      border-radius: 15px;
+      // Derive tres lent facon Ken Burns : la photo respire au lieu d'etre
+      // une image fixe. 40s, imperceptible a l'oeil nu mais vivant.
+      animation: deriveHeader 40s ease-in-out infinite alternate;
     }
 
+    // Assombrit le bas pour que le titre, qui chevauche la photo, reste lisible.
+    .gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+          rgba(10, 15, 25, 0.15) 0%,
+          rgba(10, 15, 25, 0.55) 55%,
+          rgba(10, 15, 25, 0.9) 100%);
+    }
+
+    // Halo d'accent sur le bord decoupe. Concentre sur les derniers pourcents :
+    // masque comme le reste, il epouse donc la vague au lieu de barrer la photo.
     &:after {
       content: '';
-      width: 100%;
-      height: 85%;
       position: absolute;
-      top: 30px;
-      background: url(../../media/shape.svg) no-repeat center /cover;
-      border-radius: 15px;
-    }
-
-    .gradient {
-      margin-top: 20px;
-      width: 100%;
-      height: 350px;
-      background: linear-gradient(180deg,
-          rgba(44, 44, 44, 1) 38%,
-          rgba(44, 44, 44, 0.7) 60%,
-          rgba(44, 44, 44, 0) 95%);
-      border-radius: 15px;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 88%, rgba($accent, 0.45) 100%);
+      pointer-events: none;
     }
   }
 
-  .contactBox {
-    grid-area: 2;
-    background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.06) 100%);
-    @include glass();
-    margin: 0 auto;
-    padding: 2rem 3rem;
-    z-index: 100;
-    border-radius: $radius-md;
-    border: $border-base;
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.4),
-      0 4px 16px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    width: 50%;
-    min-width: 440px;
-    min-height: 200px;
+  // --- Corps : une seule colonne, centree --------------------------------
+  .contact-corps {
+    width: 100%;
+    max-width: 460px;
+    // Le texte demarre desormais SOUS le bandeau, sans chevauchement : il se
+    // posait auparavant en plein milieu de la photo et la masquait presque
+    // entierement. Le creux de la vague fournit la respiration.
+    margin: 1rem auto 0;
+    padding: 0 1.5rem 1.5rem;
     position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg,
-          transparent,
-          rgba($accent, 0.5) 50%,
-          transparent);
+    // Apparition en cascade. Chaque enfant direct entre avec 90 ms de decalage
+    // sur le precedent : la page se compose sous les yeux au lieu de surgir
+    // d'un bloc. `both` conserve l'etat initial avant le demarrage, sinon les
+    // elements clignoteraient a pleine opacite pendant leur delai.
+    > * {
+      opacity: 0;
+      animation: entreeCascade 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     }
 
-    &:hover {
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.18) 0%,
-          rgba(255, 255, 255, 0.1) 100%);
-      border-color: rgba($accent, 0.3);
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        0 8px 24px rgba($accent, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        0 0 30px rgba($accent, 0.15);
-      transform: translateY(-5px);
-    }
+    > *:nth-child(1) { animation-delay: 0.05s; }
+    > *:nth-child(2) { animation-delay: 0.14s; }
+    > *:nth-child(3) { animation-delay: 0.23s; }
+    > *:nth-child(4) { animation-delay: 0.32s; }
+    > *:nth-child(5) { animation-delay: 0.41s; }
+    > *:nth-child(6) { animation-delay: 0.50s; }
 
     h1 {
-      text-align: center;
-      margin-top: 0.3rem;
-      position: relative;
-      color: #0affef;
-      text-shadow: 0px 0px 10px #0affef;
-
-      &:after {
-        content: '';
-        height: 1px;
-        width: 50%;
-        background: #0affef;
-        position: absolute;
-        bottom: -25px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
+      color: $accent;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      margin: 0 0 0.5rem;
+      text-shadow: 0 0 15px rgba($accent, 0.5), 0 2px 6px rgba(0, 0, 0, 0.8);
     }
 
-    ul {
-      height: 72%;
-      width: inherit;
-      display: grid;
-      margin-top: 3.5rem;
+    .baseline {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0 0 1rem;
+    }
 
-      li {
-        position: relative;
-        color: #fff;
-        font-size: 1.2rem;
-        text-shadow: 0px 0px 5px #0affef;
-      }
+    // Pastille verte pulsante : un signal de fraicheur, pas une decoration.
+    .statut-dispo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(64, 255, 170, 0.35);
+      border-radius: $radius-pill;
+      background: rgba(64, 255, 170, 0.07);
+      color: #eafff6;
+      font-size: 0.8rem;
 
       i {
-        font-size: 1.4rem;
-        position: absolute;
-        transform: translateY(2px);
-        color: #0affef;
-        text-shadow: 0px 0px 10px #0affef;
-      }
-
-      span,
-      a {
-        font-size: 1.4rem;
-        position: absolute;
-        transform: translateX(52px);
-        background: transparent;
-        border: none;
-        outline: none;
-        width: 350px;
-        transition: 0.2s ease;
-        text-shadow: 0px 0px 5px #0affef;
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .clickInput:hover {
-        transform: translateX(56px);
-        cursor: pointer;
+        font-size: 0.55rem;
+        color: #40ffaa;
+        animation: pulseDispo 2.4s ease-in-out infinite;
       }
     }
-  }
 
-  .socialNetwork {
-    grid-area: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    ul {
-      display: flex;
-      text-align: center;
+    // --- L'action principale de la page ---------------------------------
+    .cta-message {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
       width: 100%;
-      justify-content: space-around;
+      padding: 1rem 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, rgba($accent, 0.9), rgba($accent, 0.6));
+      border: none;
+      border-radius: $radius-sm;
+      color: #04121a;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba($accent, 0.25);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
 
-      a {
-        width: 20%;
-        font-size: 1.2rem;
-        background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0.05) 100%);
-        @include glass(15px);
-        border: $border-base;
-        border-radius: $radius-md;
-        display: inline-block;
-        padding: 0.8rem 0;
-        box-shadow:
-          0 8px 24px rgba(0, 0, 0, 0.3),
-          0 2px 8px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        position: relative;
-        overflow: hidden;
+      i { font-size: 0.9rem; }
 
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg,
-              transparent,
-              rgba(10, 255, 239, 0.1),
-              transparent);
-          transition: left 0.5s ease;
-        }
+      // Balayage lumineux au survol : meme motif que les cartes projet et les
+      // liens de navigation, l'action principale de la page merite le meme
+      // vocabulaire.
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+        transition: left 0.6s ease;
+      }
 
-        &:hover {
-          background: linear-gradient(135deg,
-              rgba(10, 255, 239, 0.2) 0%,
-              rgba(10, 255, 239, 0.1) 100%);
-          border-color: rgba(10, 255, 239, 0.4);
-          color: #fff;
-          box-shadow:
-            0 12px 32px rgba(10, 255, 239, 0.3),
-            0 4px 16px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2),
-            0 0 25px rgba(10, 255, 239, 0.4);
-          transform: translateY(-3px) scale(1.05);
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba($accent, 0.4);
 
-          &::before {
-            left: 100%;
-          }
+        &::before { left: 100%; }
+      }
+    }
 
-          h4 {
-            color: #fff;
-            text-shadow: 0 0 10px rgba(10, 255, 239, 0.6);
-          }
+    // --- Coordonnees, compactes -----------------------------------------
+    .coordonnees {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.25rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
 
-          i {
-            color: #fff;
-            text-shadow: 0 0 15px rgba(10, 255, 239, 0.8);
-            transform: scale(1.1);
-          }
-        }
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-align: left;
 
         i {
-          color: #0affef;
-          margin-top: 0.3rem;
-          text-shadow: 0px 0px 10px #0affef;
+          flex-shrink: 0;
+          width: 1.3rem;
+          font-size: 1rem;
+          color: $accent;
+          text-align: center;
+          text-shadow: 0 0 10px rgba($accent, 0.45);
         }
 
-        h4 {
-          color: #0affef;
-          text-shadow: 0px 0px 10px #0affef;
+        a,
+        span {
+          color: rgba(255, 255, 255, 0.88);
+          font-size: 0.92rem;
+          text-decoration: none;
+          overflow-wrap: anywhere;
+        }
+
+        a {
+          transition: color 0.3s ease;
+
+          &:hover,
+          &:focus-visible {
+            color: $accent;
+            text-shadow: 0 0 10px rgba($accent, 0.5);
+          }
+        }
+
+        em {
+          color: rgba(255, 255, 255, 0.45);
+          font-style: normal;
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    // --- Liens secondaires ----------------------------------------------
+    .liens-secondaires {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.9rem;
+        border: $border-soft;
+        border-radius: $radius-sm;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.8rem;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+        i { color: rgba($accent, 0.75); }
+
+        &:hover,
+        &:focus-visible {
+          border-color: rgba($accent, 0.4);
+          background: rgba($accent, 0.06);
+          color: #fff;
+          transform: translateY(-2px);
         }
       }
     }
   }
 }
 
-// Mobile / tablette : la grille en pourcentages a hauteur fixe devient un
-// simple empilement. Un seul palier, qui couvre toute la plage jusqu'au
-// desktop — l'ancien decoupage 768/500/400 laissait la bande 501-850px
-// avec la hauteur fixe et `overflow: hidden` du desktop, donc tronquee.
+@keyframes pulseDispo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes deriveHeader {
+  from { transform: scale(1) translateY(0); }
+  to   { transform: scale(1.08) translateY(-6px); }
+}
+
+// Les deux ondes derivent en sens opposes, chacune d'exactement une de ses
+// tuiles par cycle : le motif combine reboucle sans saut visible, mais leur
+// dephasage continu empeche l'oeil de percevoir une simple translation.
+@keyframes ondule {
+  from {
+    mask-position: 0 0, 0 0;
+    -webkit-mask-position: 0 0, 0 0;
+  }
+  to {
+    mask-position: 1400px 0, -1000px 0;
+    -webkit-mask-position: 1400px 0, -1000px 0;
+  }
+}
+
+@keyframes particulesFond {
+  from { background-position: 0 0; }
+  to   { background-position: 0 -200px; }
+}
+
+@keyframes entreeCascade {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Respecte le reglage systeme « reduire les animations ». Toutes celles de
+// cette page sont decoratives : elles peuvent disparaitre sans rien couter au
+// contenu. L'entree en cascade doit toutefois laisser les elements VISIBLES,
+// d'ou l'opacite forcee — sans cela la page resterait vide.
+@media (prefers-reduced-motion: reduce) {
+  .contactContent .header,
+  .contactContent .header:before,
+  .contactContent .statut-dispo i,
+  .contactContent::before {
+    animation: none;
+  }
+
+  .contactContent .contact-corps > * {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Formulaire, rendu dans la modale (donc hors de .contactContent).
+// ---------------------------------------------------------------------------
+.formulaire-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .champ {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.7rem 0.85rem;
+      background: rgba(0, 0, 0, 0.35);
+      border: $border-soft;
+      border-radius: $radius-sm;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      // Le focus doit rester visible au clavier : c'est le seul repere pour
+      // qui ne se sert pas de la souris.
+      &:focus {
+        outline: none;
+        border-color: rgba($accent, 0.5);
+        box-shadow: 0 0 0 3px rgba($accent, 0.15);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.5;
+    }
+
+    select option {
+      background: #0f1928;
+      color: #fff;
+    }
+  }
+
+  // Champ piege anti-robots : retire de l'ecran sans `display: none`, que
+  // certains robots detectent.
+  .pot-de-miel {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .envoyer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.5rem;
+    background: linear-gradient(135deg, rgba($accent, 0.9), rgba($accent, 0.65));
+    border: none;
+    border-radius: $radius-sm;
+    color: #04121a;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    &:hover:not(:disabled),
+    &:focus-visible:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba($accent, 0.35);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: progress;
+    }
+  }
+
+  .retour {
+    margin: 0;
+    min-height: 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+
+    &--envoye { color: #40ffaa; }
+    &--erreur { color: #ff8a8a; }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------------------------
 @media screen and (max-width: $mobileBreakpoint) {
   .contactContent {
+    // Hauteur libre : c'est la page qui defile, plus le panneau.
     height: auto;
     overflow: visible;
-    grid-template-rows: auto auto auto;
-    row-gap: 1.25rem;
-    padding: 0.75rem;
 
+    // Hauteur fixe : le panneau passe en `height: auto` sur mobile, un
+    // pourcentage n'aurait aucune reference pour se resoudre.
     .header {
-      height: 200px;
-
-      &:before {
-        background-position: center top;
-        height: 100%;
-      }
-
-      &:after {
-        height: 100%;
-        top: 0;
-      }
-
-      .gradient {
-        height: 100%;
-        margin-top: 0;
-      }
+      height: 300px;
+      // Animation figee sur petit ecran : recomposer deux couches de masque a
+      // chaque image coute cher sur un telephone d'entree de gamme, pour un
+      // effet qu'on percoit surtout sur grand ecran.
+      animation: none;
     }
 
-    .contactBox {
-      // min-width: 440px depassait la largeur de l'ecran.
-      width: 100%;
-      min-width: 0;
-      min-height: 0;
-      margin: 0;
-      padding: 1.25rem 1rem;
+    .contact-corps {
+      margin-top: 0.75rem;
+      padding: 0 1rem 1.5rem;
 
-      &:hover {
-        transform: none;
-      }
-
-      h1 {
-        font-size: 1.35rem;
-      }
-
-      ul {
-        height: auto;
-        width: 100%;
-        margin-top: 2.5rem;
-        gap: 1rem;
-
-        li {
-          display: flex;
-          align-items: center;
-          gap: 0.85rem;
-          font-size: 1rem;
-        }
-
-        // Le positionnement absolu + largeur figee de 350px tronquait
-        // l'e-mail. En flux normal, le texte se replie.
-        i {
-          position: static;
-          transform: none;
-          font-size: 1.1rem;
-          width: 1.4rem;
-          flex-shrink: 0;
-          text-align: center;
-        }
-
-        span,
-        a {
-          position: static;
-          transform: none;
-          width: auto;
-          min-width: 0;
-          font-size: 0.95rem;
-          overflow-wrap: anywhere;
-        }
-
-        .clickInput:hover {
-          transform: none;
-        }
-      }
-    }
-
-    .socialNetwork {
-      ul {
-        gap: 0.75rem;
-        justify-content: center;
-
-        a {
-          width: 50%;
-          font-size: 0.95rem;
-          padding: 0.7rem 0;
-
-          &:hover {
-            transform: none;
-          }
-
-          h4 {
-            font-size: 0.85rem;
-          }
-        }
-      }
+      h1 { font-size: 1.45rem; }
     }
   }
 }
