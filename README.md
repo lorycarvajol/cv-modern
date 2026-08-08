@@ -28,17 +28,10 @@ Ouvrez [http://localhost:3000](http://localhost:3000) et admirez le résultat. L
 
 ## 🎨 Travailler sur les styles (Sass)
 
-Les styles sont écrits en Sass. Pour les compiler une fois :
-
-```bash
-npm run build-css
-```
-
-Ou pour les compiler automatiquement à chaque changement :
-
-```bash
-npm run watch-css
-```
+Les styles sont écrits en Sass, dans `src/styles/`. Le point d'entrée est
+`src/styles/styles.scss`, importé par `src/index.js` : la compilation est prise en charge
+par webpack, il n'y a donc **aucune étape manuelle**. Modifiez un `.scss`, le rechargement
+à chaud s'occupe du reste. 🎉
 
 ## 🧪 Lancer les tests
 

@@ -27,7 +27,19 @@
       "PowerShell(attrib *)",
       "Bash(npx eslint *)",
       "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
-      "Read(//c/Program Files/Google/Chrome/Application/**)"
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Bash(npm -v)",
+      "Bash(docker --version)",
+      "Bash(docker build *)",
+      "PowerShell($p = \"C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe\"; if \\(Test-Path $p\\) { Start-Process $p; \"Docker Desktop lance\" } else { \"introuvable: $p\" })",
+      "Bash(docker info *)",
+      "Bash(docker rm *)",
+      "Bash(docker run *)",
+      "Bash(curl -s -o /dev/null http://localhost:8099/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8099/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8099/contact)",
+      "Bash(curl -s -I http://localhost:8099/index.html)",
+      "Bash(curl -s http://localhost:8099/contact)"
     ],
     "deny": []
   }

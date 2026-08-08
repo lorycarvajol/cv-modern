@@ -1,25 +1,17 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Lory Carvajol",
+  "name": "Lory Carvajol — CV & Portfolio",
+  "description": "CV et portfolio interactif de Lory Carvajol, développeur full-stack et data analyst.",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "media/laptop.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "lang": "fr",
+  "theme_color": "#05080f",
+  "background_color": "#05080f"
 }

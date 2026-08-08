@@ -1,0 +1,14 @@
+node_modules
+build
+.git
+.gitignore
+.claude
+coverage
+*.log
+.env.local
+.env.*.local
+Dockerfile
+.dockerignore
+docker-compose.yml
+README.md
+fiche-claude-code-cv-modern.md

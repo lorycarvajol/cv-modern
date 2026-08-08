@@ -1,0 +1,25 @@
+services:
+  frontend:
+    build: .
+    container_name: cv-frontend
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.cv-web.rule=Host(`lorycarvajol.dev`) || Host(`www.lorycarvajol.dev`)"
+      - "traefik.http.routers.cv-web.entrypoints=websecure"
+      - "traefik.http.routers.cv-web.tls.certresolver=myresolver"
+      - "traefik.http.services.cv-web.loadbalancer.server.port=80"
+      # Redirection permanente www -> domaine racine (evite le contenu duplique).
+      # Le $$ est obligatoire : Compose interpole $, un ${1} simple serait avale
+      # avant d'atteindre Traefik.
+      - "traefik.http.middlewares.cv-www.redirectregex.regex=^https://www\\.lorycarvajol\\.dev/(.*)"
+      - "traefik.http.middlewares.cv-www.redirectregex.replacement=https://lorycarvajol.dev/$${1}"
+      - "traefik.http.middlewares.cv-www.redirectregex.permanent=true"
+      - "traefik.http.routers.cv-web.middlewares=cv-www"
+
+networks:
+  proxy:
+    external: true
