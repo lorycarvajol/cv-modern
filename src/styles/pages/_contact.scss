@@ -300,6 +300,25 @@
     }
 
     // --- Liens secondaires ----------------------------------------------
+    // Mentions obligatoires, en pied de page. Discretes mais toujours
+    // atteignables — c'est le seul acces sur mobile.
+    .liens-legaux-contact {
+      margin: 1.25rem 0 0;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.3);
+
+      a {
+        color: rgba(255, 255, 255, 0.45);
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover,
+        &:focus-visible {
+          color: $accent;
+        }
+      }
+    }
+
     .liens-secondaires {
       display: flex;
       flex-wrap: wrap;

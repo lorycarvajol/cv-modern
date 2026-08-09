@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Knowledges from './pages/Knowledges';
 import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
+import MentionsLegales from './pages/MentionsLegales';
+import Confidentialite from './pages/Confidentialite';
 import NotFound from './pages/NotFound';
 import Modal from './components/common/Modal';
 import ChatBox from './components/common/ChatBox';
@@ -34,6 +36,8 @@ const App = () => {
           <Route path="/competences" element={<Knowledges />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Modal show={showModal} onClose={closeModal} title={modalTitle}>

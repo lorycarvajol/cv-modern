@@ -288,7 +288,7 @@ a {
 a:visited {
   color:$black;
 }
-.home, .knowledges, .portfolio, .contact {
+.home, .knowledges, .portfolio, .contact, .legal {
   display: flex;
   gap: 1rem;
   height: 90vh; // Maximum 90% de la hauteur d'écran
@@ -316,7 +316,7 @@ a:visited {
 // `.portfolioContent` figurait ici mais n'existe pas dans le JSX : le conteneur
 // du portfolio s'appelle `.portfolio-container`. La regle ne s'y appliquait donc
 // pas, et _portfolio.scss redeclarait les memes proprietes de son cote.
-.homeContent, .knowledgesContent, .portfolio-container, .contactContent {
+.homeContent, .knowledgesContent, .portfolio-container, .contactContent, .legalContent {
   margin-left: .4rem;
   flex: 1;
   height: calc(90vh - 1rem); // 90% de hauteur moins padding

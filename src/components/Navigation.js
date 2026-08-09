@@ -65,6 +65,14 @@ const Navigation = () => {
                 </ul>
                 <div className="signature">
                    <p>© Lory Carvajol </p>
+                   {/* Ce bloc est masque sur mobile avec `.socialNetwork` :
+                       les memes liens sont repris en bas de la page Contact,
+                       qui reste accessible depuis la barre d'onglets. */}
+                   <p className="liens-legaux">
+                       <NavLink to="/mentions-legales">Mentions légales</NavLink>
+                       <span aria-hidden="true"> · </span>
+                       <NavLink to="/confidentialite">Confidentialité</NavLink>
+                   </p>
                 </div>
             </div>
         </div>

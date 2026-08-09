@@ -1,0 +1,200 @@
+// Pages mentions legales et politique de confidentialite.
+//
+// Ce sont des documents : contrairement aux quatre pages de presentation, ils
+// defilent et privilegient la lisibilite sur l'effet. Le cadre reste celui du
+// site (`panel-surface`), le contenu adopte une mesure de lecture bridee.
+
+.legal {
+  .legalContent {
+    margin: 0.5rem 0;
+    height: calc(90vh - 1rem);
+    width: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2.5rem;
+
+    @include panel-surface;
+
+    article {
+      // Mesure de lecture : au-dela, l'oeil perd la ligne suivante.
+      max-width: 760px;
+      margin: 0 auto;
+      font-family: 'Montserrat', sans-serif;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: $accent;
+      margin: 0 0 0.25rem;
+      text-shadow: 0 0 20px rgba($accent, 0.5);
+    }
+
+    .maj {
+      margin: 0 0 2.5rem;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      color: #fff;
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: $border-base;
+    }
+
+    h3 {
+      font-size: 1rem;
+      color: rgba($accent, 0.9);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    a {
+      color: $accent;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.3s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: #fff;
+        text-shadow: 0 0 10px rgba($accent, 0.6);
+      }
+    }
+
+    // --- Identite de l'editeur : paires terme / valeur -------------------
+    dl {
+      display: grid;
+      // Colonne de termes a largeur fixe : les valeurs s'alignent, ce qui
+      // rend les champs manquants immediatement reperables.
+      grid-template-columns: 10rem 1fr;
+      gap: 0.6rem 1.5rem;
+      margin: 0;
+    }
+
+    dt {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    dd {
+      margin: 0;
+    }
+
+    // Champ en attente de ta situation d'entrepreneur. Deliberement voyant :
+    // une mention legale incomplete mise en ligne est une infraction, pas un
+    // detail cosmetique — il ne faut pas pouvoir la manquer en relisant.
+    .a-completer {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border: 1px dashed rgba(255, 190, 90, 0.6);
+      border-radius: $radius-sm;
+      background: rgba(255, 190, 90, 0.08);
+      color: rgba(255, 205, 130, 0.95);
+      font-style: normal;
+      font-size: 0.85rem;
+    }
+
+    .liste-nette {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem;
+
+      li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+
+        &::before {
+          content: '\f00c'; // check, Font Awesome
+          font-family: 'Font Awesome 5 Free';
+          font-weight: 900;
+          position: absolute;
+          left: 0;
+          color: rgba($accent, 0.8);
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    // --- Tableau des sous-traitants -------------------------------------
+    .tableau-legal {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 1.25rem;
+      font-size: 0.88rem;
+
+      th,
+      td {
+        text-align: left;
+        padding: 0.7rem 0.8rem;
+        border-bottom: $border-soft;
+        vertical-align: top;
+      }
+
+      th {
+        color: rgba(255, 255, 255, 0.55);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        border-bottom: $border-base;
+      }
+
+      .hors-ue {
+        color: rgba(255, 190, 90, 0.95);
+        font-weight: 600;
+      }
+    }
+
+    @media (max-width: $denseGridBreakpoint) {
+      padding: 1.75rem;
+
+      dl {
+        // Deux colonnes ne tiennent plus : terme au-dessus de sa valeur.
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+      }
+
+      dt {
+        margin-top: 0.75rem;
+      }
+
+      // Un tableau ne se replie pas : il defile dans sa propre boite plutot
+      // que de pousser la page en largeur.
+      .tableau-legal {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobileBreakpoint) {
+  // Meme specificite (0,2,0) que la regle de base : un `.legalContent` seul
+  // (0,1,0) serait ignore, media query ou non.
+  .legal .legalContent {
+    height: auto;
+    padding: 1.5rem 1rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+}

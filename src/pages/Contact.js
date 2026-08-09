@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import FullPageModal from '../components/common/FullPageModal';
 import { EMAIL, lienMail } from '../data/contactInfo';
@@ -174,6 +175,14 @@ const Contact = () => {
                             Mon CV
                         </a>
                     </div>
+
+                    {/* Seul acces aux pages legales sur mobile : la signature de
+                        la sidebar, qui porte les memes liens, y est masquee. */}
+                    <p className="liens-legaux-contact">
+                        <Link to="/mentions-legales">Mentions légales</Link>
+                        <span aria-hidden="true"> · </span>
+                        <Link to="/confidentialite">Confidentialité</Link>
+                    </p>
                 </div>
             </div>
 
