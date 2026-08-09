@@ -119,6 +119,21 @@ $shadow-panel-hover:
   border: $border-base;
   border-radius: $radius-md;
   box-shadow: $shadow-panel;
+
+  // Pas de verre depoli sur mobile.
+  //
+  // `backdrop-filter` fait du panneau le bloc conteneur des elements en
+  // `position: fixed`. Sur mobile ces panneaux passent en hauteur libre et
+  // atteignent facilement 1800px : une modale rendue a l'interieur se centrait
+  // donc sur le PANNEAU et non sur l'ecran — mesure page defilee en bas, elle
+  // s'ouvrait de 318 a 983px pour un ecran de 777, soit 206px hors champ.
+  //
+  // L'effet est de toute facon quasi invisible sur un panneau pleine largeur,
+  // et c'est l'un des plus couteux a composer sur telephone.
+  @media screen and (max-width: $mobileBreakpoint) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 // Surface de carte standard : fond, bordure, rayon, verre et elevation.

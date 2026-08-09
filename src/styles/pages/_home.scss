@@ -4,6 +4,11 @@
     height: calc(90vh - 1rem);
     width: 100%;
     position: relative;
+    // Conserve sur les deux axes : c'est ce qui contient les calques
+    // decoratifs ci-dessous, animes en `rotate`. Leur boite transformee
+    // deborde largement et ajoutait a elle seule 131px de defilement fantome
+    // des que l'axe vertical etait libere. Le defilement du contenu reel est
+    // porte par `.hero-section`, qui n'heberge aucune decoration.
     overflow: hidden;
     padding: 2rem;
 
@@ -50,16 +55,58 @@
 
     .hero-section {
       display: flex;
+      // Deux etages : le bloc de presentation en haut (texte + chiffres), le
+      // bandeau de parcours sur toute la largeur en bas. L'ancien `row` avec
+      // `align-items: center` laissait la colonne des chiffres suspendue au
+      // milieu, avec ~240px de vide en dessous d'elle.
+      flex-direction: column;
+      // Le bloc de presentation est cale en haut, le bandeau de parcours en
+      // bas : centrer l'ensemble laissait une bande vide au-dessus du badge et
+      // une autre sous les cartes. L'espace libre se retrouve entre les boutons
+      // et le bandeau, ou il fait office de separation.
+      // (Avantage annexe : contrairement a `center`, `space-between` se replie
+      // sur `flex-start` en cas de debordement — rien ne part au-dessus de
+      // l'origine de defilement, donc rien d'inatteignable.)
+      justify-content: space-between;
       gap: 2rem;
       height: 100%;
-      align-items: center;
+      // Le hero porte le defilement a la place du panneau : dans une fenetre
+      // basse ou etroite, le contenu reste atteignable au lieu d'etre coupe
+      // net par le `overflow: hidden` du panneau. La barre n'apparait que
+      // lorsqu'elle sert.
+      overflow-y: auto;
+
+      // Etage haut : le texte a gauche, la colonne de chiffres a droite sur
+      // toute sa hauteur.
+      .hero-top {
+        display: flex;
+        gap: 2rem;
+        align-items: stretch;
+        // Cette rangee absorbe la hauteur libre du panneau. A hauteur naturelle
+        // elle laissait une bande vide d'une centaine de pixels entre les
+        // boutons et la frise, sur toute la largeur.
+        flex: 1 1 auto;
+      }
 
       .hero-text {
-        flex: 2;
+        flex: 1 1 auto;
+        min-width: 0;
         font-family: 'Montserrat', sans-serif;
+        // Le bloc s'etire sur toute la hauteur de la colonne de chiffres et
+        // repartit ses lignes dedans, au lieu de se tasser en haut. Le retrait
+        // superieur le fait descendre legerement : le badge n'est plus colle
+        // au bord du panneau.
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 1.5rem;
 
         .intro-badge {
           display: inline-flex;
+          // `.hero-text` est passe en conteneur flex : sans cette ligne, le
+          // badge subit l'etirement par defaut et devient une barre pleine
+          // largeur au lieu d'une pastille calee a gauche.
+          align-self: flex-start;
           align-items: center;
           gap: 0.5rem;
           background: rgba(10, 255, 239, 0.15);
@@ -77,7 +124,9 @@
         }
 
         h1 {
-          font-size: 4rem;
+          // 4rem debordait des 490px de la colonne une fois les chiffres
+          // places a droite : « Lory Carvajol » passait a la ligne.
+          font-size: 3.4rem;
           font-family: 'Orbitron', sans-serif;
           margin: 0 0 0.5rem 0;
           line-height: 1.1;
@@ -91,63 +140,23 @@
         }
 
         .tagline {
-          font-size: 2rem;
+          font-size: 2.2rem;
           color: rgba(10, 255, 239, 0.9);
-          margin: 0 0 1rem 0;
+          margin: 0 0 1.25rem 0;
           font-weight: 300;
           text-shadow: 1px 4px 1px rgba(0, 0, 0, 0.8);
         }
 
         .description {
-          font-size: 1rem;
+          font-size: 1.15rem;
           color: rgba(255, 255, 255, 0.9);
-          line-height: 1.5;
-          margin-bottom: 1.5rem;
-          max-width: 500px;
+          line-height: 1.8;
+          margin-bottom: 2rem;
+          // La description court desormais sous les cartes de chiffres. Elle
+          // reste bridee : au-dela, la ligne depasse la centaine de caracteres
+          // et devient penible a suivre.
+          max-width: 700px;
           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        .key-highlights {
-          margin-bottom: 1.5rem;
-
-          .highlight-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.6rem;
-            margin-bottom: 0.6rem;
-            background: rgba($accent, 0.1);
-            border-radius: $radius-sm;
-            transition: transform 0.3s ease;
-
-            &:hover {
-              transform: translateX(5px);
-              background: rgba(10, 255, 239, 0.15);
-            }
-
-            i {
-              font-size: 1.1rem;
-              color: #0affef;
-              width: 20px;
-              text-align: center;
-              text-shadow: 0 0 8px rgba(10, 255, 239, 0.5);
-            }
-
-            div {
-              strong {
-                color: #fff;
-                font-size: 0.9rem;
-                display: block;
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-              }
-
-              span {
-                color: rgba(255, 255, 255, 0.8);
-                font-size: 0.8rem;
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-              }
-            }
-          }
         }
 
         .cta-section {
@@ -201,17 +210,34 @@
       }
 
       .hero-stats {
-        flex: 1;
+        // Colonne verticale a droite du texte : les trois cartes se repartissent
+        // sur toute la hauteur du bloc, ce qui occupe la colonne au lieu de la
+        // laisser vide sous une rangee tassee en haut.
+        // Base figee : en autorisant le retrecissement, la description (large
+        // de 700px au maximum) reclamait l'espace et rabotait la colonne a
+        // 193px. Aucun risque d'affamer le titre ici : sous
+        // $denseGridBreakpoint, les deux blocs sont empiles, plus cote a cote.
+        flex: 0 0 260px;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        align-self: center;
+        // Gouttiere large : elle aere les trois cartes et, comme elle compte
+        // dans la hauteur naturelle de la colonne, elle etire d'autant le bloc
+        // de texte en face.
+        gap: 1.75rem;
+        // Marge interieure : le survol souleve les cartes de 3px et projette une
+        // ombre. Collees au bord du bloc, les deux depassaient du cadre et se
+        // faisaient couper par le `overflow` du panneau.
+        padding: 4px;
 
         .stat-card {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           background: rgba($accent, 0.1);
           border: $border-base;
           border-radius: $radius-md;
-          padding: 1.2rem 1rem;
+          padding: 1.5rem 1rem;
           text-align: center;
           transition: all 0.3s ease;
           @include glass(10px);
@@ -224,6 +250,8 @@
           }
 
           .stat-number {
+            // La colonne fait 300px de large : les chiffres retrouvent la
+            // taille qu'ils avaient avant d'etre tasses sur une rangee.
             font-size: 2.2rem;
             font-weight: 700;
             color: #0affef;
@@ -237,20 +265,155 @@
             color: rgba(255, 255, 255, 0.9);
             text-transform: uppercase;
             letter-spacing: 1px;
+            line-height: 1.3;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+          }
+        }
+      }
+
+      // Bandeau de parcours : quatre reperes chronologiques sur toute la
+      // largeur du hero. C'est ce bloc qui comble le vide laisse en bas du
+      // panneau par l'ancienne disposition en deux colonnes.
+      .key-highlights {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        // Le bandeau absorbe la hauteur laissee libre plutot que de la laisser
+        // en vide au-dessus de lui. Le plafond evite des tuiles demesurees sur
+        // un grand ecran ; en dessous, les cartes s'etirent.
+        flex: 1 1 auto;
+        max-height: 190px;
+
+        .highlight-item {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 0.6rem;
+          padding: 1.2rem 1rem;
+          @include card-surface;
+          transition: transform 0.3s ease, border-color 0.3s ease;
+
+          &:hover {
+            transform: translateY(-3px);
+            border-color: rgba($accent, 0.5);
+          }
+
+          i {
+            font-size: 1.5rem;
+            color: #0affef;
+            text-shadow: 0 0 8px rgba(10, 255, 239, 0.5);
+          }
+
+          div {
+            strong {
+              color: #fff;
+              font-size: 0.9rem;
+              display: block;
+              margin-bottom: 0.15rem;
+              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
+
+            span {
+              color: rgba(255, 255, 255, 0.8);
+              font-size: 0.8rem;
+              line-height: 1.3;
+              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
           }
         }
       }
     }
 
-    // Responsive
-    @media (max-width: 768px) {
-      padding: 1rem;
-
+    // Panneau etroit, hauteur toujours figee a 90vh : c'est la plage la plus
+    // delicate. Le titre et les chiffres ne tiennent plus cote a cote (a 1100px
+    // de fenetre, le panneau ne fait que 608px), et tout ce qui passe a la
+    // ligne pousse le contenu hors du panneau, ou `overflow: hidden` le coupe
+    // sans prevenir. D'ou l'empilement et l'echelle typographique reduite.
+    @media (max-width: $denseGridBreakpoint) {
       .hero-section {
-        flex-direction: column;
+        // Gouttieres resserrees : chaque rem gagne ici est un rem qui ne sort
+        // pas du panneau.
         gap: 1.5rem;
-        justify-content: center;
+
+        .key-highlights {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+          // Des cette largeur le bandeau passe sur plusieurs rangees : le
+          // plafond de 190px, calibre pour une seule rangee, les ecraserait.
+          max-height: none;
+          flex: 0 0 auto;
+
+          .highlight-item {
+            padding: 0.75rem;
+          }
+        }
+
+        .hero-top {
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        // Empiles sous le texte, les chiffres reprennent la pleine largeur en
+        // rangee : une colonne de trois cartes ajouterait ici ~250px de hauteur
+        // dans un panneau qui en manque deja.
+        .hero-stats {
+          flex: 0 0 auto;
+          flex-direction: row;
+          gap: 0.75rem;
+          padding: 0;
+        }
+
+        .hero-text {
+          h1 {
+            font-size: 2.6rem;
+          }
+
+          .tagline {
+            font-size: 1.5rem;
+          }
+
+          // L'echelle agrandie est calibree pour le grand panneau ; ici chaque
+          // point de police se paie en defilement.
+          .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+          }
+        }
+
+        .hero-stats .stat-card {
+          padding: 0.9rem 0.6rem;
+
+          .stat-number {
+            font-size: 1.8rem;
+          }
+
+          .stat-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+          }
+        }
+
+        .key-highlights .highlight-item i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    // Bascule mobile : le seuil suit $mobileBreakpoint, celui qui fait deja
+    // passer la page en « document qui defile » (cf. bloc en bas de fichier).
+    // Les anciennes valeurs 768/480 ne correspondaient a aucune bascule reelle.
+    // Le padding mobile est pose par le bloc `.home .homeContent` en bas de
+    // fichier (meme seuil, meme specificite, mais plus loin dans la cascade).
+    @media (max-width: $mobileBreakpoint) {
+      .hero-section {
+        gap: 1.5rem;
+
+        .hero-top {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
 
         .hero-text {
           h1 {
@@ -260,31 +423,18 @@
           .tagline {
             font-size: 1.5rem;
           }
-
-          .key-highlights {
-            .highlight-item {
-              padding: 0.5rem;
-              margin-bottom: 0.5rem;
-            }
-          }
         }
 
+        // Les chiffres reprennent toute la largeur une fois empiles sous le
+        // texte : la base fixe de 300px provoquerait un debordement sur un
+        // telephone de 360px de large.
         .hero-stats {
-          flex-direction: row;
-          align-self: stretch;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
 
-          .stat-card {
-            flex: 1;
-            padding: 1rem 0.5rem;
-
-            .stat-number {
-              font-size: 1.8rem;
-            }
-
-            .stat-label {
-              font-size: 0.7rem;
-            }
-          }
+        .key-highlights {
+          grid-template-columns: 1fr;
         }
       }
     }

@@ -1,5 +1,39 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
+import { lienMail } from '../data/contactInfo';
+
+// Reperes de parcours affiches en bandeau sous le hero. Ils reprennent, dans
+// l'ordre chronologique, les quatre experiences detaillees par la modale de la
+// page Competences (components/Knowledges/Experiences.js) : rien n'est ajoute
+// ici qui ne soit deja documente la-bas.
+const PARCOURS = [
+    {
+        icone: 'fas fa-industry',
+        titre: 'Alstom-Areva',
+        detail: 'Monteur-câbleur · 2001–2014',
+    },
+    {
+        icone: 'fas fa-chalkboard-teacher',
+        titre: 'Freelance & formateur DWWM',
+        detail: 'Site de Saint-Baldoph · 2020–2022',
+    },
+    {
+        icone: 'fas fa-plane',
+        titre: 'Airbus',
+        detail: 'Data Analyst, projet PilotMe · 2022–2024',
+    },
+    {
+        icone: 'fas fa-rocket',
+        titre: 'Freelance & Nepsod',
+        detail: 'Formation et conseil · 2025–2026',
+    },
+];
+
+const STATS = [
+    { valeur: '5+', libelle: "Années d'expérience" },
+    { valeur: '20+', libelle: 'Projets réalisés' },
+    { valeur: '100+', libelle: 'Apprenants formés' },
+];
 
 const Home = () => {
     return (
@@ -7,72 +41,74 @@ const Home = () => {
             <Navigation />
             <div className="homeContent">
                 <div className="hero-section">
-                    <div className="hero-text">
-                        <div className="intro-badge">
-                            <i className="fas fa-code"></i>
-                            <span>Développeur Full-Stack & Data Analyst</span>
-                        </div>
-                        <h1>
-                            <span className="name-highlight">Lory Carvajol</span>
-                        </h1>
-                        <h2 className="tagline">
-                            Expert en transformation digitale & formation tech
-                        </h2>
-                        <p className="description">
-                            Formateur et consultant numérique passionné, j'accompagne les entreprises 
-                            dans leur digitalisation grâce à mon expertise en développement web moderne 
-                            et analyse de données acquise chez Airbus.
-                        </p>
-                        
-                        <div className="key-highlights">
-                            <div className="highlight-item">
-                                <i className="fas fa-plane"></i>
-                                <div>
-                                    <strong>Airbus</strong>
-                                    <span>Data Analyst 2022-2024</span>
-                                </div>
+                    {/* Le texte occupe la colonne de gauche, les chiffres une
+                        colonne verticale a droite sur toute sa hauteur. */}
+                    <div className="hero-top">
+                        <div className="hero-text">
+                            <div className="intro-badge">
+                                <i className="fas fa-code"></i>
+                                <span>Développeur Full-Stack & Data Analyst</span>
                             </div>
-                            <div className="highlight-item">
-                                <i className="fas fa-chalkboard-teacher"></i>
-                                <div>
-                                    <strong>Formateur Expert</strong>
-                                    <span>Web & Mobile Development</span>
-                                </div>
-                            </div>
-                            <div className="highlight-item">
-                                <i className="fas fa-rocket"></i>
-                                <div>
-                                    <strong>Consultant</strong>
-                                    <span>Transformation Digitale</span>
-                                </div>
+                            <h1>
+                                <span className="name-highlight">Lory Carvajol</span>
+                            </h1>
+                            <h2 className="tagline">
+                                De l'industrie au numérique — développement, data et formation
+                            </h2>
+
+                            <p className="description">
+                                Treize ans dans le transport et la distribution d'énergie chez Alstom-Areva,
+                                puis une reconversion vers le développement en 2020. Depuis, je forme des
+                                développeurs web et mobile, j'analyse des données — dont deux ans chez Airbus
+                                sur le projet PilotMe — et j'accompagne les entreprises en freelance.
+                            </p>
+
+                            <div className="cta-section">
+                                <a
+                                    href={`${process.env.PUBLIC_URL}/media/CV_carvajol_lory_24-02-26.pdf`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-primary"
+                                    data-infobulle="Ouvre le CV au format PDF dans un nouvel onglet"
+                                >
+                                    <i className="fas fa-download"></i>
+                                    Télécharger mon CV
+                                </a>
+                                {/* Ouvre le gestionnaire de courrier dans une autre fenetre.
+                                    Remplace l'ancre #contact, qui ne pointait sur rien. */}
+                                <a
+                                    href={lienMail('Contact professionnel')}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-secondary"
+                                    data-infobulle="Ouvre votre messagerie avec mon adresse déjà remplie"
+                                >
+                                    <i className="fas fa-envelope"></i>
+                                    Me contacter
+                                </a>
                             </div>
                         </div>
 
-                        <div className="cta-section">
-                            <a href="./media/CV_carvajol_lory_24-02-26.pdf" target="_blank" className="btn-primary">
-                                <i className="fas fa-download"></i>
-                                Télécharger mon CV
-                            </a>
-                            <a href="#contact" className="btn-secondary">
-                                <i className="fas fa-envelope"></i>
-                                Me contacter
-                            </a>
+                        <div className="hero-stats">
+                            {STATS.map((stat) => (
+                                <div className="stat-card" key={stat.valeur}>
+                                    <div className="stat-number">{stat.valeur}</div>
+                                    <div className="stat-label">{stat.libelle}</div>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
-                    <div className="hero-stats">
-                        <div className="stat-card">
-                            <div className="stat-number">5+</div>
-                            <div className="stat-label">Années d'expérience</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-number">20+</div>
-                            <div className="stat-label">Projets réalisés</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-number">100+</div>
-                            <div className="stat-label">Apprenants formés</div>
-                        </div>
+                    <div className="key-highlights">
+                        {PARCOURS.map((etape) => (
+                            <div className="highlight-item" key={etape.titre}>
+                                <i className={etape.icone}></i>
+                                <div>
+                                    <strong>{etape.titre}</strong>
+                                    <span>{etape.detail}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

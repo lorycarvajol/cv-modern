@@ -37,11 +37,11 @@ const ChatBox = () => {
             const lowerMessage = userMessage.toLowerCase();
             
             if (lowerMessage.includes('expérience') || lowerMessage.includes('parcours')) {
-                botResponse = "J'ai une expérience variée : Data-Analyste chez Airbus (2022-2024), Formateur en développement web (2020-2022), et Monteur-Câbleur chez Alstom (2001-2009). Chaque expérience m'a apporté des compétences complémentaires !";
+                botResponse = "J'ai une expérience variée : Data-Analyste chez Airbus (2022-2024), Freelance et formateur en développement web (2020-2022), et Monteur-Câbleur chez Alstom (2001-2014). Chaque expérience m'a apporté des compétences complémentaires !";
             } else if (lowerMessage.includes('compétence') || lowerMessage.includes('technique')) {
                 botResponse = "Mes compétences principales : Python, SQL, JavaScript, PHP. Frameworks : Django, React, Bootstrap, Symfony. Je maîtrise aussi Docker, Git, et les méthodologies Agile. Consultez la section 'Connaissances' pour plus de détails !";
             } else if (lowerMessage.includes('projet') || lowerMessage.includes('réalisation')) {
-                botResponse = "Mon projet phare est PiltoME chez Airbus : une plateforme de pilotage Manufacturing Engineering avec tableaux de bord temps réel, intégration multi-sources et automatisation des processus !";
+                botResponse = "Mon projet phare est PilotMe chez Airbus : une plateforme de pilotage Manufacturing Engineering avec tableaux de bord temps réel, intégration multi-sources et automatisation des processus !";
             } else if (lowerMessage.includes('formation') || lowerMessage.includes('étude')) {
                 botResponse = "J'ai suivi une formation intensive en Développement Web et Web Mobile, puis j'ai évolué vers le rôle de formateur. Une reconversion réussie du secteur industriel vers le tech !";
             } else if (lowerMessage.includes('contact') || lowerMessage.includes('joindre')) {

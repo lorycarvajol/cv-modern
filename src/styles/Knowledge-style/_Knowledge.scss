@@ -150,3 +150,50 @@
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// Modale « Voir plus » : elle occupe l'emplacement du panneau, comme celle du
+// portfolio, au lieu de deborder.
+//
+// L'overlay est deja borne au panneau, mais par un effet de bord : le
+// `backdrop-filter` de `panel-surface` fait de `.knowledgesContent` le bloc
+// conteneur des elements en `position: fixed`. On garde ce comportement — il
+// est le bon ici, car un element fixe ne suit pas le defilement interne du
+// panneau — mais il faut le savoir : retirer le verre depoli de `panel-surface`
+// renverrait cette modale en plein ecran.
+//
+// Ce qui manquait : le conteneur interieur restait en `95vw x 90vh`, donc plus
+// haut que le panneau (911px contre 893) et il debordait par le bas.
+// ---------------------------------------------------------------------------
+@media screen and (min-width: #{$mobileBreakpoint + 1}) {
+  .knowledgesContent {
+    // La modale RECOUVRE le bord du panneau au lieu de s'arreter avant.
+    //
+    // Avec `inset: 0` elle s'arretait au ras de la boite interieure, laissant
+    // apparaitre les decors du panneau (bordure, lisere superieur, halo
+    // interne). Le long des bords droits cette bande fait 1px et passe inapercue,
+    // mais dans la courbe des angles elle s'epaissit nettement — c'etait le
+    // defaut visible.
+    //
+    // En debordant d'1px, la modale couvre cette bande et reprend le rayon
+    // EXTERIEUR du panneau : un seul bord arrondi, au lieu de deux courbes
+    // concentriques separees par un liseré d'epaisseur variable.
+    .fullpage-modal-overlay {
+      inset: -1px;
+      padding: 0;
+      border-radius: $radius-md;
+      // Contient l'animation d'ouverture, qui deborderait sinon du panneau.
+      overflow: hidden;
+    }
+
+    .fullpage-modal-container {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      // Le panneau porte deja bordure et rayon : les redoubler ferait un cadre
+      // dans un cadre.
+      border: none;
+      border-radius: $radius-md;
+    }
+  }
+}

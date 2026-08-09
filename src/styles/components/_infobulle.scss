@@ -1,0 +1,104 @@
+// ---------------------------------------------------------------------------
+// Infobulles
+//
+// Recette unique, posee via l'attribut `data-infobulle` : le texte de la bulle
+// est la valeur de l'attribut, il n'y a donc pas de balise supplementaire a
+// ecrire pour la majorite des cas.
+//
+// Deux choix contraints par l'existant :
+//
+// - `::after` seulement, pas de fleche en `::before`. `.cta-message` (page
+//   Contact) utilise deja `::before` pour son balayage lumineux ; lui prendre
+//   son pseudo-element casserait l'effet.
+// - la bulle se place au-dessus de l'element. Toutes les cibles actuelles sont
+//   en milieu ou en bas de panneau : rien ne sort du cadre.
+// ---------------------------------------------------------------------------
+
+[data-infobulle] {
+  position: relative;
+
+  &::after {
+    content: attr(data-infobulle);
+    position: absolute;
+    bottom: calc(100% + 0.6rem);
+    // Alignee sur le bord gauche du declencheur, pas centree sur lui : centree,
+    // elle depassait par la gauche des que le panneau se resserrait (bouton
+    // large de 180px contre une bulle de 250px, colles au bord du panneau), et
+    // les conteneurs la rognaient sans bruit — `.hero-section` porte
+    // `overflow-y: auto`, ce qui rend aussi l'axe horizontal coupant.
+    left: 0;
+    // Le decalage vertical est repris au survol : la bulle monte en
+    // apparaissant plutot que de surgir d'un coup.
+    transform: translateY(5px);
+    z-index: 30;
+
+    width: max-content;
+    max-width: 230px;
+    padding: 0.5rem 0.75rem;
+    border: $border-base;
+    border-radius: $radius-sm;
+    background: rgba(4, 18, 26, 0.94);
+    @include glass(8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+
+    // Remise a plat : ces boutons heritent d'Orbitron, de majuscules forcees
+    // ou d'ombres portees selon l'endroit. Une infobulle doit rester lisible
+    // et identique partout.
+    color: rgba(255, 255, 255, 0.92);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0;
+    text-align: left;
+    text-transform: none;
+    text-shadow: none;
+    white-space: normal;
+
+    opacity: 0;
+    visibility: hidden;
+    // Sans cela la bulle intercepte le curseur et fait clignoter le survol.
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  }
+
+  // `focus-within` plutot que `focus` : la regle sert aussi aux enveloppes,
+  // dont c'est l'enfant qui recoit le focus clavier.
+  &:hover::after,
+  &:focus-visible::after,
+  &:focus-within::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+// Pour un declencheur proche du bord droit : la bulle se cale sur ce bord
+// plutot que de partir vers la droite et de se faire couper.
+[data-infobulle].infobulle--droite::after {
+  left: auto;
+  right: 0;
+}
+
+// Enveloppe, pour les elements qui ne peuvent pas porter la bulle eux-memes :
+// `.cta-message` rogne ses pseudo-elements avec `overflow: hidden`.
+.zone-infobulle {
+  display: block;
+  width: 100%;
+}
+
+// Fenetre etroite : 230px de bulle calee a droite depassaient par la gauche
+// dans un panneau de 305px. Elle se replie sur deux ou trois lignes.
+@media (max-width: $mobileBreakpoint) {
+  [data-infobulle]::after {
+    max-width: 180px;
+  }
+}
+
+// Sur ecran tactile il n'y a pas de survol : la bulle resterait invisible ou,
+// pire, s'afficherait au premier appui et retarderait le clic.
+@media (hover: none) {
+  [data-infobulle]::after {
+    display: none;
+  }
+}

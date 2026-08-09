@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import FullPageModal from '../components/common/FullPageModal';
+import { EMAIL, lienMail } from '../data/contactInfo';
 
 // ---------------------------------------------------------------------------
 // TEXTES A VALIDER
@@ -16,7 +17,6 @@ const INFOS = {
 
 const SUJETS = ['Formation', 'Développement', 'Data & consulting', 'Autre sujet'];
 
-const EMAIL = 'lorycarvajolwebdev@gmail.com';
 const TEL_AFFICHE = '06 77 16 55 26';
 const TEL_LIEN = '+33677165526';
 
@@ -104,19 +104,34 @@ const Contact = () => {
                         {INFOS.disponibilite}
                     </span>
 
-                    <button type="button" className="cta-message" onClick={() => setOuvert(true)}>
-                        <i className="fas fa-paper-plane" aria-hidden="true"></i>
-                        Écrire un message
-                    </button>
+                    {/* L'infobulle est portee par l'enveloppe : `.cta-message`
+                        rogne ses pseudo-elements (`overflow: hidden`, pour son
+                        balayage lumineux) et la bulle serait coupee. */}
+                    <span
+                        className="zone-infobulle"
+                        data-infobulle="Ouvre le formulaire d'envoi, sans quitter la page"
+                    >
+                        <button type="button" className="cta-message" onClick={() => setOuvert(true)}>
+                            <i className="fas fa-paper-plane" aria-hidden="true"></i>
+                            Écrire un message
+                        </button>
+                    </span>
 
                     <ul className="coordonnees">
                         <li>
                             <i className="fas fa-mobile-alt" aria-hidden="true"></i>
-                            <a href={`tel:${TEL_LIEN}`}>{TEL_AFFICHE}</a>
+                            <a href={`tel:${TEL_LIEN}`} data-infobulle="Appeler ce numéro">
+                                {TEL_AFFICHE}
+                            </a>
                         </li>
                         <li>
                             <i className="far fa-envelope" aria-hidden="true"></i>
-                            <a href={`mailto:${EMAIL}?subject=${encodeURIComponent('Contact professionnel')}`}>
+                            <a
+                                href={lienMail()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                data-infobulle="Ouvre votre messagerie dans une nouvelle fenêtre"
+                            >
                                 {EMAIL}
                             </a>
                         </li>
@@ -133,6 +148,7 @@ const Contact = () => {
                             href="https://www.linkedin.com/in/lory-carvajol-71367513b/"
                             target="_blank"
                             rel="noopener noreferrer"
+                            data-infobulle="Mon profil LinkedIn, dans un nouvel onglet"
                         >
                             <i className="fab fa-linkedin" aria-hidden="true"></i>
                             Linkedin
@@ -141,6 +157,8 @@ const Contact = () => {
                             href="https://github.com/lorycarvajol"
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="infobulle--droite"
+                            data-infobulle="Mes dépôts publics sur GitHub, dans un nouvel onglet"
                         >
                             <i className="fab fa-github" aria-hidden="true"></i>
                             Github
@@ -149,6 +167,8 @@ const Contact = () => {
                             href={`${process.env.PUBLIC_URL}/media/CV_carvajol_lory_24-02-26.pdf`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="infobulle--droite"
+                            data-infobulle="Ouvre le CV au format PDF dans un nouvel onglet"
                         >
                             <i className="fas fa-file-alt" aria-hidden="true"></i>
                             Mon CV

@@ -25,12 +25,12 @@ const Experiences = () => {
 
                 <div className="exp-2">
                     <h4>Apprentis Data-analyste Airbus 2022 / 2024</h4>
-                    <p>- Mise en place du projet PiltoME.</p>
+                    <p>- Mise en place du projet PilotMe.</p>
                     <p>- Suivi et support des activités du service Manufacturing Engineering.</p>
                 </div>
 
                 <div className="exp-3">
-                    <h4>Formation puis Coach/Formateur DWWM 2020 / 2022</h4>
+                    <h4>Freelance et formateur DWWM 2020 / 2022</h4>
                     <p>Formateur en développement web et mobile</p>
                     <p>Responsable du site de formation de Saint-Baldoph.</p>
                 </div>
@@ -51,7 +51,7 @@ const Experiences = () => {
                 <div className="all-experiences">
                     
                     <div className="experience-section">
-                        <h2>Formateur/Consultant Numérique (2024 - Présent)</h2>
+                        <h2>Formateur/Consultant Numérique (2025 - 2026)</h2>
                         
                         <h3>Contexte Professionnel</h3>
                         <p>
@@ -104,7 +104,7 @@ const Experiences = () => {
                             l'univers de l'aéronautique et de développer mes compétences en analyse de données à grande échelle.
                         </p>
 
-                        <h3>Projet Principal : PiltoME</h3>
+                        <h3>Projet Principal : PilotMe</h3>
                         <ul>
                             <li><i className="fas fa-rocket"></i>Conception et développement d'une plateforme de pilotage Manufacturing Engineering</li>
                             <li><i className="fas fa-chart-line"></i>Création de tableaux de bord interactifs pour le suivi des KPIs industriels</li>
@@ -137,7 +137,7 @@ const Experiences = () => {
                     <hr style={{margin: '40px 0', borderColor: '#ddd'}} />
 
                     <div className="experience-section">
-                        <h2>Coach/Formateur DWWM (2020-2022)</h2>
+                        <h2>Freelance et Formateur DWWM (2020-2022)</h2>
                         
                         <h3>Formation Initiale</h3>
                         <p>
@@ -186,28 +186,28 @@ const Experiences = () => {
                     <hr style={{margin: '40px 0', borderColor: '#ddd'}} />
 
                     <div className="experience-section">
-                        <h2>Monteur-Câbleur - Alstom-Areva (2001-2009)</h2>
+                        <h2>Monteur-Câbleur - Alstom-Areva (2001-2014)</h2>
                         
                         <h3>Contexte Industriel</h3>
                         <p>
-                            Premier emploi dans l'industrie lourde, au sein d'Alstom-Areva, leader mondial de l'énergie nucléaire. 
-                            Cette expérience de 8 ans m'a forgé une solide culture industrielle et m'a appris la rigueur 
-                            indispensable dans les environnements à haute criticité.
+                            Premier emploi dans l'industrie lourde, au sein d'Alstom-Areva, dans le transport et la
+                            distribution d'énergie. Cette expérience de treize ans m'a forgé une solide culture industrielle
+                            et m'a appris la rigueur indispensable dans les environnements à haute criticité.
                         </p>
 
                         <h3>Activités en Atelier Blanc</h3>
                         <ul>
                             <li><i className="fas fa-hard-hat"></i>Montage de sous-ensembles mécaniques haute précision</li>
                             <li><i className="fas fa-bolt"></i>Câblage de systèmes électriques et électroniques complexes</li>
-                            <li><i className="fas fa-search"></i>Contrôle qualité selon les standards nucléaires (RCC-M)</li>
+                            <li><i className="fas fa-search"></i>Contrôle qualité selon les standards de l'industrie de l'énergie</li>
                             <li><i className="fas fa-clipboard-check"></i>Respect des procédures qualité et traçabilité complète</li>
                         </ul>
 
                         <h3>Interventions sur Site</h3>
                         <ul>
-                            <li><i className="fas fa-map-marker-alt"></i>Déplacements sur centrales nucléaires françaises et internationales</li>
+                            <li><i className="fas fa-map-marker-alt"></i>Déplacements sur sites français et internationaux, dont des environnements de centrale nucléaire</li>
                             <li><i className="fas fa-users"></i>Travail en équipe sous supervision technique</li>
-                            <li><i className="fas fa-shield-alt"></i>Respect strict des consignes de sécurité et radioprotection</li>
+                            <li><i className="fas fa-shield-alt"></i>Respect strict des consignes de sécurité, dont la radioprotection sur les sites concernés</li>
                             <li><i className="fas fa-clock"></i>Gestion des contraintes d'arrêt de tranche (planning serré)</li>
                         </ul>
 

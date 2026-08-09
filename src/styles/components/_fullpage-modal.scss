@@ -34,19 +34,34 @@
   overflow: hidden;
   animation: modalSlideIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  &::before {
+  // Liseres d'accent, en haut ET en bas, volontairement FLOUTES.
+  //
+  // Le trait etait auparavant net : imbrique dans un panneau, il venait se
+  // coller a la bordure cyan de celui-ci et le cumul de deux traits d'epaisseurs
+  // et de courbures differentes se lisait comme un decalage du rayon. Diffus, il
+  // ne rentre plus en concurrence avec une bordure nette — il eclaire le bord au
+  // lieu de le redessiner.
+  //
+  // Retrait lateral de 8% : la lumiere s'eteint avant les angles, ou la courbure
+  // rendrait le flou irregulier.
+  &::before,
+  &::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba($accent, 0.6) 50%, 
+    left: 8%;
+    right: 8%;
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba($accent, 0.75) 50%,
       transparent
     );
+    filter: blur(2.5px);
+    pointer-events: none;
   }
+
+  &::before { top: 0; }
+  &::after  { bottom: 0; }
 }
 
 .fullpage-modal-header {

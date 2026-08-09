@@ -858,9 +858,13 @@
     // Ancre de positionnement pour la modale.
     position: relative;
 
+    // La modale RECOUVRE le bord du panneau (detail dans _Knowledge.scss) :
+    // s'arreter au ras de la boite interieure laissait apparaitre les decors du
+    // panneau — discrets le long des bords droits, nettement plus epais dans la
+    // courbe des angles.
     .fullpage-modal-overlay {
       position: absolute;
-      inset: 0;
+      inset: -1px;
       padding: 0;
       border-radius: $radius-md;
       // Contient l'animation d'ouverture, qui deborderait sinon du panneau.

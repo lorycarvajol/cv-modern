@@ -100,7 +100,7 @@ class Languages extends Component {
                     
                     <h4>Stack Python/Django</h4>
                     <ul>
-                        <li><i className="fas fa-rocket"></i><strong>Plateforme PiltoME (Airbus)</strong> - Dashboard industriel avec KPIs temps réel</li>
+                        <li><i className="fas fa-rocket"></i><strong>Plateforme PilotMe (Airbus)</strong> - Dashboard industriel avec KPIs temps réel</li>
                         <li><i className="fas fa-chart-bar"></i><strong>Analytics Engine</strong> - ETL automatisé + visualisations Matplotlib</li>
                         <li><i className="fas fa-robot"></i><strong>ML Pipeline</strong> - Preprocessing + modèles Scikit-learn + API FastAPI</li>
                     </ul>
