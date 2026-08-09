@@ -23,5 +23,15 @@ yarn-debug.log*
 yarn-error.log*
 cra-out.log
 
-# Secrets du micro-service mailer (cle Resend)
-.env
+# Secrets du micro-service mailer (cles Resend et Anthropic).
+#
+# Regle volontairement large : tout fichier .env est ignore, SAUF le modele
+# .env.example, qui ne doit contenir que des gabarits. Ecrire `.env` seul
+# laissait passer un `.env.prod`, `.env.vps` ou `.env.backup` cree a la va-vite —
+# c'est exactement par la que fuit une cle.
+.env*
+!.env.example
+
+# Artefacts Python du service mailer
+__pycache__/
+*.pyc

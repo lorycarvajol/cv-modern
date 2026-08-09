@@ -28,47 +28,107 @@ const ChatBox = () => {
         setIsOpen(!isOpen);
     };
 
-    const simulateBotResponse = (userMessage) => {
+    // Interroge /api/chat et affiche la reponse au fil de l'eau.
+    //
+    // `fetch` plutot que `EventSource` : ce dernier ne sait faire que du GET, et
+    // l'historique de conversation doit partir dans le corps de la requete.
+    const demanderReponse = async (historique) => {
         setIsTyping(true);
-        
-        setTimeout(() => {
-            let botResponse = "Merci pour votre message ! ";
-            
-            const lowerMessage = userMessage.toLowerCase();
-            
-            if (lowerMessage.includes('expérience') || lowerMessage.includes('parcours')) {
-                botResponse = "J'ai une expérience variée : Data-Analyste chez Airbus (2022-2024), Freelance et formateur en développement web (2020-2022), et Monteur-Câbleur chez Alstom (2001-2014). Chaque expérience m'a apporté des compétences complémentaires !";
-            } else if (lowerMessage.includes('compétence') || lowerMessage.includes('technique')) {
-                botResponse = "Mes compétences principales : Python, SQL, JavaScript, PHP. Frameworks : Django, React, Bootstrap, Symfony. Je maîtrise aussi Docker, Git, et les méthodologies Agile. Consultez la section 'Connaissances' pour plus de détails !";
-            } else if (lowerMessage.includes('projet') || lowerMessage.includes('réalisation')) {
-                botResponse = "Mon projet phare est PilotMe chez Airbus : une plateforme de pilotage Manufacturing Engineering avec tableaux de bord temps réel, intégration multi-sources et automatisation des processus !";
-            } else if (lowerMessage.includes('formation') || lowerMessage.includes('étude')) {
-                botResponse = "J'ai suivi une formation intensive en Développement Web et Web Mobile, puis j'ai évolué vers le rôle de formateur. Une reconversion réussie du secteur industriel vers le tech !";
-            } else if (lowerMessage.includes('contact') || lowerMessage.includes('joindre')) {
-                botResponse = "Vous pouvez me joindre par email : lorycarvajolwebdev@gmail.com ou par téléphone : 06-77-16-55-26. N'hésitez pas à consulter mes profils LinkedIn et GitHub !";
-            } else if (lowerMessage.includes('salut') || lowerMessage.includes('bonjour') || lowerMessage.includes('hello')) {
-                botResponse = "Bonjour ! Ravi de vous rencontrer ! 👋 Je suis développeur passionné par les technologies web et l'analyse de données. Que souhaitez-vous savoir sur mon profil ?";
-            } else if (lowerMessage.includes('merci')) {
-                botResponse = "De rien ! C'est un plaisir de vous renseigner. N'hésitez pas si vous avez d'autres questions sur mon parcours ou mes compétences ! 😊";
-            } else {
-                botResponse += "Je peux vous parler de mon expérience, mes compétences techniques, mes projets, ou vous donner mes coordonnées. Que souhaitez-vous savoir ?";
+        const idReponse = Date.now() + 1;
+        let premierFragment = true;
+
+        try {
+            const reponse = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    // Le message d'accueil est ecrit en dur cote client : le
+                    // modele ne l'a jamais produit, et l'API refuse un historique
+                    // qui ne commence pas par le visiteur. On coupe donc tout ce
+                    // qui precede le premier message utilisateur.
+                    messages: historique
+                        .slice(historique.findIndex((m) => m.sender === 'user'))
+                        .map((m) => ({
+                            role: m.sender === 'user' ? 'user' : 'assistant',
+                            content: m.text,
+                        })),
+                }),
+            });
+
+            // Une reponse HTML en 200 signifie qu'on a atterri sur le site au
+            // lieu de l'API. Meme controle que le formulaire de contact : sans
+            // lui, on afficherait du HTML dans la bulle.
+            const typeContenu = reponse.headers.get('content-type') || '';
+            if (!reponse.ok || !typeContenu.includes('text/event-stream')) {
+                const data = await reponse.json().catch(() => ({}));
+                throw new Error(
+                    typeof data.detail === 'string'
+                        ? data.detail
+                        : "Le chat est indisponible. Écrivez-moi par e-mail."
+                );
             }
 
-            setMessages(prev => [...prev, {
-                id: Date.now(),
-                text: botResponse,
-                sender: 'bot',
-                timestamp: new Date()
-            }]);
+            const lecteur = reponse.body.getReader();
+            const decodeur = new TextDecoder();
+            let tampon = '';
+
+            // Une lecture peut couper un evenement en deux : on accumule et on
+            // ne traite que les evenements termines par une ligne vide.
+            while (true) {
+                const { done, value } = await lecteur.read();
+                if (done) break;
+
+                tampon += decodeur.decode(value, { stream: true });
+                const evenements = tampon.split('\n\n');
+                tampon = evenements.pop();
+
+                for (const evenement of evenements) {
+                    if (!evenement.startsWith('data: ')) continue;
+                    const charge = evenement.slice(6);
+                    if (charge === '[DONE]') continue;
+
+                    const { texte, erreur } = JSON.parse(charge);
+                    if (erreur) throw new Error(erreur);
+                    if (!texte) continue;
+
+                    if (premierFragment) {
+                        premierFragment = false;
+                        setIsTyping(false);
+                        setMessages((prev) => [
+                            ...prev,
+                            { id: idReponse, text: texte, sender: 'bot', timestamp: new Date() },
+                        ]);
+                    } else {
+                        setMessages((prev) =>
+                            prev.map((m) =>
+                                m.id === idReponse ? { ...m, text: m.text + texte } : m
+                            )
+                        );
+                    }
+                }
+            }
+        } catch (err) {
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: Date.now() + 2,
+                    text:
+                        err.message === 'Failed to fetch'
+                            ? "Le chat est injoignable. Écrivez-moi par e-mail."
+                            : err.message,
+                    sender: 'bot',
+                    timestamp: new Date(),
+                },
+            ]);
+        } finally {
             setIsTyping(false);
-        }, 1000 + Math.random() * 1000); // Délai réaliste
+        }
     };
 
     const handleSendMessage = (e) => {
         e.preventDefault();
-        if (inputMessage.trim() === '') return;
+        if (inputMessage.trim() === '' || isTyping) return;
 
-        // Ajouter le message utilisateur
         const userMessage = {
             id: Date.now(),
             text: inputMessage,
@@ -76,11 +136,12 @@ const ChatBox = () => {
             timestamp: new Date()
         };
 
-        setMessages(prev => [...prev, userMessage]);
-        
-        // Simuler une réponse du bot
-        simulateBotResponse(inputMessage);
-        
+        // L'historique envoye au serveur inclut ce message : `messages` n'est
+        // pas encore a jour a cet instant, setState n'est pas synchrone.
+        const historique = [...messages, userMessage];
+        setMessages(historique);
+        demanderReponse(historique);
+
         setInputMessage('');
     };
 

@@ -20,9 +20,10 @@ services:
       - "traefik.http.middlewares.cv-www.redirectregex.permanent=true"
       - "traefik.http.routers.cv-web.middlewares=cv-www"
 
-  # Detient la cle Resend et envoie les messages du formulaire de contact.
-  # Un service distinct plutot qu'un appel depuis le React : la cle autorise
-  # l'envoi au nom du domaine, elle ne doit jamais partir dans le navigateur.
+  # Detient les cles API (Resend, Anthropic) : formulaire de contact et chatbot.
+  # Un service distinct plutot qu'un appel depuis le React : ces cles autorisent
+  # des envois au nom du domaine et des appels factures, elles ne doivent jamais
+  # partir dans le navigateur.
   mailer:
     build: ./mailer
     container_name: cv-mailer
@@ -32,6 +33,13 @@ services:
       - RESEND_API_KEY=${RESEND_API_KEY}
       - MAIL_FROM=${MAIL_FROM:-contact@lorycarvajol.dev}
       - MAIL_TO=${MAIL_TO:-lorycarvajolwebdev@gmail.com}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CHAT_BUDGET_JETONS_JOUR=${CHAT_BUDGET_JETONS_JOUR:-200000}
+    # Monte plutot que copie : les faits du CV ont une seule source, partagee
+    # avec les pages React qui importent le meme fichier. Le copier dans l'image
+    # recreerait la duplication que ce fichier existe pour supprimer.
+    volumes:
+      - ./src/data/parcours.json:/app/parcours.json:ro
     networks:
       - proxy
     labels:

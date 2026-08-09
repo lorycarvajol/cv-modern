@@ -1,22 +1,28 @@
 """
-Micro-service d'envoi du formulaire de contact.
+Micro-service du site : formulaire de contact et chatbot.
 
-Sa seule raison d'etre : detenir la cle Resend. Celle-ci autorise l'envoi
-d'e-mails au nom du domaine, elle ne peut donc pas vivre dans le bundle React,
+Sa raison d'etre est la meme pour les deux : detenir des cles API. La cle
+Resend autorise l'envoi d'e-mails au nom du domaine, la cle Anthropic autorise
+des appels factures — ni l'une ni l'autre ne peut vivre dans le bundle React,
 qui part en clair dans le navigateur.
 
-Une seule route, POST /api/contact.
+Deux routes : POST /api/contact et POST /api/chat.
 """
 
+import json
 import os
 import time
 import logging
 from collections import deque
-from typing import Deque, Dict
+from typing import Deque, Dict, Tuple
 
 import httpx
+from anthropic import APIConnectionError, APIStatusError
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, EmailStr, Field
+
+from chat import RequeteChat, chat_disponible, repondre, _budget_epuise
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("cv-mailer")
@@ -25,11 +31,17 @@ RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 MAIL_FROM = os.environ.get("MAIL_FROM", "contact@lorycarvajol.dev")
 MAIL_TO = os.environ.get("MAIL_TO", "lorycarvajolwebdev@gmail.com")
 
-# Fenetre glissante par IP. L'endpoint est public : sans cela, un script peut
-# vider le quota Resend (100 envois/jour) en quelques secondes.
+# Fenetre glissante par IP. Les endpoints sont publics : sans cela, un script
+# peut vider le quota Resend (100 envois/jour) en quelques secondes.
 RATE_LIMIT_MAX = int(os.environ.get("RATE_LIMIT_MAX", "3"))
 RATE_LIMIT_WINDOW_S = int(os.environ.get("RATE_LIMIT_WINDOW_S", "3600"))
-_hits: Dict[str, Deque[float]] = {}
+
+# Le chat a son propre quota : une conversation, c'est plusieurs requetes, la
+# limite du formulaire (3/h) la rendrait inutilisable.
+CHAT_RATE_LIMIT_MAX = int(os.environ.get("CHAT_RATE_LIMIT_MAX", "30"))
+
+# Cle : (nom du seau, IP). Deux compteurs independants sur la meme IP.
+_hits: Dict[Tuple[str, str], Deque[float]] = {}
 
 app = FastAPI(title="cv-mailer", docs_url=None, redoc_url=None)
 
@@ -51,12 +63,12 @@ def _client_ip(request: Request) -> str:
     return request.client.host if request.client else "unknown"
 
 
-def _rate_limited(ip: str) -> bool:
+def _rate_limited(ip: str, seau: str = "contact", maximum: int = RATE_LIMIT_MAX) -> bool:
     now = time.time()
-    hits = _hits.setdefault(ip, deque())
+    hits = _hits.setdefault((seau, ip), deque())
     while hits and now - hits[0] > RATE_LIMIT_WINDOW_S:
         hits.popleft()
-    if len(hits) >= RATE_LIMIT_MAX:
+    if len(hits) >= maximum:
         return True
     hits.append(now)
     return False
@@ -64,7 +76,62 @@ def _rate_limited(ip: str) -> bool:
 
 @app.get("/api/health")
 def health() -> dict:
-    return {"status": "ok", "configured": bool(RESEND_API_KEY)}
+    return {
+        "status": "ok",
+        "configured": bool(RESEND_API_KEY),
+        "chat": chat_disponible(),
+    }
+
+
+@app.post("/api/chat")
+async def chat(payload: RequeteChat, request: Request):
+    """Reponse du chatbot, diffusee au fil de l'eau.
+
+    Le format de sortie est du SSE (`text/event-stream`) : le navigateur affiche
+    les mots au fur et a mesure au lieu d'attendre la reponse complete. On ne
+    peut pas utiliser `EventSource` cote client — il ne sait pas faire de POST —
+    donc le front lit le flux via `fetch`.
+    """
+    if not chat_disponible():
+        raise HTTPException(status_code=503, detail="Le chat est indisponible.")
+
+    if _budget_epuise():
+        # Le coupe-circuit quotidien a saute. On le dit franchement plutot que
+        # de renvoyer une erreur technique : le visiteur a une porte de sortie.
+        logger.warning("Budget de chat quotidien atteint")
+        raise HTTPException(
+            status_code=429,
+            detail="Le chat a atteint sa limite du jour. Ecrivez-moi par e-mail.",
+        )
+
+    ip = _client_ip(request)
+    if _rate_limited(ip, seau="chat", maximum=CHAT_RATE_LIMIT_MAX):
+        raise HTTPException(
+            status_code=429,
+            detail="Trop de messages. Reessayez dans un moment.",
+        )
+
+    async def flux():
+        try:
+            async for fragment in repondre(payload.messages):
+                # `json.dumps` plutot que le texte brut : un fragment peut
+                # contenir un saut de ligne, qui terminerait l'evenement SSE.
+                yield f"data: {json.dumps({'texte': fragment})}\n\n"
+        except ValueError as exc:
+            yield f"data: {json.dumps({'erreur': str(exc)})}\n\n"
+        except (APIStatusError, APIConnectionError) as exc:
+            # Le detail peut contenir des elements de configuration : journalise,
+            # mais ne renvoie rien de tout cela au visiteur.
+            logger.error("Anthropic a echoue : %s", exc)
+            yield f"data: {json.dumps({'erreur': 'Reponse impossible pour le moment.'})}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        flux(),
+        media_type="text/event-stream",
+        # Sans cela, un proxy tamponne la reponse et le streaming ne sert a rien.
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.post("/api/contact")

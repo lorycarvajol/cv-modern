@@ -1,39 +1,13 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
 import { lienMail } from '../data/contactInfo';
+import donnees from '../data/parcours.json';
 
-// Reperes de parcours affiches en bandeau sous le hero. Ils reprennent, dans
-// l'ordre chronologique, les quatre experiences detaillees par la modale de la
-// page Competences (components/Knowledges/Experiences.js) : rien n'est ajoute
-// ici qui ne soit deja documente la-bas.
-const PARCOURS = [
-    {
-        icone: 'fas fa-industry',
-        titre: 'Alstom-Areva',
-        detail: 'Monteur-câbleur · 2001–2014',
-    },
-    {
-        icone: 'fas fa-chalkboard-teacher',
-        titre: 'Freelance & formateur DWWM',
-        detail: 'Site de Saint-Baldoph · 2020–2022',
-    },
-    {
-        icone: 'fas fa-plane',
-        titre: 'Airbus',
-        detail: 'Data Analyst, projet PilotMe · 2022–2024',
-    },
-    {
-        icone: 'fas fa-rocket',
-        titre: 'Freelance & Nepsod',
-        detail: 'Formation et conseil · 2025–2026',
-    },
-];
-
-const STATS = [
-    { valeur: '5+', libelle: "Années d'expérience" },
-    { valeur: '20+', libelle: 'Projets réalisés' },
-    { valeur: '100+', libelle: 'Apprenants formés' },
-];
+// Reperes de parcours et chiffres : lus depuis parcours.json, la source unique
+// partagee avec le chatbot (le service mailer monte le meme fichier). Une date
+// se corrige la-bas, une seule fois.
+const PARCOURS = donnees.parcours;
+const STATS = donnees.chiffres;
 
 const Home = () => {
     return (

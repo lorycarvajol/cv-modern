@@ -35,6 +35,20 @@ Reste à faire :
 - Déployer : `docker compose up -d --build` (démarre `cv-frontend` et
   `cv-mailer`).
 
+### 2 bis. Chatbot — clé Anthropic
+
+Le chatbot appelle Claude depuis le service `mailer` (route `POST /api/chat`).
+Même règle que Resend : la clé reste sur le serveur.
+
+- Créer une clé sur `https://console.anthropic.com/settings/keys` et la mettre
+  dans le `.env` du VPS (`ANTHROPIC_API_KEY`).
+- `CHAT_BUDGET_JETONS_JOUR` est un **coupe-circuit quotidien**, pas un réglage
+  de confort. Une route LLM publique est une facture ouverte. Défaut : 200 000
+  jetons de sortie/jour, soit environ 5 $ sur Claude Opus 5.
+- Les faits du CV viennent de `src/data/parcours.json`, monté en lecture seule
+  dans le conteneur. **C'est la source unique** : corriger une date là, jamais
+  dans un composant.
+
 ### 3. Test de bout en bout — JAMAIS EFFECTUÉ
 
 C'est le point de vigilance principal. Ce qui est vérifié à ce jour :
@@ -46,8 +60,14 @@ Ce qui ne l'est **pas** :
 
 - l'envoi réel d'un e-mail (clé valide → Resend accepte → réception) ;
 - le chemin de succès côté interface (message de confirmation, remise à zéro
-  des champs). En développement `/api/contact` renvoie un 404, seul le chemin
-  d'erreur a donc été exercé.
+  des champs) ;
+- **le chemin de succès du chatbot** : réponse réelle de Claude, diffusion au
+  fil de l'eau, mise en cache du prompt. Seul le chemin d'erreur a été exercé.
+
+`src/setupProxy.js` route désormais `/api` vers `localhost:8000` en
+développement : lancer le service (`uvicorn main:app --port 8000` depuis
+`mailer/`, avec les clés en variables d'environnement) rend le formulaire **et**
+le chat testables en local, ce qui n'était pas le cas jusqu'ici.
 
 Après déploiement, envoyer un message depuis le formulaire et vérifier la
 réception sur `lorycarvajolwebdev@gmail.com`.

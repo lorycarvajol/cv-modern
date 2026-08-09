@@ -138,8 +138,13 @@
     text-align: center;
     user-select: none;
     display: flex;
+    // Sans cela, `.idContent` se cale a flex-start : le groupe photo + nom
+    // (151px) restait plaque a gauche des 228px disponibles, soit 34px hors du
+    // centre de la sidebar.
+    justify-content: center;
     padding: 20px 0;
-    margin-left: 10px;
+    // Marge symetrique : `margin-left` seul decalait le bloc de 5px de plus.
+    margin: 0 10px;
     position: relative;
 
     .idContent {
@@ -198,13 +203,26 @@
       }
 
       h3 {
-        // Orbitron etant ~23% plus large que la police de repli, le nom passait
-        // sur deux lignes avec l'ancien reglage (1.3rem / .2rem d'interlettrage).
-        font-size: 1.1rem;
+        // Prenom et nom sur deux lignes. La taille avait ete baissee a 1.1rem
+        // pour tenir sur une seule ligne (Orbitron est ~23% plus large que la
+        // police de repli) : cette contrainte ne s'applique plus, d'ou le retour
+        // a 1.3rem.
+        font-size: 1.3rem;
         text-transform: uppercase;
         letter-spacing: .1rem;
-        white-space: nowrap;
+        line-height: 1.2;
         margin: 0;
+        // Les deux lignes demarrent au meme endroit. En `center` (herite de
+        // `.id`), « LORY » etait centre sur « CARVAJOL » et commencait donc
+        // 39px plus loin. Le bloc lui-meme reste centre dans la sidebar.
+        text-align: left;
+
+        // C'est ce `block` qui produit la coupure, pas un <br> dans le JSX :
+        // le bandeau mobile laisse les span en ligne et garde le nom sur une
+        // seule ligne.
+        span {
+          display: block;
+        }
         color: #0affef;
         font-family: 'Orbitron', sans-serif;
         text-shadow: 
@@ -500,6 +518,9 @@
       padding: 0 1rem;
       display: flex;
       align-items: center;
+      // Le bandeau garde son contenu a gauche : sans cette ligne il heriterait
+      // du `center` pose sur la sidebar de bureau.
+      justify-content: flex-start;
 
       background: rgba(10, 15, 25, 0.92);
       backdrop-filter: blur(20px) saturate(150%);
@@ -526,6 +547,9 @@
           font-size: 1rem;
           letter-spacing: .12rem;
           white-space: nowrap;
+
+          // L'en-tete mobile fait 56px de haut : le nom y reste sur une ligne.
+          span { display: inline; }
 
           &::after { content: none; }
         }

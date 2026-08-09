@@ -8,7 +8,14 @@ const Navigation = () => {
             <div className="id">
                 <div className="idContent">
                     <img src={process.env.PUBLIC_URL +"./media/moi2.png" } alt="pic" height="150px"/>
-                    <h3>Lory Carvajol</h3>
+                    {/* Deux span plutot qu'un <br> : le passage a la ligne est
+                        pilote par le CSS. Sur le bandeau mobile, haut de 56px,
+                        ils restent en ligne. L'espace explicite sert a ce cas —
+                        sans lui, on lirait « LORYCARVAJOL ». */}
+                    <h3>
+                        <span>Lory</span>{' '}
+                        <span>Carvajol</span>
+                    </h3>
                 </div>
             </div>
 

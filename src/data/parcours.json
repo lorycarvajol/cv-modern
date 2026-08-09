@@ -1,0 +1,87 @@
+{
+  "_lisezmoi": "Source de verite unique des faits du CV. Consomme par les pages React (import direct) et par le service mailer, qui le monte en volume pour construire le prompt systeme du chatbot. Corriger une date ICI, jamais dans un composant.",
+
+  "identite": {
+    "nom": "Lory Carvajol",
+    "titre": "Developpeur Full-Stack & Data Analyst",
+    "accroche": "De l'industrie au numerique — developpement, data et formation",
+    "zone": "Aix-les-Bains, Savoie",
+    "mobilite": "A distance ou sur site",
+    "disponibilite": "Disponible pour de nouvelles missions",
+    "email": "lorycarvajolwebdev@gmail.com",
+    "telephone": "06 77 16 55 26",
+    "linkedin": "https://www.linkedin.com/in/lory-carvajol-71367513b/",
+    "github": "https://github.com/lorycarvajol"
+  },
+
+  "chiffres": [
+    { "valeur": "5+", "libelle": "Années d'expérience" },
+    { "valeur": "20+", "libelle": "Projets réalisés" },
+    { "valeur": "100+", "libelle": "Apprenants formés" }
+  ],
+
+  "parcours": [
+    {
+      "id": "alstom",
+      "icone": "fas fa-industry",
+      "titre": "Alstom-Areva",
+      "detail": "Monteur-câbleur · 2001–2014",
+      "debut": 2001,
+      "fin": 2014,
+      "secteur": "Transport et distribution d'energie",
+      "resume": "Treize ans dans l'industrie lourde : montage de sous-ensembles mecaniques de haute precision, cablage de systemes electriques et electroniques complexes, controle qualite selon les standards de l'industrie de l'energie. Deplacements sur sites francais et internationaux, dont des environnements de centrale nucleaire, avec les consignes de securite et de radioprotection associees."
+    },
+    {
+      "id": "dwwm",
+      "icone": "fas fa-chalkboard-teacher",
+      "titre": "Freelance & formateur DWWM",
+      "detail": "Site de Saint-Baldoph · 2020–2022",
+      "debut": 2020,
+      "fin": 2022,
+      "secteur": "Formation au developpement web et mobile",
+      "resume": "Reconversion vers le developpement, puis formateur : animation de sessions en developpement web (HTML5/CSS3, JavaScript, PHP, MySQL, React, Symfony), accompagnement des projets fil rouge et des soutenances. Responsable operationnel du site de formation de Saint-Baldoph et coordination de l'equipe pedagogique."
+    },
+    {
+      "id": "airbus",
+      "icone": "fas fa-plane",
+      "titre": "Airbus",
+      "detail": "Data Analyst, projet PilotMe · 2022–2024",
+      "debut": 2022,
+      "fin": 2024,
+      "secteur": "Aeronautique — Manufacturing Engineering",
+      "resume": "Apprenti data-analyste au sein du service Manufacturing Engineering. Projet principal PilotMe : plateforme de pilotage avec tableaux de bord interactifs pour le suivi des indicateurs industriels, integration de donnees multi-sources (SAP, bases manufacturieres, capteurs IoT), automatisation des processus de reporting en Python et Power BI, gestion des flux ETL."
+    },
+    {
+      "id": "freelance",
+      "icone": "fas fa-rocket",
+      "titre": "Freelance & Nepsod",
+      "detail": "Formation et conseil · 2025–2026",
+      "debut": 2025,
+      "fin": 2026,
+      "secteur": "Formation et conseil independant",
+      "resume": "Formateur numerique pour l'entreprise Nepsod et consultant freelance : formation en developpement web et mobile, conseil en data analyse et business intelligence, accompagnement des entreprises dans leur transformation numerique."
+    }
+  ],
+
+  "competences": {
+    "langages": ["Python", "SQL", "PHP", "JavaScript"],
+    "frameworks": ["Django", "React", "Symfony", "Bootstrap", "Vue.js"],
+    "outils": ["Docker", "Git", "Power BI", "methodologies Agile/Scrum"],
+    "domaines": [
+      "Developpement front-end et back-end",
+      "Analyse de donnees et visualisation",
+      "Conception et gestion de bases de donnees",
+      "Developpement d'API RESTful",
+      "Deploiement conteneurise"
+    ]
+  },
+
+  "projets_notables": [
+    { "nom": "PilotMe", "contexte": "Airbus", "technos": ["Python", "Power BI"], "description": "Plateforme de pilotage Manufacturing Engineering, tableaux de bord temps reel." },
+    { "nom": "volha-design.fr", "contexte": "Site vitrine e-commerce", "technos": ["React", "Symfony"], "description": "Boutique de produits faits main, en developpement sur temps libre." },
+    { "nom": "ApiSki", "contexte": "Formation", "technos": ["Vue.js", "PHP"], "description": "Tableau de bord de competition de ski : listes de competiteurs en temps reel, export Excel des temps, classements dynamiques." },
+    { "nom": "LitRevu", "contexte": "Formation", "technos": ["Django", "Python"], "description": "Application de critiques de livres et articles avec recommandations." },
+    { "nom": "Chess tournament", "contexte": "Formation", "technos": ["Python"], "description": "Gestion de tournois d'echecs en systeme suisse, avec rapports." },
+    { "nom": "Book to scrap", "contexte": "Formation", "technos": ["Python"], "description": "Scraper extrayant les donnees de livres vers des fichiers CSV par categorie." }
+  ]
+}
