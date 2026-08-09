@@ -14,6 +14,23 @@ const FullPageModal = ({ show, onClose, title, children, moduleType, variant = '
     const boite = useRef(null);
     const declencheur = useRef(null);
 
+    // `onClose` garde dans une reference plutot qu'en dependance de l'effet.
+    //
+    // La plupart des appelants passent une fonction definie dans leur corps de
+    // rendu (`onClose={fermer}`) : son identite change a CHAQUE rendu. En la
+    // listant dans les dependances, l'effet se rejouait a chaque frappe dans le
+    // formulaire de contact — et sa premiere instruction etant de donner le
+    // focus au premier element focusable, celui-ci partait sur le bouton
+    // « Fermer » a chaque lettre. Il fallait recliquer dans le champ pour taper
+    // la suivante.
+    //
+    // Corriger ici plutot que chez les six appelants : la modale reste juste
+    // quelle que soit la facon dont on lui passe son callback.
+    const fermeture = useRef(onClose);
+    useEffect(() => {
+        fermeture.current = onClose;
+    }, [onClose]);
+
     useEffect(() => {
         if (!show) return undefined;
 
@@ -29,7 +46,7 @@ const FullPageModal = ({ show, onClose, title, children, moduleType, variant = '
 
         const auClavier = (e) => {
             if (e.key === 'Escape') {
-                onClose();
+                fermeture.current();
                 return;
             }
             if (e.key !== 'Tab') return;
@@ -58,7 +75,9 @@ const FullPageModal = ({ show, onClose, title, children, moduleType, variant = '
                 declencheur.current.focus();
             }
         };
-    }, [show, onClose]);
+        // `show` seul : l'effet ne doit se rejouer qu'a l'ouverture et a la
+        // fermeture, jamais entre deux frappes au clavier.
+    }, [show]);
 
     if (!show) return null;
 
