@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import FullPageModal from '../common/FullPageModal';
 
 const Experiences = () => {
@@ -183,7 +184,13 @@ const Experiences = () => {
                         </p>
                     </div>
 
-                    <hr style={{margin: '40px 0', borderColor: '#ddd'}} />
+                    {/* Intervalle entre les deux periodes. Discret a dessein :
+                        une ligne sobre, pas une section — le detail est sur une
+                        page a part, atteignable seulement d'ici. */}
+                    <Link to="/parcours-2014-2020" className="intervalle-parcours">
+                        <span className="periode">2014 — 2020</span>
+                        <span className="mention">En savoir plus</span>
+                    </Link>
 
                     <div className="experience-section">
                         <h2>Monteur-Câbleur - Alstom-Areva (2001-2014)</h2>

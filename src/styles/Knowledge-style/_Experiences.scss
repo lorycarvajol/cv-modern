@@ -223,3 +223,49 @@
 
 
 }
+// ---------------------------------------------------------------------------
+// Intervalle 2014-2020, dans la modale « Parcours Professionnel Detaille ».
+//
+// Volontairement en retrait : trait discontinu, texte attenue, aucun halo. Il
+// marque une coupure dans la chronologie sans attirer l'oeil comme le font les
+// sections d'experience. Le survol seul revele qu'il est cliquable.
+// ---------------------------------------------------------------------------
+.intervalle-parcours {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.5rem 0;
+  padding: 0.9rem 1.2rem;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: $radius-sm;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  .periode {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.3s ease;
+  }
+
+  .mention {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.3s ease;
+
+    &::after {
+      content: ' →';
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba($accent, 0.35);
+    background: rgba($accent, 0.05);
+
+    .periode { color: rgba(255, 255, 255, 0.8); }
+    .mention { color: $accent; }
+  }
+}

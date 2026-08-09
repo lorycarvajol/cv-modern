@@ -4,7 +4,7 @@
 // defilent et privilegient la lisibilite sur l'effet. Le cadre reste celui du
 // site (`panel-surface`), le contenu adopte une mesure de lecture bridee.
 
-.legal {
+.legal, .recit {
   .legalContent {
     margin: 0.5rem 0;
     height: calc(90vh - 1rem);
@@ -162,6 +162,42 @@
       }
     }
 
+    // --- Page recit (2014-2020) -----------------------------------------
+    // Sobriete voulue : pas de halo sur le titre, une mesure de lecture plus
+    // etroite. C'est un texte suivi, pas un document de reference.
+    .periode-titre {
+      margin: 0 0 0.35rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .chapeau {
+      font-size: 1.08rem;
+      color: rgba(255, 255, 255, 0.75);
+      border-left: 2px solid rgba($accent, 0.35);
+      padding-left: 1.1rem;
+    }
+
+    // Aparte : la note decalee qui clot le recit. Detachee du corps du texte
+    // par un filet et une teinte plus sourde — elle doit se lire comme un
+    // apercu glisse en marge, pas comme la conclusion du propos.
+    .aparte {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: $border-soft;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.95rem;
+    }
+
+    .retour {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+
+      a { text-decoration: none; }
+    }
+
     @media (max-width: $denseGridBreakpoint) {
       padding: 1.75rem;
 
@@ -189,7 +225,8 @@
 @media screen and (max-width: $mobileBreakpoint) {
   // Meme specificite (0,2,0) que la regle de base : un `.legalContent` seul
   // (0,1,0) serait ignore, media query ou non.
-  .legal .legalContent {
+  .legal .legalContent,
+  .recit .legalContent {
     height: auto;
     padding: 1.5rem 1rem;
 

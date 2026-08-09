@@ -6,6 +6,7 @@ import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
 import MentionsLegales from './pages/MentionsLegales';
 import Confidentialite from './pages/Confidentialite';
+import Interruption from './pages/Interruption';
 import NotFound from './pages/NotFound';
 import Modal from './components/common/Modal';
 import ChatBox from './components/common/ChatBox';
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
+          <Route path="/parcours-2014-2020" element={<Interruption />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Modal show={showModal} onClose={closeModal} title={modalTitle}>

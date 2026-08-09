@@ -267,21 +267,9 @@
       gap: 0.35rem;
       position: relative;
 
-      // Rail vertical le long des liens : la barre de l'element actif s'y pose
-      // comme un curseur sur une glissiere, au lieu de flotter seule.
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 1px;
-        background: linear-gradient(180deg,
-          transparent 0%,
-          rgba($accent, 0.28) 12%,
-          rgba($accent, 0.28) 88%,
-          transparent 100%);
-      }
+      // Le rail vertical qui longeait les liens a ete retire : il se lisait
+      // comme un trait parasite plutot que comme une glissiere. La barre
+      // d'accent de l'element actif suffit a marquer la position.
 
       li {
         padding: 0;
