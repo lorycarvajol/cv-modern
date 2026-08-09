@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
-import { lienMail } from '../data/contactInfo';
 import donnees from '../data/parcours.json';
 
 // Reperes de parcours et chiffres : lus depuis parcours.json, la source unique
@@ -48,18 +48,21 @@ const Home = () => {
                                     <i className="fas fa-download"></i>
                                     Télécharger mon CV
                                 </a>
-                                {/* Ouvre le gestionnaire de courrier dans une autre fenetre.
-                                    Remplace l'ancre #contact, qui ne pointait sur rien. */}
-                                <a
-                                    href={lienMail('Contact professionnel')}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                {/* Mene a la page Contact ET y ouvre le formulaire.
+                                    L'etat de navigation transporte l'intention sans
+                                    polluer l'URL ; Contact.js le lit au montage.
+                                    Un `mailto:` a la place dependrait de l'association
+                                    de messagerie du poste du visiteur — quand elle
+                                    manque, le clic ne produit rien du tout. */}
+                                <Link
+                                    to="/contact"
+                                    state={{ ouvrirFormulaire: true }}
                                     className="btn-secondary"
-                                    data-infobulle="Ouvre votre messagerie avec mon adresse déjà remplie"
+                                    data-infobulle="Ouvre le formulaire de contact"
                                 >
                                     <i className="fas fa-envelope"></i>
                                     Me contacter
-                                </a>
+                                </Link>
                             </div>
                         </div>
 

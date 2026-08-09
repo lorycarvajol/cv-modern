@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import FullPageModal from '../components/common/FullPageModal';
-import { EMAIL, lienMail } from '../data/contactInfo';
+import { EMAIL } from '../data/contactInfo';
 
 // ---------------------------------------------------------------------------
 // TEXTES A VALIDER
@@ -25,9 +25,33 @@ const CHAMPS_VIDES = { name: '', email: '', subject: SUJETS[0], message: '', web
 
 const Contact = () => {
     const [ouvert, setOuvert] = useState(false);
+    const [copie, setCopie] = useState(false);
+    const location = useLocation();
+
+    // Le bouton « Me contacter » de l'accueil arrive ici avec l'intention
+    // d'ecrire : on ouvre le formulaire sans lui demander un second clic.
+    useEffect(() => {
+        if (location.state?.ouvrirFormulaire) setOuvert(true);
+    }, [location.state]);
     const [champs, setChamps] = useState(CHAMPS_VIDES);
     const [etat, setEtat] = useState('idle'); // idle | envoi | envoye | erreur
     const [erreur, setErreur] = useState('');
+
+    // Filet de securite du lien mailto. Celui-ci depend d'un gestionnaire de
+    // courrier correctement associe sur le poste du visiteur : quand
+    // l'association est absente ou pointe vers une application desinstallee,
+    // le clic ne produit rien du tout. Copier l'adresse marche toujours.
+    const copierEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(EMAIL);
+            setCopie(true);
+            setTimeout(() => setCopie(false), 2000);
+        } catch {
+            // Presse-papiers refuse (contexte non securise, permission) :
+            // l'adresse reste lisible et selectionnable a l'ecran.
+            setCopie(false);
+        }
+    };
 
     const majChamp = (e) => {
         const { name, value } = e.target;
@@ -127,14 +151,29 @@ const Contact = () => {
                         </li>
                         <li>
                             <i className="far fa-envelope" aria-hidden="true"></i>
-                            <a
-                                href={lienMail()}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                data-infobulle="Ouvre votre messagerie dans une nouvelle fenêtre"
+                            {/* L'adresse copie au clic, elle n'ouvre plus de mailto.
+                                Celui-ci dependait de l'association de messagerie du
+                                poste du visiteur : quand elle est absente ou pointe
+                                vers une application desinstallee, le clic ne produit
+                                rien, et la page n'a aucun moyen de le detecter pour
+                                proposer un secours. Copier marche toujours. */}
+                            <button
+                                type="button"
+                                className="copier-email"
+                                onClick={copierEmail}
+                                data-infobulle="Copier l'adresse dans le presse-papiers"
                             >
                                 {EMAIL}
-                            </a>
+                                <i
+                                    className={copie ? 'fas fa-check' : 'far fa-copy'}
+                                    aria-hidden="true"
+                                ></i>
+                            </button>
+                            {/* aria-live : la confirmation est annoncee aux lecteurs
+                                d'ecran, qui ne verraient pas le changement d'icone. */}
+                            <span className="retour-copie" role="status" aria-live="polite">
+                                {copie ? 'Adresse copiée' : ''}
+                            </span>
                         </li>
                         <li>
                             <i className="fas fa-map-marker-alt" aria-hidden="true"></i>

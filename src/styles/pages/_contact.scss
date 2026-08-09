@@ -56,18 +56,22 @@
   .header {
     position: relative;
     width: 100%;
-    // Partage 50/50 : le bandeau occupe la moitie du panneau, le texte l'autre.
-    // Exprime en % du panneau plutot qu'en vh — c'est le panneau qu'on partage,
-    // pas la fenetre.
+    // Le bandeau est la variable d'ajustement : il prend la hauteur laissee
+    // libre par le bloc texte, et cede en premier quand la fenetre raccourcit.
+    // La photo, posee en `cover`, se rogne alors d'elle-meme au lieu de faire
+    // apparaitre une barre de defilement.
     //
-    // Le `min()` est le garde-fou : le bloc texte mesure ~390px quelle que soit
-    // la hauteur d'ecran. Sur un panneau court, lui laisser seulement 50% le
-    // ferait deborder (73px de defilement sur un portable de 760px). On reserve
-    // donc 400px au texte, et la photo prend tout le reste — soit exactement la
-    // moitie des que l'ecran est assez haut.
-    height: min(50%, calc(100% - 400px));
-    min-height: 260px;
-    flex-shrink: 0;
+    // La version precedente reservait 400px au texte et bloquait le bandeau a
+    // 260px minimum. Deux erreurs : le bloc texte mesure en realite 425px, d'ou
+    // 40px de defilement des 900px de hauteur d'ecran ; et le plancher de 260px
+    // l'empechait de ceder au-dela, le defilement grimpant a 179px sur une
+    // fenetre de 600px.
+    //
+    // `max-height: 50%` conserve le partage moitie-moitie des que l'ecran est
+    // assez haut — le rendu ne bouge pas sur un grand ecran.
+    flex: 1 1 auto;
+    max-height: 50%;
+    min-height: 100px;
     border-radius: $radius-md $radius-md 0 0;
     overflow: hidden;
 
@@ -137,6 +141,8 @@
   .contact-corps {
     width: 100%;
     max-width: 460px;
+    // Le texte ne se comprime jamais : c'est le bandeau qui absorbe le manque.
+    flex-shrink: 0;
     // Le texte demarre desormais SOUS le bandeau, sans chevauchement : il se
     // posait auparavant en plein milieu de la photo et la masquait presque
     // entierement. Le creux de la vague fournit la respiration.
@@ -300,6 +306,56 @@
     }
 
     // --- Liens secondaires ----------------------------------------------
+    // L'adresse elle-meme : un bouton qui copie, pas un lien. Il reprend
+    // l'apparence des autres coordonnees de la liste — seule l'icone a droite
+    // signale l'action.
+    .copier-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.88);
+      font-family: inherit;
+      font-size: 0.92rem;
+      text-align: left;
+      overflow-wrap: anywhere;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      i {
+        flex-shrink: 0;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.4);
+        transition: color 0.3s ease;
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: $accent;
+        text-shadow: 0 0 10px rgba($accent, 0.5);
+
+        i { color: $accent; }
+      }
+
+      // Confirmation visuelle, deux secondes apres le clic.
+      .fa-check {
+        color: #40ffaa;
+      }
+    }
+
+    // Confirmation textuelle : reservee aux lecteurs d'ecran, l'icone suffit
+    // a l'oeil.
+    .retour-copie {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
     // Mentions obligatoires, en pied de page. Discretes mais toujours
     // atteignables — c'est le seul acces sur mobile.
     .liens-legaux-contact {

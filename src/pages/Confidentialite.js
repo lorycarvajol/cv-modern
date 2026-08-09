@@ -16,9 +16,7 @@ const Confidentialite = () => (
                     <p>
                         {EDITEUR.nom}, éditeur de ce site. Pour toute question relative à vos
                         données, écrivez à{' '}
-                        <a href={lienMail('Données personnelles')} target="_blank" rel="noopener noreferrer">
-                            {EMAIL}
-                        </a>
+                        <a href={lienMail('Données personnelles')}>{EMAIL}</a>
                         .
                     </p>
                 </section>
@@ -124,9 +122,7 @@ const Confidentialite = () => (
                     <p>
                         Vous disposez d’un droit d’accès, de rectification, d’effacement, de
                         limitation et d’opposition sur vos données. Pour l’exercer, écrivez à{' '}
-                        <a href={lienMail('Exercice de mes droits RGPD')} target="_blank" rel="noopener noreferrer">
-                            {EMAIL}
-                        </a>
+                        <a href={lienMail('Exercice de mes droits RGPD')}>{EMAIL}</a>
                         . Une réponse vous sera apportée sous un mois.
                     </p>
                     <p>

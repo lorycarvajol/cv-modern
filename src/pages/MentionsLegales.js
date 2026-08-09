@@ -31,9 +31,7 @@ const MentionsLegales = () => (
 
                         <dt>Courriel</dt>
                         <dd>
-                            <a href={lienMail('Contact via les mentions légales')} target="_blank" rel="noopener noreferrer">
-                                {EMAIL}
-                            </a>
+                            <a href={lienMail('Contact via les mentions légales')}>{EMAIL}</a>
                         </dd>
 
                         <dt>SIRET</dt>
