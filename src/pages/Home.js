@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import { lienCV } from '../data/contactInfo';
 import donnees from '../data/parcours.json';
 
 // Reperes de parcours et chiffres : lus depuis parcours.json, la source unique
@@ -39,7 +40,7 @@ const Home = () => {
 
                             <div className="cta-section">
                                 <a
-                                    href={`${process.env.PUBLIC_URL}/media/CV_carvajol_lory_24-02-26.pdf`}
+                                    href={lienCV()}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="btn-primary"

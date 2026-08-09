@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import FullPageModal from '../components/common/FullPageModal';
-import { EMAIL } from '../data/contactInfo';
+import { EMAIL, lienCV } from '../data/contactInfo';
 
 // ---------------------------------------------------------------------------
 // TEXTES A VALIDER
@@ -204,7 +204,7 @@ const Contact = () => {
                             Github
                         </a>
                         <a
-                            href={`${process.env.PUBLIC_URL}/media/CV_carvajol_lory_24-02-26.pdf`}
+                            href={lienCV()}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="infobulle--droite"
