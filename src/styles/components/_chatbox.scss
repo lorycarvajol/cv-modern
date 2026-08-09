@@ -442,10 +442,30 @@ border: 1px solid rgba(10, 255, 239, 0.8);
   }
 }
 
-@media screen and (max-width: 768px) {
+// Geometrie de la fenetre de chat. Elle vivait en style inline dans ChatBox.js,
+// ou aucune media query ne pouvait l'atteindre.
+.chat-fenetre {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 350px;
+  height: 500px;
+}
+
+// Bascule mobile calee sur $mobileBreakpoint, et non sur 768px.
+//
+// C'est a 850px qu'apparait la barre d'onglets fixe. Avec l'ancien seuil, la
+// bulle gardait son placement bureau entre 768 et 850px et se posait sur la
+// barre. En dessous de 768px elle chevauchait encore de 25px : son bord bas
+// tombait a 40px du bas de l'ecran, la barre commencant a 65px.
+@media screen and (max-width: $mobileBreakpoint) {
   .chatbox-container {
-    bottom: 20px;
-    right: 20px;
+    // Padding annule : il eloignait le bouton de `bottom` de 20px
+    // supplementaires, ce qui rendait le calcul de degagement illisible.
+    // Ici, `bottom` est la distance reelle du bouton au bas de l'ecran.
+    padding: 0;
+    bottom: calc(#{$mobileTabBarH} + 1rem);
+    right: 1rem;
   }
 
   .chat-toggle {
@@ -457,11 +477,15 @@ border: 1px solid rgba(10, 255, 239, 0.8);
     }
   }
 
-  .chatbox {
-    width: min(350px, calc(100vw - 40px));
-    height: min(500px, calc(100vh - 100px));
-    bottom: 75px;
-    right: -10px;
+  .chat-fenetre {
+    // Pleine largeur moins une gouttiere : a 380px, les 350px fixes du bureau
+    // ne laissaient que 30px et collaient la fenetre au bord gauche.
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    // Se pose au-dessus de la bulle, elle-meme au-dessus de la barre.
+    bottom: calc(#{$mobileTabBarH} + 5rem);
+    height: min(500px, calc(100vh - #{$mobileTabBarH} - 7rem));
     border-radius: 15px;
   }
 

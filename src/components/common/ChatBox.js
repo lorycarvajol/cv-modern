@@ -167,15 +167,16 @@ const ChatBox = () => {
                 )}
             </div>
 
-            {/* Fenêtre de chat */}
+            {/* Fenêtre de chat.
+
+                La geometrie (position, taille) est passee au CSS : elle doit
+                changer sur mobile pour degager la barre d'onglets, ce qu'un
+                style inline ne permet pas — il l'emporte sur toute media query.
+                L'habillage reste ici. */}
             {isOpen && (
-                <div 
+                <div
+                    className="chat-fenetre"
                     style={{
-                        position: 'fixed',
-                        bottom: '100px',
-                        right: '30px',
-                        width: '350px',
-                        height: '500px',
                         background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)',
                         backdropFilter: 'blur(25px) saturate(180%) brightness(1.1)',
                         WebkitBackdropFilter: 'blur(25px) saturate(180%) brightness(1.1)',
