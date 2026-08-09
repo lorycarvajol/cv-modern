@@ -116,5 +116,37 @@ export const portfolioData = [
     source: 'https://github.com/lorycarvajol/litreview.git',
     info: "Projet de formation Python. L'application vise à fournir des critiques sur des livres et articles, ainsi qu'à recommander des lectures basées sur les avis des utilisateurs. Le projet prévoit l'utilisation de Django pour créer un MVP, avec des wireframes fournis par l'UX designer et un schéma de base de données déjà disponible pour guider le développement.",
     picture: './media/litrevu.png'
+  },
+  {
+    id: 14,
+    name: 'QCM Platform',
+    // Casse exacte : le filtre compare la chaine telle quelle
+    // (`themes.includes('Formateur')`). En minuscules, le projet n'apparaissait
+    // sous aucun filtre.
+    themes: ['Formateur'],
+    languages: ['React', 'FastAPI', 'Python'],
+    languagesIcons: ['fab fa-react', 'fas fa-bolt', 'fab fa-python'],
+    source: 'https://github.com/lorycarvajol/QCM-python-react',
+    website: 'https://qcm.lorycarvajol.dev',
+    info: "Plateforme de QCM full-stack avec création et génération de questionnaires par IA (Claude) ou manuellement et importation de fichier Excel , gestion de classes et de rôles (formateur, élève, compte solo), assignation de notes issus d'autre exercices, tableaux de bord avec graphiques, import Excel et export PDF des résultats. Authentification JWT, verrouillage de compte après échecs répétés, et conformité RGPD.",
+    techSpecs: {
+      frontend: ['React 18', 'Vite', 'Tailwind CSS'],
+      backend: ['FastAPI', 'TinyDB', 'Anthropic Claude API'],
+      hosting: ['Docker Compose', 'Traefik', 'OVH VPS']
+    },
+    screenshots: [
+      { src: './media/qcm/01-login.png', caption: 'Connexion avec sélection du rôle (formateur / élève solo)' },
+      { src: './media/qcm/02-dashboard-formateur.png', caption: 'Tableau de bord formateur : suivi des classes et de la progression' },
+      { src: './media/qcm/03-creation-qcm.png', caption: 'Possibilité de créer des QCM par plusieurs méthodes' },
+      { src: './media/qcm/04-generation-ia.png', caption: 'Génération d\'un QCM par IA à partir d\'un simple sujet' },
+      { src: './media/qcm/05-passage-qcm.png', caption: 'Interface de passage d\'un QCM, côté élève' },
+      { src: './media/qcm/06-rapports.png', caption: 'Rapports de résultats avec graphiques par classe' },
+      { src: './media/qcm/07-import-excel.png', caption: 'Import d\'un QCM depuis un fichier Excel, avec validation' }
+    ],
+    picture: './media/qcm/02-dashboard-formateur.png',
+    // Cadrage de la vignette de carte. Sans cela, le rognage se fait au centre
+    // et coupe l'en-tete du tableau de bord. Champ optionnel : les autres
+    // projets gardent le centrage par defaut.
+    cadrage: 'top center'
   }
 ]

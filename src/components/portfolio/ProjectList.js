@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { portfolioData } from '../../data/portfolioData';
 import Project from './Project';
 import FullPageModal from '../common/FullPageModal';
+import Carrousel from '../common/Carrousel';
+import VisionneusePleinEcran from '../common/VisionneusePleinEcran';
+
+// Noms des couches de `techSpecs`, cote affichage. Les cles du fichier de
+// donnees restent en anglais : ce sont des termes techniques stables, alors que
+// leur libelle a l'ecran peut changer.
+const LIBELLES_COUCHES = {
+    frontend: 'Interface',
+    backend: 'Serveur',
+    hosting: 'Hébergement',
+};
 
 // Libelle affiche quand un filtre ne contient encore aucun projet. Une entree
 // par theme : plusieurs sections se remplissent au fil de l'eau, un message
@@ -40,7 +51,9 @@ export default class ProjectList extends Component {
         currentPage: 1,
         projectsPerPage: 6,
         selectedProject: null,
-        showModal: false
+        showModal: false,
+        // Index de la vue agrandie depuis la capture d'en-tete. `null` = ferme.
+        indexEntete: null
     };
 
     handleRadio = (event) => {
@@ -74,15 +87,34 @@ export default class ProjectList extends Component {
         });
     }
 
+    // Vues servies a la visionneuse quand on agrandit la capture d'en-tete :
+    // la galerie du projet si elle existe, sinon la seule capture de la carte.
+    vuesEntete = (projet) => (
+        projet.screenshots?.length
+            ? projet.screenshots
+            : [{ src: projet.picture, caption: projet.name }]
+    );
+
+    handleAgrandirEntete = () => {
+        const projet = this.state.selectedProject;
+        const vues = this.vuesEntete(projet);
+        // S'ouvre sur la capture affichee, pas systematiquement sur la premiere.
+        const depart = Math.max(0, vues.findIndex((v) => v.src === projet.picture));
+        this.setState({ indexEntete: depart });
+    };
+
     handleCloseModal = () => {
         this.setState({
             selectedProject: null,
-            showModal: false
+            showModal: false,
+            // Sans cette remise a zero, rouvrir une fiche reaffichait la
+            // visionneuse restee ouverte de la precedente.
+            indexEntete: null
         });
     }
 
     render() {
-        let {projects, radios, selectedRadio, currentPage, projectsPerPage, showModal, selectedProject} = this.state;
+        let {projects, radios, selectedRadio, currentPage, projectsPerPage, showModal, selectedProject, indexEntete} = this.state;
         
         // Filtrage par theme
         const filteredProjects = projects.filter(item =>
@@ -191,9 +223,23 @@ export default class ProjectList extends Component {
                     {selectedProject && (
                         <div className="project-modal-content">
                             <div className="project-modal-header">
-                                <div className="project-modal-image">
+                                {/* Capture d'en-tete, agrandissable comme celles
+                                    du carrousel. Quand le projet a une galerie,
+                                    l'agrandissement s'ouvre sur la vue
+                                    correspondante et on peut circuler dans
+                                    toutes ; sinon la visionneuse n'en montre
+                                    qu'une, sans fleches ni vignettes. */}
+                                <button
+                                    type="button"
+                                    className="project-modal-image"
+                                    onClick={this.handleAgrandirEntete}
+                                    aria-label={`Agrandir l'aperçu de ${selectedProject.name}`}
+                                >
                                     <img src={selectedProject.picture} alt={selectedProject.name} />
-                                </div>
+                                    <span className="loupe-entete" aria-hidden="true">
+                                        <i className="fas fa-expand"></i>
+                                    </span>
+                                </button>
                                 <div className="project-modal-tech">
                                     <h3>Technologies utilisées</h3>
                                     <div className="tech-icons">
@@ -212,6 +258,38 @@ export default class ProjectList extends Component {
                             <div className="project-modal-body">
                                 <h3>Description du projet</h3>
                                 <p className="project-description">{selectedProject.info}</p>
+
+                                {/* Champs optionnels : seuls les projets qui les
+                                    renseignent affichent ces sections. Les autres
+                                    fiches restent inchangees. */}
+                                {selectedProject.techSpecs && (
+                                    <div className="project-specs">
+                                        <h3>Architecture</h3>
+                                        <dl>
+                                            {Object.entries(selectedProject.techSpecs).map(([couche, outils]) => (
+                                                <React.Fragment key={couche}>
+                                                    <dt>{LIBELLES_COUCHES[couche] || couche}</dt>
+                                                    <dd>{outils.join(' · ')}</dd>
+                                                </React.Fragment>
+                                            ))}
+                                        </dl>
+                                    </div>
+                                )}
+
+                                {selectedProject.screenshots?.length > 0 && (
+                                    <div className="project-galerie">
+                                        <h3>Aperçus</h3>
+                                        {/* `key` sur l'id du projet : sans elle, passer
+                                            d'un projet a l'autre reutiliserait le meme
+                                            carrousel, qui resterait sur l'index de la
+                                            fiche precedente. */}
+                                        <Carrousel
+                                            key={selectedProject.id}
+                                            vues={selectedProject.screenshots}
+                                            titre={selectedProject.name}
+                                        />
+                                    </div>
+                                )}
 
                                 <div className="project-modal-actions">
                                     {selectedProject.website && (
@@ -239,6 +317,15 @@ export default class ProjectList extends Component {
                                 </div>
                             </div>
                         </div>
+                    )}
+                    {selectedProject && indexEntete !== null && (
+                        <VisionneusePleinEcran
+                            vues={this.vuesEntete(selectedProject)}
+                            index={indexEntete}
+                            onChangerIndex={(i) => this.setState({ indexEntete: i })}
+                            onFermer={() => this.setState({ indexEntete: null })}
+                            titre={selectedProject.name}
+                        />
                     )}
                 </FullPageModal>
             </>

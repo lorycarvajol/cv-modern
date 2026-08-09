@@ -882,3 +882,348 @@
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// Fiche projet : architecture technique et galerie d'apercus.
+//
+// Sections optionnelles, rendues seulement pour les projets qui renseignent
+// `techSpecs` et `screenshots` dans portfolioData.js.
+// ---------------------------------------------------------------------------
+.project-specs {
+  margin-top: 2rem;
+
+  dl {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 0.6rem 1.25rem;
+    margin: 0;
+  }
+
+  dt {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  dd {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: $mobileBreakpoint) {
+    dl { grid-template-columns: 1fr; gap: 0.15rem; }
+    dt { margin-top: 0.75rem; }
+  }
+}
+
+.project-galerie {
+  margin-top: 2rem;
+}
+
+// ---------------------------------------------------------------------------
+// Carrousel d'apercus (components/common/Carrousel.js)
+// ---------------------------------------------------------------------------
+.carrousel {
+  .carrousel-scene {
+    position: relative;
+    // Cadre de proportions fixes : les captures n'ont pas toutes le meme
+    // format, sans cela la fiche sautait d'une vue a l'autre.
+    //
+    // 2.2/1 et non 16/9 : les captures mesurent ~1910x850, soit un rapport de
+    // 2.11 a 2.25. Dans un cadre en 1.78 elles etaient limitees par la largeur
+    // et laissaient 90px de bandes vides en haut et en bas.
+    aspect-ratio: 2.2 / 1;
+    background: rgba(0, 0, 0, 0.35);
+    border: $border-base;
+    border-radius: $radius-md;
+    overflow: hidden;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      // `contain` et non `cover` : ce sont des captures d'interface, les
+      // rogner cacherait ce qu'elles servent a montrer.
+      object-fit: contain;
+      cursor: zoom-in;
+      display: block;
+    }
+  }
+
+  .carrousel-compteur,
+  .carrousel-loupe {
+    position: absolute;
+    bottom: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: $radius-sm;
+    background: rgba(4, 18, 26, 0.75);
+    @include glass(8px);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .carrousel-compteur {
+    left: 0.6rem;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .carrousel-loupe {
+    right: 0.6rem;
+    border: $border-soft;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover,
+    &:focus-visible {
+      border-color: rgba($accent, 0.5);
+      color: $accent;
+    }
+  }
+
+  .carrousel-legende {
+    margin: 0.8rem 0 0;
+    min-height: 2.6em; // reserve la place de deux lignes : sans cela le bloc
+                       // sautait quand une legende passait sur une seule.
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .carrousel-vignettes {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    // Les boutons d'action de la fiche suivent immediatement : sans cette
+    // marge, les vignettes les touchaient.
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+
+    button {
+      flex: 0 0 74px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.25s ease;
+
+      img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+      &:hover, &:focus-visible { opacity: 0.85; }
+
+      &.active {
+        opacity: 1;
+        border-color: rgba($accent, 0.7);
+        box-shadow: 0 0 10px rgba($accent, 0.35);
+      }
+    }
+  }
+
+  @media (max-width: $mobileBreakpoint) {
+    .carrousel-fleche { width: 2rem; height: 2rem; }
+    .carrousel-vignettes button { flex-basis: 60px; height: 38px; }
+  }
+}
+
+// --- Plein ecran : carrousel complet, pas une image isolee -------------
+// Fleches de navigation. Regle de premier niveau et non imbriquee dans
+// `.carrousel` : le plein ecran est rendu dans document.body par un portail,
+// il n'a donc plus `.carrousel` pour ancetre.
+.carrousel-fleche {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: $border-base;
+  border-radius: 50%;
+  background: rgba(4, 18, 26, 0.75);
+  @include glass(8px);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &.precedent { left: 0.6rem; }
+  &.suivant { right: 0.6rem; }
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba($accent, 0.6);
+    background: rgba($accent, 0.18);
+    color: #fff;
+  }
+}
+
+.carrousel-plein-ecran {
+  position: fixed;
+  inset: 0;
+  z-index: 10000; // au-dessus de la modale projet (9999)
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 3.5rem 4.5rem 1.5rem;
+  background: rgba(2, 8, 14, 0.95);
+  @include glass(10px);
+  cursor: zoom-out;
+
+  .pe-scene {
+    flex: 1 1 auto;
+    min-height: 0; // sans quoi l'image pousse le pied de page hors de l'ecran
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: $radius-sm;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  // Les fleches se posent sur les bords de l'ecran, pas sur l'image : a
+  // cette taille, les superposer masquerait ce qu'on vient agrandir.
+  .carrousel-fleche {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.1rem;
+
+    &.precedent { left: 1rem; }
+    &.suivant { right: 1rem; }
+  }
+
+  .pe-fermer {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: $border-base;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 1;
+
+    &:hover, &:focus-visible { border-color: rgba($accent, 0.6); color: $accent; }
+  }
+
+  .pe-pied {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 900px;
+    cursor: default;
+  }
+
+  .pe-legende {
+    margin: 0 0 0.75rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+  }
+
+  .pe-compteur {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.1rem 0.5rem;
+    border: $border-soft;
+    border-radius: $radius-sm;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: rgba($accent, 0.9);
+  }
+
+  .pe-vignettes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    button {
+      flex: 0 0 84px;
+      height: 50px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.45;
+      transition: all 0.25s ease;
+
+      img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+      &:hover, &:focus-visible { opacity: 0.85; }
+
+      &.active {
+        opacity: 1;
+        border-color: rgba($accent, 0.7);
+        box-shadow: 0 0 10px rgba($accent, 0.35);
+      }
+    }
+  }
+
+  @media (max-width: $mobileBreakpoint) {
+    padding: 3.25rem 0.75rem 1rem;
+
+    .carrousel-fleche {
+      width: 2.4rem;
+      height: 2.4rem;
+      &.precedent { left: 0.35rem; }
+      &.suivant { right: 0.35rem; }
+    }
+
+    .pe-vignettes button { flex-basis: 56px; height: 34px; }
+  }
+}
+
+// La capture d'en-tete de la fiche projet est devenue un bouton (elle ouvre la
+// visionneuse) : on annule l'habillage natif pour qu'elle reste une image.
+.project-modal-image {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  position: relative;
+
+  .loupe-entete {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: $border-soft;
+    border-radius: $radius-sm;
+    background: rgba(4, 18, 26, 0.75);
+    @include glass(8px);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.25s ease, color 0.25s ease;
+  }
+
+  &:hover .loupe-entete,
+  &:focus-visible .loupe-entete {
+    opacity: 1;
+    color: $accent;
+  }
+}

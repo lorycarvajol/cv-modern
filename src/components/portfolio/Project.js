@@ -12,7 +12,7 @@ export default class Project extends Component {
     
 
     render() {
-        let {name, languagesIcons, picture} = this.props.item;
+        let {name, languagesIcons, picture, cadrage} = this.props.item;
         
         return (
             <div className="project">
@@ -30,7 +30,17 @@ export default class Project extends Component {
                 <h3>{name}</h3>
                 
                 <div className="project-image">
-                    <img src={picture} alt={name} />
+                    {/* `cadrage` (optionnel, defini dans portfolioData.js) choisit
+                        la partie conservee au rognage. Le cadre de la carte est
+                        bien plus large que haut (4.18 contre 2.25 pour les
+                        captures) : `cover` rogne donc en haut et en bas, et le
+                        centrage par defaut coupe l'en-tete de l'interface, qui
+                        est justement ce qui identifie l'application. */}
+                    <img
+                        src={picture}
+                        alt={name}
+                        style={cadrage ? { objectPosition: cadrage } : undefined}
+                    />
                 </div>
 
             </div>
