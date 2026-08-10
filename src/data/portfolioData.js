@@ -148,5 +148,28 @@ export const portfolioData = [
     // et coupe l'en-tete du tableau de bord. Champ optionnel : les autres
     // projets gardent le centrage par defaut.
     cadrage: 'top center'
-  }
+  },
+  {
+  id: 15,
+  name: 'CodeAcademy',
+  themes: ['Labo'],
+  languages: ['React', 'Django'],
+  languagesIcons: ['fab fa-react', 'fab fa-python'],
+  source: 'https://github.com/lorycarvajol/appli-learning-1',
+  website: 'https://codelearning.lorycarvajol.dev',
+  info: "Plateforme d'apprentissage du développement web en 4 chapitres (HTML, CSS, JavaScript, mise en ligne d'un site vitrine), avec exercices corrigés automatiquement dans un bac à sable Docker isolé, sans réseau. Système de quiz, trophées et progression, espace formateur pour suivre une classe, et journal d'audit pour l'administration. Anonymisation RGPD plutôt que suppression, pour ne pas fausser les statistiques de classe.",
+  techSpecs: {
+    frontend: ['React 18', 'Vite', 'Redux Toolkit', 'React Router 7', 'Monaco Editor'],
+    backend: ['Django 5.2', 'Django REST Framework', 'SimpleJWT', 'Celery'],
+    database: ['PostgreSQL 15', 'Redis 7'],
+    hosting: ['Docker Compose', 'Traefik', "Let's Encrypt", 'OVH VPS']
+  },
+  screenshots: [
+    { src: './media/codelearning/tableau-de-bord.jpg', caption: 'Le tableau de bord : reprendre son parcours là où on l\'a laissé' },
+    { src: './media/codelearning/exercice.jpg', caption: 'Un exercice corrigé automatiquement dans un bac à sable isolé' },
+    { src: './media/codelearning/trophees.jpg', caption: 'Trophées et objectifs, dont dix secrets révélés par une énigme' },
+    { src: './media/codelearning/espace-formateur.jpg', caption: 'L\'espace formateur : suivi de classe, leçon par leçon' }
+  ],
+  picture: './media/codelearning/tableau-de-bord.jpg'
+}
 ]

@@ -65,7 +65,7 @@ const Experiences = () => {
                         <ul>
                             <li><i className="fas fa-laptop-code"></i>Formation en développement web et mobile pour Nepsod</li>
                             <li><i className="fas fa-chart-pie"></i>Consulting en data analyse et business intelligence</li>
-                            <li><i className="fas fa-users-class"></i>Animation de sessions de formation professionnelle</li>
+                            <li><i className="fas fa-chalkboard-teacher"></i>Animation de sessions de formation professionnelle</li>
                             <li><i className="fas fa-project-diagram"></i>Accompagnement à la transformation digitale des entreprises</li>
                         </ul>
 
@@ -126,7 +126,7 @@ const Experiences = () => {
                             <li><i className="fas fa-industry"></i>Compréhension des processus industriels aéronautiques</li>
                             <li><i className="fas fa-users-cog"></i>Travail en équipe pluridisciplinaire (ingénieurs, techniciens, managers)</li>
                             <li><i className="fas fa-project-diagram"></i>Gestion de projet en mode Agile/Scrum</li>
-                            <li><i className="fas fa-presentation"></i>Communication technique auprès des parties prenantes</li>
+                            <li><i className="fas fa-comments"></i>Communication technique auprès des parties prenantes</li>
                         </ul>
 
                         <p>
@@ -173,7 +173,7 @@ const Experiences = () => {
                             <li><i className="fas fa-graduation-cap"></i>Pédagogie active et apprentissage par projet</li>
                             <li><i className="fab fa-git-alt"></i>Formation aux bonnes pratiques Git et travail collaboratif</li>
                             <li><i className="fas fa-bug"></i>Debugging et résolution de problèmes en binôme</li>
-                            <li><i className="fas fa-presentation"></i>Préparation aux entretiens techniques</li>
+                            <li><i className="fas fa-user-tie"></i>Préparation aux entretiens techniques</li>
                         </ul>
 
                         <h3>Résultats</h3>

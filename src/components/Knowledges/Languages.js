@@ -90,7 +90,7 @@ class Languages extends Component {
 
                     <h3>Combinaisons Techniques Maîtrisées</h3>
                     <ul>
-                        <li><i className="fas fa-layers"></i><strong>Full Stack Python</strong> : Django + PostgreSQL + Bootstrap + Deployment Docker</li>
+                        <li><i className="fas fa-layer-group"></i><strong>Full Stack Python</strong> : Django + PostgreSQL + Bootstrap + Deployment Docker</li>
                         <li><i className="fas fa-chart-line"></i><strong>Data Stack</strong> : Python + Pandas/NumPy + SQL + Power BI + Matplotlib</li>
                         <li><i className="fas fa-globe"></i><strong>Web Moderne</strong> : React + JavaScript ES6+ + API REST + Responsive Design</li>
                         <li><i className="fas fa-server"></i><strong>Backend Robuste</strong> : PHP/Symfony + MySQL + API + Sécurité avancée</li>
