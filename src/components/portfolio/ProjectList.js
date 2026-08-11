@@ -11,6 +11,7 @@ import VisionneusePleinEcran from '../common/VisionneusePleinEcran';
 const LIBELLES_COUCHES = {
     frontend: 'Interface',
     backend: 'Serveur',
+    database: 'Données',
     hosting: 'Hébergement',
 };
 

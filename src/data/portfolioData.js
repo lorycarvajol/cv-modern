@@ -6,6 +6,12 @@
 //
 // `languages` reste utilise pour les icones et la liste des technos affichees
 // dans la fiche detail du projet.
+//
+// `shortInfo` (optionnel) est la description courte affichee sur la carte de la
+// grille, sous le titre. A ne pas confondre avec `info`, la description longue
+// reservee a la fiche detail. Une phrase, sans point final superflu : elle est
+// tronquee a deux lignes pour que les cartes d'une meme rangee restent alignees.
+// Les projets qui ne la renseignent pas gardent la carte a trois rangees.
 export const portfolioData = [
   {
     id: 1,
@@ -128,6 +134,7 @@ export const portfolioData = [
     languagesIcons: ['fab fa-react', 'fas fa-bolt', 'fab fa-python'],
     source: 'https://github.com/lorycarvajol/QCM-python-react',
     website: 'https://qcm.lorycarvajol.dev',
+    shortInfo: 'Questionnaires générés par IA, suivi de classe et export des résultats',
     info: "Plateforme de QCM full-stack avec création et génération de questionnaires par IA (Claude) ou manuellement et importation de fichier Excel , gestion de classes et de rôles (formateur, élève, compte solo), assignation de notes issus d'autre exercices, tableaux de bord avec graphiques, import Excel et export PDF des résultats. Authentification JWT, verrouillage de compte après échecs répétés, et conformité RGPD.",
     techSpecs: {
       frontend: ['React 18', 'Vite', 'Tailwind CSS'],
@@ -150,26 +157,34 @@ export const portfolioData = [
     cadrage: 'top center'
   },
   {
-  id: 15,
-  name: 'CodeAcademy',
-  themes: ['Labo'],
-  languages: ['React', 'Django'],
-  languagesIcons: ['fab fa-react', 'fab fa-python'],
-  source: 'https://github.com/lorycarvajol/appli-learning-1',
-  website: 'https://codelearning.lorycarvajol.dev',
-  info: "Plateforme d'apprentissage du développement web en 4 chapitres (HTML, CSS, JavaScript, mise en ligne d'un site vitrine), avec exercices corrigés automatiquement dans un bac à sable Docker isolé, sans réseau. Système de quiz, trophées et progression, espace formateur pour suivre une classe, et journal d'audit pour l'administration. Anonymisation RGPD plutôt que suppression, pour ne pas fausser les statistiques de classe.",
-  techSpecs: {
-    frontend: ['React 18', 'Vite', 'Redux Toolkit', 'React Router 7', 'Monaco Editor'],
-    backend: ['Django 5.2', 'Django REST Framework', 'SimpleJWT', 'Celery'],
-    database: ['PostgreSQL 15', 'Redis 7'],
-    hosting: ['Docker Compose', 'Traefik', "Let's Encrypt", 'OVH VPS']
-  },
-  screenshots: [
-    { src: './media/codelearning/tableau-de-bord.jpg', caption: 'Le tableau de bord : reprendre son parcours là où on l\'a laissé' },
-    { src: './media/codelearning/exercice.jpg', caption: 'Un exercice corrigé automatiquement dans un bac à sable isolé' },
-    { src: './media/codelearning/trophees.jpg', caption: 'Trophées et objectifs, dont dix secrets révélés par une énigme' },
-    { src: './media/codelearning/espace-formateur.jpg', caption: 'L\'espace formateur : suivi de classe, leçon par leçon' }
-  ],
-  picture: './media/codelearning/tableau-de-bord.jpg'
-}
+    id: 15,
+    name: 'CodeAcademy',
+    themes: ['Formateur'],
+    languages: ['React', 'Django', 'PostgreSQL', 'Docker'],
+    languagesIcons: ['fab fa-react', 'fab fa-python', 'fas fa-database', 'fab fa-docker'],
+    source: 'https://github.com/lorycarvajol/appli-learning-1',
+    website: 'https://codelearning.lorycarvajol.dev',
+    shortInfo: 'Parcours web en 4 chapitres, exercices corrigés dans un bac à sable Docker',
+    info: "Plateforme d'apprentissage du développement web : 4 chapitres et 68 leçons (HTML, CSS, JavaScript, puis mise en ligne d'un site vitrine), avec exercices de code corrigés automatiquement dans un bac à sable Docker isolé, sans accès réseau. Chaque exercice annonce ses critères de validation et propose des indices. Progression détaillée leçon par leçon, quiz, 30 trophées dont 10 secrets et séries de régularité. Espace formateur pour suivre une classe et ouvrir les chapitres, back-office Django pour le contenu et le journal d'audit. Anonymisation RGPD plutôt que suppression, pour ne pas fausser les statistiques de classe.",
+    techSpecs: {
+      frontend: ['React 18', 'Vite', 'Redux Toolkit', 'React Router 7', 'Monaco Editor'],
+      backend: ['Django 5.2', 'Django REST Framework', 'SimpleJWT', 'Celery'],
+      database: ['PostgreSQL 15', 'Redis 7'],
+      hosting: ['Docker Compose', 'Traefik', "Let's Encrypt", 'OVH VPS']
+    },
+    screenshots: [
+      { src: './media/codelearning/tableau-de-bord.png', caption: 'Tableau de bord : reprendre la leçon en cours, points, trophées et progression globale' },
+      { src: './media/codelearning/chapitres.png', caption: 'Les 4 chapitres du parcours, du HTML à la mise en ligne d\'un site vitrine' },
+      { src: './media/codelearning/lessons.png', caption: 'Une leçon : théorie, exemples de code commentés et analogies du quotidien' },
+      { src: './media/codelearning/exercices.png', caption: 'Exercice corrigé automatiquement : critères de validation, indices et éditeur de code' },
+      { src: './media/codelearning/progression.png', caption: 'Ma progression : avancement chapitre par chapitre, temps investi et score moyen' },
+      { src: './media/codelearning/trophy.png', caption: 'Trophées et objectifs, dont dix secrets révélés par une énigme' },
+      { src: './media/codelearning/gestion-classes.png', caption: 'Espace formateur : suivi des apprenants et ouverture des chapitres' },
+      { src: './media/codelearning/tableau-de-bord-admin.png', caption: 'Back-office Django : contenu, classes, gamification et jetons révoqués' }
+    ],
+    picture: './media/codelearning/tableau-de-bord.png',
+    // Meme raison que pour QCM : le rognage centre couperait l'en-tete du
+    // tableau de bord (barre de navigation et message d'accueil).
+    cadrage: 'top center'
+  }
 ]

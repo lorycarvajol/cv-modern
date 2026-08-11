@@ -39,7 +39,13 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8099/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8099/contact)",
       "Bash(curl -s -I http://localhost:8099/index.html)",
-      "Bash(curl -s http://localhost:8099/contact)"
+      "Bash(curl -s http://localhost:8099/contact)",
+      "Bash(BROWSER=none PORT=3000 npm start *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(node *)",
+      "Bash(npx react-scripts *)",
+      "Bash(BROWSER=none npx react-scripts *)"
     ],
     "deny": []
   }

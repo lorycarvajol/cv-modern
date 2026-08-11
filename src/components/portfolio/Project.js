@@ -12,23 +12,30 @@ export default class Project extends Component {
     
 
     render() {
-        let {name, languagesIcons, picture, cadrage} = this.props.item;
-        
+        let {name, languagesIcons, picture, cadrage, shortInfo} = this.props.item;
+
         return (
-            <div className="project">
+            /* `project--avec-resume` ajoute la rangee de grille du resume. Sans
+               cette classe, le `1fr` de `.project` echoit au paragraphe et la
+               capture bascule dans une rangee implicite. */
+            <div className={`project${shortInfo ? ' project--avec-resume' : ''}`}>
                 <button className="project-details-btn" onClick={this.handleInfo}>
                     <i className="fas fa-info-circle"></i>
                     Détails
                 </button>
-                
+
                 <div className="icons">
                     {languagesIcons.map(icon =>
                         <i className={icon} key={icon}></i>
                     )}
                 </div>
-                
+
                 <h3>{name}</h3>
-                
+
+                {/* Champ optionnel : les projets sans `shortInfo` gardent une
+                    carte a trois rangees, inchangee. */}
+                {shortInfo && <p className="project-resume">{shortInfo}</p>}
+
                 <div className="project-image">
                     {/* `cadrage` (optionnel, defini dans portfolioData.js) choisit
                         la partie conservee au rognage. Le cadre de la carte est

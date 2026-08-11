@@ -136,7 +136,15 @@
         box-shadow: $shadow-card;
         position: relative;
         overflow: hidden;
-        
+
+        // Une rangee de plus pour la description courte, glissee entre le titre
+        // et la capture. Variante et non valeur par defaut : une 4e rangee
+        // declaree pour tous ajouterait un `gap` de 1rem au bas des cartes qui
+        // n'ont pas de resume, la rangee vide comptant dans les gouttieres.
+        &.project--avec-resume {
+          grid-template-rows: auto auto auto 1fr;
+        }
+
         &::before {
           content: '';
           position: absolute;
@@ -239,6 +247,24 @@
         }
       }
       
+      // Description courte de la carte (`shortInfo`). Le titre porte un trait
+      // lumineux en `::after` a -8px : d'ou le retrait haut, sinon le resume
+      // vient s'asseoir dessus.
+      .project-resume {
+        margin: 0.35rem 0 0;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.85rem;
+        line-height: 1.45;
+        text-align: center;
+
+        // Bornage a deux lignes : les resumes n'ont pas tous la meme longueur et
+        // une carte plus haute que sa voisine desaligne toute la rangee.
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
       .project-image {
         width: 100%;
         height: 200px;
