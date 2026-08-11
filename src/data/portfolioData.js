@@ -241,5 +241,38 @@ export const portfolioData = [
     // Meme raison que pour les projets precedents : le rognage centre couperait
     // l'en-tete et l'accroche de la page d'accueil.
     cadrage: 'top center'
+  },
+  {
+    id: 18,
+    name: 'Voyage à Milan',
+    // 'Labo' et non 'Vitrine' : ce n'est pas un site client, c'est un banc
+    // d'essai personnel — d'ou sa place a cote des autres experimentations.
+    themes: ['Labo'],
+    languages: ['HTML5', 'CSS3', 'JavaScript'],
+    languagesIcons: ['fab fa-html5', 'fab fa-css3-alt', 'fab fa-js'],
+    source: 'https://github.com/lorycarvajol/voyage---Milan',
+    shortInfo: "Carnet de route interactif d'un week-end dans les Alpes jusqu'à Milan",
+    info: "Carnet de route d'un week-end d'août : traversée des Alpes par le col du Petit-Saint-Bernard puis trois jours à Milan (320 km, 17 étapes, 2 pays). Site éditorial en HTML/CSS/JS vanille, sans framework ni dépendance : profil altimétrique en SVG animé au chargement, carte Leaflet avec tracés colorés par territoire traversé, et trois dispositifs de repérage synchronisés (fil segmenté desktop, fil au clic mobile, rail vertical des 17 étapes) pilotés par un seul ordonnanceur de scroll partagé. Système de couleur et de typographie pensé comme un récit : glacier pour le versant français, laiton pour la vallée d'Aoste, rouge Campari pour Milan. Accessibilité soignée (prefers-reduced-motion, aria-current, lien d'évitement). Le projet est né en août 2025 d'une demande de mon épouse pour préparer un week-end pour le marriage d'une amie : la première version a été produite en deux ou trois échanges avec Claude, et c'est la refonte menée un an plus tard qui a tout repris — direction artistique, mise en page, animations. Les deux dernières captures montrent cet état d'origine.",
+    techSpecs: {
+      frontend: ['HTML/CSS/JS vanille, sans framework', 'Leaflet 1.9.4 (carte)', 'SVG animé (profil altimétrique)'],
+      hosting: ['Netlify', 'build.js (assemblage statique, sans dépendance npm)']
+    },
+    // Les cinq premieres vues montrent la refonte, les deux dernieres la
+    // version de 2025 : l'ordre fait lire la galerie comme un avant/apres, et
+    // les legendes datent explicitement les captures d'origine pour qu'on ne
+    // les prenne pas pour l'etat actuel du site.
+    screenshots: [
+      { src: './media/voyage-milan/new-hero.png', caption: "Ouverture : le profil altimétrique du trajet, dessiné en SVG et animé au chargement" },
+      { src: './media/voyage-milan/new-itineraire.png', caption: 'Le tracé sur carte Leaflet : traversée alpine en pointillés, descente sur Milan en rouge' },
+      { src: './media/voyage-milan/new-journey.png', caption: "Jour 01, la traversée alpine : chaque étape avec sa distance, sa durée et ce qu'il y a à voir" },
+      { src: './media/voyage-milan/new-journey-2.png', caption: 'Jour 02 à Milan : le fil de progression du haut se colore section par section' },
+      { src: './media/voyage-milan/new-tricks.png', caption: 'Le guide : budget, réservations, adresses et usages locaux en trois colonnes' },
+      { src: './media/voyage-milan/old-design-hero.png', caption: 'Première version, août 2025 : sortie de deux ou trois échanges avec Claude' },
+      { src: './media/voyage-milan/old-design-content.png', caption: 'La même page en 2025 — cartes empilées et tuiles claires, avant la refonte éditoriale' }
+    ],
+    picture: './media/voyage-milan/new-hero.png',
+    // Meme raison que pour les projets precedents : le rognage centre couperait
+    // le titre et la barre de navigation.
+    cadrage: 'top center'
   }
 ]

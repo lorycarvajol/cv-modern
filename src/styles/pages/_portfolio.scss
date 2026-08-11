@@ -251,18 +251,36 @@
       // lumineux en `::after` a -8px : d'ou le retrait haut, sinon le resume
       // vient s'asseoir dessus.
       .project-resume {
+        // Les trois valeurs servent a la fois au bornage et au plancher de
+        // hauteur : les garder ensemble evite qu'elles divergent.
+        $resume-lignes: 2;
+        $resume-taille: 0.85rem;
+        $resume-interligne: 1.45;
+
         margin: 0.35rem 0 0;
         color: rgba(255, 255, 255, 0.65);
-        font-size: 0.85rem;
-        line-height: 1.45;
+        font-size: $resume-taille;
+        line-height: $resume-interligne;
         text-align: center;
 
         // Bornage a deux lignes : les resumes n'ont pas tous la meme longueur et
         // une carte plus haute que sa voisine desaligne toute la rangee.
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: $resume-lignes;
         -webkit-box-orient: vertical;
         overflow: hidden;
+
+        // Plancher indispensable, et pas une precaution decorative.
+        //
+        // `overflow: hidden` ramene la hauteur minimale automatique de ce
+        // paragraphe a zero. La carte, elle, est contrainte : la rangee de la
+        // capture vaut 200px fixes. Le resume est donc la seule rangee que la
+        // grille puisse comprimer, et elle s'en sert des qu'une deuxieme rangee
+        // de cartes apparait : mesure a 13.4px pour 39px de contenu sur le
+        // filtre Labo a trois projets, la deuxieme ligne passant sous la
+        // capture. Le bug est invisible tant qu'un filtre ne contient qu'une
+        // seule rangee de cartes.
+        min-height: $resume-lignes * $resume-interligne * $resume-taille;
       }
 
       .project-image {
