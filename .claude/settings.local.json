@@ -48,7 +48,17 @@
       "Bash(BROWSER=none npx react-scripts *)",
       "Bash(mv \"comparatif villes.png\" comparatif-villes.png)",
       "Bash(mv \"corbe saisonnière.png\" courbe-saisonniere.png)",
-      "Bash(mv \"tendance annuelle.png\" tendance-annuelle.png)"
+      "Bash(mv \"tendance annuelle.png\" tendance-annuelle.png)",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git check-ignore *)",
+      "Bash(npm ls *)",
+      "Bash(node -e *)",
+      "Read(//tmp/**)",
+      "Bash(bash -n /tmp/d.sh)",
+      "Bash(cp /tmp/corps.txt /tmp/d.sh)",
+      "Bash(cat /tmp/corps.txt)"
     ],
     "deny": []
   }

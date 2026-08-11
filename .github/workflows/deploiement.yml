@@ -1,0 +1,95 @@
+# Deploiement continu sur le VPS OVH.
+#
+# Declenche a chaque push sur master. Le job `verification` sert de garde-fou :
+# si le build React casse, on ne touche pas au serveur. Le job `deploiement` ne
+# demarre qu'apres.
+#
+# Prerequis cote GitHub (Settings > Secrets and variables > Actions) :
+#   VPS_HOTE        adresse du serveur          ex. 51.75.194.109
+#   VPS_UTILISATEUR compte SSH de deploiement   ex. deploy
+#   VPS_CHEMIN      dossier du depot sur le VPS ex. /srv/cv-modern
+#   VPS_CLE_SSH     cle privee (ed25519) du compte ci-dessus
+#   VPS_HOST_KEY    cle publique du serveur, sortie de `ssh-keyscan`
+#
+# Tant que ces cinq secrets n'existent pas, le workflow echoue sans rien casser :
+# il ne peut pas ouvrir de session.
+
+name: Déploiement
+
+on:
+  push:
+    branches: [master]
+  # Permet de redeployer a la demande depuis l'onglet Actions, sans commit vide.
+  workflow_dispatch:
+
+concurrency:
+  group: deploiement-production
+  # Volontairement `false` : interrompre un deploiement en cours laisserait le
+  # serveur avec des conteneurs a moitie reconstruits.
+  cancel-in-progress: false
+
+jobs:
+  verification:
+    name: Build de contrôle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # CI=true transforme les avertissements en erreurs : c'est ce qui rend ce
+      # job utile comme garde-fou plutot que decoratif.
+      - name: Build de production
+        run: npm run build
+        env:
+          CI: true
+
+  deploiement:
+    name: Déploiement sur le VPS
+    needs: verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Préparer la connexion SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_CLE_SSH }}" > ~/.ssh/id_deploiement
+          chmod 600 ~/.ssh/id_deploiement
+          # Empreinte du serveur fournie en secret plutot que
+          # StrictHostKeyChecking=no : sans elle, la premiere connexion accepte
+          # n'importe quel hote qui repond a cette adresse.
+          printf '%s\n' "${{ secrets.VPS_HOST_KEY }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Mettre à jour et relancer la pile
+        run: |
+          ssh -i ~/.ssh/id_deploiement \
+              -o IdentitiesOnly=yes \
+              "${{ secrets.VPS_UTILISATEUR }}@${{ secrets.VPS_HOTE }}" \
+              'bash -euo pipefail -s' <<'DEPLOIEMENT'
+            # Le delimiteur est quote : le shell local n'interprete rien. Seul
+            # `${{ ... }}` est remplace, en amont, par Actions lui-meme.
+            cd "${{ secrets.VPS_CHEMIN }}"
+            echo "== Dossier : $(pwd)"
+
+            git fetch origin master
+            # `reset --hard` et non `pull` : un `pull` echouerait sur un conflit
+            # si quelqu'un a edite un fichier suivi sur le serveur. Les fichiers
+            # non suivis survivent — le `.env` du VPS n'est donc pas touche
+            # (`.env*` est ignore, voir .gitignore).
+            git reset --hard origin/master
+
+            echo "== Reconstruction"
+            docker compose up -d --build
+
+            # Sans ce nettoyage, chaque `--build` laisse l'image precedente en
+            # orphelin : le disque du VPS se remplit en quelques semaines.
+            docker image prune -f
+
+            echo "== Etat des conteneurs"
+            docker compose ps
+          DEPLOIEMENT
