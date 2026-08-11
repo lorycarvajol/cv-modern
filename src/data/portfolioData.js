@@ -215,5 +215,31 @@ export const portfolioData = [
     // Meme raison que pour les deux projets precedents : le rognage centre
     // couperait l'en-tete et l'accroche de la page d'accueil.
     cadrage: 'top center'
+  },
+  {
+    id: 17,
+    name: 'Évolution Climatique',
+    themes: ['Labo'],
+    languages: ['React', 'FastAPI', 'Python'],
+    languagesIcons: ['fab fa-react', 'fas fa-bolt', 'fab fa-python'],
+    source: 'https://github.com/lorycarvajol/weather-evolution-app',
+    website: 'https://weather-evolution-app.vercel.app',
+    shortInfo: "75 ans d'évolution des températures d'été, ville par ville",
+    info: "Application de visualisation de l'évolution de la température moyenne estivale (mai-septembre) sur les 75 dernières années, pour une ou plusieurs villes françaises, à partir des données ouvertes Météo-France. Architecture en pipeline : un ETL Python récupère et agrège les données une fois (mise à jour périodique), calcule une tendance par régression linéaire (°C/an) par ville, et alimente une base ; le backend ne fait que la lire, sans recalcul à la requête. Sélecteur de villes en autocomplétion, comparaison multi-villes sur un même graphique et badge de tendance par décennie pour chacune. Deux lectures : la tendance annuelle, doublée du nombre de jours au-dessus de 35 °C quand une seule ville est retenue, et une courbe saisonnière animée qui déroule les années mois par mois, avec en repère la plus ancienne année disponible pour la ville et les précipitations en arrière-plan.",
+    techSpecs: {
+      frontend: ['React 18', 'Vite', 'Recharts', 'Axios'],
+      backend: ['FastAPI', 'SQLAlchemy', 'SQLite / PostgreSQL'],
+      hosting: ['Vercel (interface)', 'Render (API)']
+    },
+    screenshots: [
+      { src: './media/weather-app/dashboard.png', caption: 'Accueil : deux lectures possibles, tendance annuelle ou courbe saisonnière' },
+      { src: './media/weather-app/tendance-annuelle.png', caption: 'Une seule ville : la courbe des étés et, en barres, les jours au-delà de 35 °C' },
+      { src: './media/weather-app/comparatif-villes.png', caption: 'Comparaison de trois villes, chacune avec sa tendance en °C par décennie' },
+      { src: './media/weather-app/courbe-saisonniere.png', caption: 'Courbe saisonnière animée : l\'année choisie face à la plus ancienne, précipitations en fond' }
+    ],
+    picture: './media/weather-app/dashboard.png',
+    // Meme raison que pour les projets precedents : le rognage centre couperait
+    // l'en-tete et l'accroche de la page d'accueil.
+    cadrage: 'top center'
   }
 ]

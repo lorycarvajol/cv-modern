@@ -45,7 +45,10 @@
       "Bash(curl -s http://localhost:3000/)",
       "Bash(node *)",
       "Bash(npx react-scripts *)",
-      "Bash(BROWSER=none npx react-scripts *)"
+      "Bash(BROWSER=none npx react-scripts *)",
+      "Bash(mv \"comparatif villes.png\" comparatif-villes.png)",
+      "Bash(mv \"corbe saisonnière.png\" courbe-saisonniere.png)",
+      "Bash(mv \"tendance annuelle.png\" tendance-annuelle.png)"
     ],
     "deny": []
   }
