@@ -57,19 +57,15 @@ jobs:
       - name: Préparer la connexion SSH
         run: |
           mkdir -p ~/.ssh
-          printf '%s\n' "${{ secrets.VPS_CLE_SSH }}" > ~/.ssh/id_deploiement
+          echo "${{ secrets.VPS_CLE_SSH }}" | base64 -d > ~/.ssh/id_deploiement
           chmod 600 ~/.ssh/id_deploiement
-          # Empreinte du serveur fournie en secret plutot que
-          # StrictHostKeyChecking=no : sans elle, la premiere connexion accepte
-          # n'importe quel hote qui repond a cette adresse.
           printf '%s\n' "${{ secrets.VPS_HOST_KEY }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       # Step temporaire : compare ce hash a celui de `md5sum ~/cv-deploy-key`
       # sur le VPS. Different => le secret GitHub est corrompu (ligne vide,
       # CRLF...), pas la cle elle-meme. A retirer une fois le diagnostic fait.
-      - name: Debug — vérifier intégrité du secret (temporaire)
-        run: printf '%s' "${{ secrets.VPS_CLE_SSH }}" | md5sum
+      
 
       - name: Mettre à jour et relancer la pile
         run: |
