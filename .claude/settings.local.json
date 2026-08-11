@@ -58,7 +58,9 @@
       "Read(//tmp/**)",
       "Bash(bash -n /tmp/d.sh)",
       "Bash(cp /tmp/corps.txt /tmp/d.sh)",
-      "Bash(cat /tmp/corps.txt)"
+      "Bash(cat /tmp/corps.txt)",
+      "Bash(bash -n /tmp/d2.sh)",
+      "Bash(bash -n C:/Users/loryc/AppData/Local/Temp/claude/C--Dev-cv-modern/85142d1d-20f5-43a0-81da-b0e23ff270c2/scratchpad/d2.sh)"
     ],
     "deny": []
   }

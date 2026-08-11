@@ -71,8 +71,12 @@ jobs:
               -o IdentitiesOnly=yes \
               "${{ secrets.VPS_UTILISATEUR }}@${{ secrets.VPS_HOTE }}" \
               'bash -euo pipefail -s' <<'DEPLOIEMENT'
-            # Le delimiteur est quote : le shell local n'interprete rien. Seul
-            # `${{ ... }}` est remplace, en amont, par Actions lui-meme.
+            # Le delimiteur est quote : le shell local n'interprete rien. Les
+            # expressions Actions, elles, sont remplacees en amont — partout
+            # dans le bloc, y compris dans une ligne commencant par un diese.
+            # Ne jamais ecrire la syntaxe d'expression a vide dans ces
+            # commentaires : Actions tenterait de l'evaluer et le workflow
+            # echouerait avant meme d'ouvrir la session SSH.
             cd "${{ secrets.VPS_CHEMIN }}"
             echo "== Dossier : $(pwd)"
 
