@@ -186,5 +186,34 @@ export const portfolioData = [
     // Meme raison que pour QCM : le rognage centre couperait l'en-tete du
     // tableau de bord (barre de navigation et message d'accueil).
     cadrage: 'top center'
+  },
+  {
+    id: 16,
+    name: 'DGFiP Concours C 2026',
+    themes: ['Labo'],
+    languages: ['HTML5', 'CSS3', 'JavaScript'],
+    languagesIcons: ['fab fa-html5', 'fab fa-css3-alt', 'fab fa-js'],
+    source: 'https://github.com/lorycarvajol/dgfip-entrainement',
+    website: 'https://dgfip-personnal-trainning.netlify.app',
+    shortInfo: 'Site de révision pour le concours DGFiP/DGDDI, sans framework',
+    info: "Site de révision pour le concours commun C externe DGFiP/DGDDI 2026 : 17 fiches de cours réparties en 4 matières (orthographe, culture générale, calcul, raisonnement), annales QCM 2023-2025 corrigées, flashcards et exercices d'entraînement avec tirage aléatoire équilibré par sous-thème (20 questions / 30 minutes par tentative, jamais la même liste deux fois). 589 questions au total, chacune corrigée et commentée, avec export du résultat en CSV ou PDF. Aucun framework ni étape de build : HTML/CSS/JS vanille, en-têtes de sécurité (CSP, HSTS) configurés côté Netlify.",
+    techSpecs: {
+      frontend: ['HTML', 'CSS', 'JavaScript vanille — sans framework ni build'],
+      hosting: ['Netlify', 'CSP et HSTS via netlify.toml']
+    },
+    screenshots: [
+      { src: './media/dgfip/tableau-de-bord.png', caption: 'Accueil : 17 fiches de cours, 8 exercices et 589 questions réparties en 4 matières' },
+      { src: './media/dgfip/lesson-choice.png', caption: 'Les fiches de cours, regroupées par matière et par sous-thème' },
+      { src: './media/dgfip/lesson.png', caption: 'Une fiche : règle fondamentale, arbre de décision, exemples et erreurs fréquentes' },
+      { src: './media/dgfip/annale.png', caption: 'Annale officielle 2025 : 54 questions en 1h30, note éliminatoire à 5/20' },
+      { src: './media/dgfip/qcm-start.png', caption: 'Entraînement par matière : 20 questions tirées au hasard, 30 minutes' },
+      { src: './media/dgfip/qcm.png', caption: 'Passage du QCM : minuteur, progression et réponse au clavier (touches 1 à 4)' },
+      { src: './media/dgfip/qcm-result.png', caption: 'Résultats : score, correction commentée question par question, export CSV et PDF' },
+      { src: './media/dgfip/flashcard.png', caption: 'Flashcards : 64 termes et notions clés tirés des annales 2023-2025' }
+    ],
+    picture: './media/dgfip/tableau-de-bord.png',
+    // Meme raison que pour les deux projets precedents : le rognage centre
+    // couperait l'en-tete et l'accroche de la page d'accueil.
+    cadrage: 'top center'
   }
 ]
