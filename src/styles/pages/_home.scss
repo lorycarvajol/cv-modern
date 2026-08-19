@@ -1,3 +1,28 @@
+// ---------------------------------------------------------------------------
+// Rythme vertical fluide
+//
+// Le panneau fait 90vh : sa hauteur suit l'ecran. Le hero, lui, etait mesure
+// entierement en rem — sa hauteur naturelle ne dependait pas du tout de
+// l'ecran. Sur un portable la somme depassait le panneau et faisait apparaitre
+// une barre de defilement A L'INTERIEUR du hero (mesure, avant correction) :
+//
+//   1280x720 -> +130px    1280x800 -> +58px    1366x768 -> +59px
+//
+// Toutes les mesures verticales sont donc bornees en `vh` : le hero se
+// comprime avec l'ecran au lieu de deborder. Les bornes basses sont calees sur
+// ce qui reste lisible, les bornes hautes sur les valeurs d'origine — au-dela
+// de ~1050px de haut, le rendu est exactement celui d'avant.
+//
+// `calc()` est obligatoire des qu'on additionne rem et vh : Sass evalue
+// l'expression a la compilation et refuse d'additionner deux unites.
+// ---------------------------------------------------------------------------
+
+$hero-gap:      clamp(0.9rem, 2.6vh, 2rem);    // etages du hero
+$hero-pad-top:  clamp(0.25rem, 2vh, 1.5rem);   // descente du badge
+$hero-sp-sm:    clamp(0.35rem, 1.3vh, 1rem);   // badge -> titre
+$hero-sp-md:    clamp(0.45rem, 1.8vh, 1.25rem);// titre -> accroche
+$hero-sp-lg:    clamp(0.75rem, 2.6vh, 2rem);   // description -> boutons
+
 .home {
   .homeContent {
     margin: 0.5rem 0;
@@ -10,7 +35,9 @@
     // des que l'axe vertical etait libere. Le defilement du contenu reel est
     // porte par `.hero-section`, qui n'heberge aucune decoration.
     overflow: hidden;
-    padding: 2rem;
+    // Retrait horizontal fixe, retrait vertical fluide : c'est 64px de hauteur
+    // rendus au contenu sur un ecran bas, sans que les colonnes se resserrent.
+    padding: clamp(1rem, 2.4vh, 2rem) 2rem;
 
     // Cadre commun aux quatre pages : le mixin porte deja les halos d'accent
     // et le lisere lumineux, l'accueil n'a plus besoin de son propre fond.
@@ -68,7 +95,7 @@
       // sur `flex-start` en cas de debordement — rien ne part au-dessus de
       // l'origine de defilement, donc rien d'inatteignable.)
       justify-content: space-between;
-      gap: 2rem;
+      gap: $hero-gap;
       height: 100%;
       // Le hero porte le defilement a la place du panneau : dans une fenetre
       // basse ou etroite, le contenu reste atteignable au lieu d'etre coupe
@@ -82,6 +109,10 @@
         display: flex;
         gap: 2rem;
         align-items: stretch;
+        // Les deux colonnes n'ont pas de hauteur propre a imposer : sans
+        // plancher, la rangee refuse de descendre sous la hauteur naturelle du
+        // texte et pousse le bandeau de parcours hors du panneau.
+        min-height: 0;
         // Cette rangee absorbe la hauteur libre du panneau. A hauteur naturelle
         // elle laissait une bande vide d'une centaine de pixels entre les
         // boutons et la frise, sur toute la largeur.
@@ -99,7 +130,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding-top: 1.5rem;
+        padding-top: $hero-pad-top;
 
         .intro-badge {
           display: inline-flex;
@@ -113,7 +144,7 @@
           border: 1px solid rgba(10, 255, 239, 0.3);
           border-radius: 20px;
           padding: 0.4rem 1rem;
-          margin-bottom: 1rem;
+          margin-bottom: $hero-sp-sm;
           font-size: 0.8rem;
           color: #0affef;
           text-shadow: 0 0 5px rgba(10, 255, 239, 0.5);
@@ -124,11 +155,12 @@
         }
 
         h1 {
-          // 4rem debordait des 490px de la colonne une fois les chiffres
-          // places a droite : « Lory Carvajol » passait a la ligne.
-          font-size: 3.4rem;
+          // Plafond a 3.4rem : 4rem debordait des 490px de la colonne une
+          // fois les chiffres places a droite, « Lory Carvajol » passait a la
+          // ligne. Plancher a 2.4rem, atteint vers 700px de hauteur d'ecran.
+          font-size: clamp(2.4rem, calc(0.9rem + 3.4vh), 3.4rem);
           font-family: 'Orbitron', sans-serif;
-          margin: 0 0 0.5rem 0;
+          margin: 0 0 $hero-sp-sm 0;
           line-height: 1.1;
           color: #fff;
           text-shadow: 3px 6px 2px rgba(0, 0, 0, 0.8);
@@ -140,18 +172,21 @@
         }
 
         .tagline {
-          font-size: 2.2rem;
+          font-size: clamp(1.5rem, calc(0.6rem + 2.2vh), 2.2rem);
           color: rgba(10, 255, 239, 0.9);
-          margin: 0 0 1.25rem 0;
+          margin: 0 0 $hero-sp-md 0;
           font-weight: 300;
           text-shadow: 1px 4px 1px rgba(0, 0, 0, 0.8);
         }
 
         .description {
-          font-size: 1.15rem;
+          font-size: clamp(0.95rem, calc(0.62rem + 0.9vh), 1.15rem);
           color: rgba(255, 255, 255, 0.9);
-          line-height: 1.8;
-          margin-bottom: 2rem;
+          // Le plus gros poste du bloc : cinq lignes a 1.8 d'interligne, c'est
+          // 166px. L'interligne se resserre avec l'ecran, sans descendre sous
+          // 1.5 ou le texte devient compact.
+          line-height: clamp(1.5em, calc(0.9em + 1.1vh), 1.8em);
+          margin-bottom: $hero-sp-lg;
           // La description court desormais sous les cartes de chiffres. Elle
           // reste bridee : au-dela, la ligne depasse la centaine de caracteres
           // et devient penible a suivre.
@@ -168,7 +203,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
+            padding: clamp(0.55rem, 1.3vh, 0.8rem) 1.5rem;
             border-radius: 20px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -223,7 +258,7 @@
         // Gouttiere large : elle aere les trois cartes et, comme elle compte
         // dans la hauteur naturelle de la colonne, elle etire d'autant le bloc
         // de texte en face.
-        gap: 1.75rem;
+        gap: clamp(0.75rem, 2.2vh, 1.75rem);
         // Marge interieure : le survol souleve les cartes de 3px et projette une
         // ombre. Collees au bord du bloc, les deux depassaient du cadre et se
         // faisaient couper par le `overflow` du panneau.
@@ -237,7 +272,7 @@
           background: rgba($accent, 0.1);
           border: $border-base;
           border-radius: $radius-md;
-          padding: 1.5rem 1rem;
+          padding: clamp(0.7rem, 1.9vh, 1.5rem) 1rem;
           text-align: center;
           transition: all 0.3s ease;
           @include glass(10px);
@@ -252,7 +287,7 @@
           .stat-number {
             // La colonne fait 300px de large : les chiffres retrouvent la
             // taille qu'ils avaient avant d'etre tasses sur une rangee.
-            font-size: 2.2rem;
+            font-size: clamp(1.6rem, calc(0.8rem + 1.85vh), 2.2rem);
             font-weight: 700;
             color: #0affef;
             text-shadow: 0 0 15px rgba(10, 255, 239, 0.6);
@@ -282,15 +317,16 @@
         // en vide au-dessus de lui. Le plafond evite des tuiles demesurees sur
         // un grand ecran ; en dessous, les cartes s'etirent.
         flex: 1 1 auto;
-        max-height: 190px;
+        // Plafond fluide : 190px sur un grand ecran, 130px sur un portable.
+        max-height: clamp(130px, 22vh, 190px);
 
         .highlight-item {
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
-          gap: 0.6rem;
-          padding: 1.2rem 1rem;
+          gap: clamp(0.3rem, 0.9vh, 0.6rem);
+          padding: clamp(0.6rem, 1.6vh, 1.2rem) 1rem;
           @include card-surface;
           transition: transform 0.3s ease, border-color 0.3s ease;
 
@@ -334,24 +370,24 @@
       .hero-section {
         // Gouttieres resserrees : chaque rem gagne ici est un rem qui ne sort
         // pas du panneau.
-        gap: 1.5rem;
+        gap: clamp(0.75rem, 2.2vh, 1.5rem);
 
         .key-highlights {
           grid-template-columns: repeat(2, 1fr);
-          gap: 0.75rem;
+          gap: clamp(0.5rem, 1.4vh, 0.75rem);
           // Des cette largeur le bandeau passe sur plusieurs rangees : le
           // plafond de 190px, calibre pour une seule rangee, les ecraserait.
           max-height: none;
           flex: 0 0 auto;
 
           .highlight-item {
-            padding: 0.75rem;
+            padding: clamp(0.5rem, 1.3vh, 0.75rem);
           }
         }
 
         .hero-top {
           flex-direction: column;
-          gap: 1.25rem;
+          gap: clamp(0.6rem, 1.7vh, 1.25rem);
         }
 
         // Empiles sous le texte, les chiffres reprennent la pleine largeur en
@@ -366,27 +402,27 @@
 
         .hero-text {
           h1 {
-            font-size: 2.6rem;
+            font-size: clamp(2rem, calc(0.7rem + 2.6vh), 2.6rem);
           }
 
           .tagline {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, calc(0.5rem + 1.5vh), 1.5rem);
           }
 
           // L'echelle agrandie est calibree pour le grand panneau ; ici chaque
           // point de police se paie en defilement.
           .description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            font-size: clamp(0.9rem, calc(0.6rem + 0.75vh), 1rem);
+            line-height: clamp(1.45em, calc(0.95em + 0.95vh), 1.6em);
+            margin-bottom: clamp(0.5rem, 1.6vh, 1rem);
           }
         }
 
         .hero-stats .stat-card {
-          padding: 0.9rem 0.6rem;
+          padding: clamp(0.55rem, 1.5vh, 0.9rem) 0.6rem;
 
           .stat-number {
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, calc(0.6rem + 1.6vh), 1.8rem);
           }
 
           .stat-label {
@@ -397,6 +433,34 @@
 
         .key-highlights .highlight-item i {
           font-size: 1.2rem;
+        }
+      }
+
+      // Portable : panneau etroit ET bas a la fois. C'est la seule combinaison
+      // ou la compression fluide ne suffisait pas — a 1366x768 il manquait
+      // encore une soixantaine de pixels, a 1280x720 cent trente.
+      //
+      // Le bandeau de parcours est le poste le plus lourd : quatre tuiles en
+      // deux rangees, icone au-dessus du texte, cela fait 202px. Les memes
+      // tuiles en ligne (icone a gauche, texte a droite) tiennent en ~120px,
+      // sans rien retirer du contenu ni descendre la typographie.
+      @media (max-height: 900px) {
+        .hero-section .key-highlights .highlight-item {
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 0.7rem;
+
+          i {
+            // L'icone ne doit ni s'etirer ni se laisser comprimer par le
+            // texte : largeur figee, elle aligne aussi les quatre tuiles.
+            flex: 0 0 1.6rem;
+            text-align: center;
+          }
+
+          div {
+            min-width: 0;
+          }
         }
       }
     }

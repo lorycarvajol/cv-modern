@@ -142,7 +142,13 @@
     // (151px) restait plaque a gauche des 228px disponibles, soit 34px hors du
     // centre de la sidebar.
     justify-content: center;
-    padding: 20px 0;
+    // Meme principe que le hero : la sidebar fait 90vh, son contenu etait
+    // mesure en pixels fixes. Sa hauteur naturelle (713px) depassait le cadre
+    // sur un portable — de 40px a 768 de haut, de 83px a 720 — et
+    // `overflow: hidden` coupait le bas SANS barre de defilement : la mention
+    // de copyright disparaissait purement et simplement. Les mesures
+    // verticales suivent donc l'ecran, plafonnees aux valeurs d'origine.
+    padding: clamp(10px, 2vh, 20px) 0;
     // Marge symetrique : `margin-left` seul decalait le bloc de 5px de plus.
     margin: 0 10px;
     position: relative;
@@ -152,12 +158,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 15px;
+      gap: clamp(8px, 1.5vh, 15px);
       position: relative;
 
       img {
-        width: 150px;
-        height: 150px;
+        // Carree : les deux axes suivent la meme mesure.
+        width: clamp(88px, 16vh, 150px);
+        height: clamp(88px, 16vh, 150px);
         object-fit: cover;
         border-radius: 30%;
         filter: grayscale(100%);
@@ -255,7 +262,7 @@
 
   .navigation {
     grid-area: 2;
-    padding: 1.5rem 1rem;
+    padding: clamp(0.6rem, 2vh, 1.5rem) 1rem;
 
     ul {
       height: 100%;
@@ -314,7 +321,9 @@
           display: flex;
           align-items: center;
           gap: 1rem;
-          padding: 1rem 0.8rem;
+          // Quatre liens : chaque pixel retire ici compte quatre fois.
+          // La pastille d'icone fait 30px, la cible reste confortable.
+          padding: clamp(0.45rem, 1.3vh, 1rem) 0.8rem;
           color: rgba(255, 255, 255, 0.8);
           transition: all 0.3s ease;
           border-radius: 12px;
@@ -390,7 +399,7 @@
 
   .socialNetwork {
     grid-area: 3;
-    padding: 1rem;
+    padding: clamp(0.5rem, 1.4vh, 1rem);
     display: flex;
     flex-direction: column;
     // Ancre en bas de la rangee : c'est ce bloc qui absorbe desormais
@@ -402,15 +411,15 @@
       display: flex;
       justify-content: center;
       gap: 1.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: clamp(0.4rem, 1.4vh, 1rem);
 
       li {
         a {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 45px;
-          height: 45px;
+          width: clamp(38px, 5vh, 45px);
+          height: clamp(38px, 5vh, 45px);
           background: rgba(10, 255, 239, 0.1);
           border: 1px solid rgba(10, 255, 239, 0.2);
           border-radius: 50%;
