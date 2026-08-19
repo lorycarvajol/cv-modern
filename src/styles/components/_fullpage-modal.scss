@@ -1,3 +1,6 @@
+// Retrait pendant des listes de modale : largeur reservee a l'icone.
+$li-retrait: 2.2rem;
+
 .fullpage-modal-overlay {
   position: fixed;
   top: 0;
@@ -32,6 +35,15 @@
   max-width: 1200px;
   position: relative;
   overflow: hidden;
+
+  // Colonne flex : l'en-tete prend sa hauteur, le contenu prend le reste.
+  // Il etait auparavant cale en `calc(100% - 120px)`, soit un en-tete suppose
+  // haut de 120px. Des que le titre passe sur deux lignes — « Stack Technique
+  // Complete » le fait des 390px de large — l'en-tete monte a 126px et la zone
+  // de contenu depassait du cadre, dont le bas etait rogne par
+  // `overflow: hidden`.
+  display: flex;
+  flex-direction: column;
   animation: modalSlideIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   // Liseres d'accent, en haut ET en bas, volontairement FLOUTES.
@@ -65,6 +77,7 @@
 }
 
 .fullpage-modal-header {
+  flex-shrink: 0;
   padding: 30px 40px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -166,7 +179,11 @@
 
 .fullpage-modal-content {
   padding: 40px;
-  height: calc(100% - 120px);
+  // Prend la hauteur restante. `min-height: 0` est indispensable : sans lui un
+  // element flex refuse de descendre sous la taille de son contenu et la zone
+  // ne defile plus, elle pousse le cadre.
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   color: #fff;
   font-size: 1.1rem;
@@ -272,15 +289,52 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   }
 
+  // Colonnes d'un contenu de modale.
+  //
+  // Remplace un `grid-template-columns: 1fr 1fr` qui etait ecrit en style en
+  // ligne dans Languages.js : deux colonnes imposees a TOUTES les largeurs. Sur
+  // un ecran de 390px la grille reclamait 373px dans une zone de 310, la
+  // colonne de droite etait tronquee (« ORM… », « SAS… ») et la modale gagnait
+  // une barre de defilement horizontale.
+  //
+  // `auto-fit` + `minmax` supprime le besoin d'un point de rupture : tant que
+  // deux colonnes de 260px tiennent, il y en a deux ; en dessous, une seule.
+  // Les pistes vides sont repliees, donc deux blocs occupent bien toute la
+  // largeur au lieu d'un quart chacun sur grand ecran.
+  //
+  // `row-gap: 0` : une fois les colonnes empilees, c'est la marge haute du
+  // `h3` de chaque bloc qui les separe — 40px de plus creuseraient un trou.
+  .colonnes-modale {
+    display: grid;
+    // `min(260px, 100%)` et non `260px` sec : sous 300px de zone utile — un
+    // iPhone SE en portrait donne 255px — un minimum de 260 depassait le cadre
+    // de 5px, la piste refusant de descendre sous son minimum.
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    column-gap: 40px;
+    row-gap: 0;
+    margin-bottom: 30px;
+  }
+
   ul {
     list-style: none;
     padding: 0;
 
     li {
-      padding: 12px 0;
+      // Retrait pendant, et non plus disposition flex.
+      //
+      // `<li><i/><strong>Python (2 ans)</strong> - Django, FastAPI</li>` compte
+      // TROIS enfants pour flex : l'icone, le <strong>, et le noeud texte qui
+      // le suit. Chacun devenait une colonne qui se repliait pour son compte —
+      // « Python (2 ans) » sur trois lignes a cote de sa description, des que la
+      // largeur diminuait. En flux normal, la ligne se lit d'un trait et se
+      // coupe la ou il faut.
+      //
+      // L'icone reste inline (donc alignee sur la premiere ligne de base), le
+      // couple `text-indent` negatif / `padding-left` la sort dans la marge et
+      // aligne les lignes suivantes sur le texte.
+      padding: 12px 0 12px $li-retrait;
+      text-indent: -$li-retrait;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
       transition: all 0.3s ease;
 
       &:hover {
@@ -288,17 +342,32 @@
           rgba(10, 255, 239, 0.1), 
           rgba(10, 255, 239, 0.05)
         );
-        padding-left: 20px;
+        padding-left: calc(#{$li-retrait} + 20px);
         border-radius: 10px;
       }
 
       i {
+        // Largeur egale au retrait : le texte demarre exactement a l'aplomb
+        // des lignes suivantes. Remplace l'ancien `margin-right: 15px`.
+        display: inline-block;
+        width: $li-retrait;
+        text-indent: 0;
         color: #0affef;
-        margin-right: 15px;
         font-size: 1.2rem;
         text-shadow: 0 0 10px rgba(10, 255, 239, 0.6);
       }
     }
+  }
+
+  // Les modales « Voir plus » descendent jusqu'au h4 (« Stack Python/Django »).
+  // Sans regle, il retombait sur le rendu par defaut du navigateur : blanc,
+  // plus petit qu'un paragraphe, indistinct du texte courant.
+  h4 {
+    color: rgba(255, 255, 255, 0.95);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    margin: 20px 0 8px;
   }
 }
 

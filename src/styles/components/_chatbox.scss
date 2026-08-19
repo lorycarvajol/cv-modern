@@ -8,6 +8,16 @@
   max-width: calc(100vw - 60px);
   max-height: calc(100vh - 60px);
   border-radius: 50%;
+
+  // Effacee tant qu'une modale plein ecran est ouverte.
+  //
+  // A z-index 3000 contre 2000 pour la modale, la pastille flottait AU-DESSUS
+  // du contenu de celle-ci. Sur un ecran de 390px elle recouvrait une ligne
+  // entiere de la stack technique. Elle reste joignable a la fermeture, et le
+  // bouton « Me contacter » du formulaire n'est pas concerne.
+  body:has(.fullpage-modal-overlay) & {
+    display: none;
+  }
 }
 
 .chat-toggle {

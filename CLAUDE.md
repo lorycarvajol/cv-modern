@@ -133,6 +133,34 @@ de valeurs en dur :
   `background-position` (cf. particules de la page Contact).
 - **`_mediaQueries.scss`** est importé par `pages/_knowledges.scss`, pas par
   `styles.scss`. Facile à manquer.
+- **Le défilement ne se remet pas seul en haut.** Sous `$mobileBreakpoint`
+  c'est le document qui défile, et react-router n'y touche pas : un appui sur
+  un onglet depuis le bas d'une page arrivait à 225px du haut de la suivante.
+  C'est `src/components/ScrollToTop.js`, monté dans le `<Router>`, qui règle
+  la question. Ne pas le retirer.
+- **`align-content` de la sidebar sur la barre d'onglets.** Le menu de bureau
+  groupe ses liens au centre ; hérité par la barre mobile, il dimensionnait la
+  rangée sur son contenu (46,5px dans une barre de 64) et laissait 9px inertes
+  en haut et en bas — pile où se pose le pouce. D'où le `align-content: stretch`
+  du bloc mobile.
+- **`backdrop-filter` piège les `position: fixed`.** Un ancêtre qui porte une
+  transformation, un filtre ou un `backdrop-filter` devient le bloc conteneur
+  des descendants en `fixed`. `@include panel-surface` en pose un : la modale
+  « plein écran » était donc bornée au panneau — 517px de large à partir de
+  x=364 sur un écran de 1000. `_settings.scss` neutralise déjà l'effet sous
+  `$mobileBreakpoint` ; côté desktop c'est `createPortal(…, document.body)`
+  dans `FullPageModal` qui règle la question. Ne pas remettre la modale dans
+  l'arbre du panneau.
+- **Pas de style en ligne pour les grilles.** Un `gridTemplateColumns: '1fr 1fr'`
+  écrit dans le JSX de `Languages.js` imposait deux colonnes jusqu'à 320px de
+  large. La classe `.colonnes-modale` (`auto-fit` + `minmax(min(260px, 100%),
+  1fr)`) s'en passe sans point de rupture. Le `min(…, 100%)` n'est pas
+  décoratif : sans lui la piste refuse de descendre sous 260px et déborde sur
+  un iPhone SE.
+- **`display: flex` sur un `li` qui mélange balises et texte nu.**
+  `<i/><strong>Python</strong> - Django, FastAPI` fait trois enfants, donc trois
+  colonnes qui se replient chacune de leur côté. Les listes de modale utilisent
+  un retrait pendant (`text-indent` négatif + `padding-left`), pas flex.
 
 ### Vérification
 

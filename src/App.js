@@ -10,6 +10,7 @@ import Interruption from './pages/Interruption';
 import NotFound from './pages/NotFound';
 import Modal from './components/common/Modal';
 import ChatBox from './components/common/ChatBox';
+import ScrollToTop from './components/ScrollToTop';
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
   return (
     <div className="App"> {/* This div now covers the entire viewport */}
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home openModal={openModal} />} />
           <Route path="/competences" element={<Knowledges />} />

@@ -593,6 +593,15 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 0;
+        // La sidebar de bureau groupe ses liens au centre. Cet
+        // `align-content: center` restait actif ici : l'unique rangee etait
+        // dimensionnee sur son contenu (46,5px) et centree dans les 64px de la
+        // barre, laissant 9px inertes en haut ET EN BAS — soit exactement la
+        // bande ou se pose le pouce sur une barre d'onglets. Mesure faite au
+        // `elementFromPoint` : a 5px du bord bas, la cible etait le <ul>.
+        // `stretch` rend la rangee, donc les liens en `height: 100%`, hauts de
+        // 64px sur toute la barre.
+        align-content: stretch;
 
         li {
           border-radius: 0;

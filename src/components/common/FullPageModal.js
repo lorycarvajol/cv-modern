@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 const SELECTEURS_FOCUSABLES =
     'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -87,7 +88,21 @@ const FullPageModal = ({ show, onClose, title, children, moduleType, variant = '
         }
     };
 
-    return (
+    // Rendue dans `document.body` et non a sa place dans l'arbre.
+    //
+    // `position: fixed` se cale sur la fenetre SAUF si un ancetre porte une
+    // transformation, un filtre ou un `backdrop-filter` : cet ancetre devient
+    // alors le bloc conteneur. Or `@include panel-surface` pose un
+    // `backdrop-filter` sur `.knowledgesContent` & consorts. La modale « plein
+    // ecran » etait donc bornee au PANNEAU : mesuree sur un ecran de 1000px,
+    // elle faisait 517px de large a partir de x=364, et le voile sombre ne
+    // couvrait que la moitie droite de la page. C'est ce qui etranglait la
+    // stack technique a ~437px de largeur utile, deux colonnes comprises.
+    //
+    // _settings.scss desactive deja `backdrop-filter` sous $mobileBreakpoint
+    // pour cette raison precise ; le portail regle le cas desktop sans avoir a
+    // sacrifier le verre depoli.
+    return createPortal(
         <div className="fullpage-modal-overlay" onClick={handleOverlayClick}>
             <div
                 className={`fullpage-modal-container ${variant ? `fullpage-modal-container--${variant}` : ''}`}
@@ -110,7 +125,8 @@ const FullPageModal = ({ show, onClose, title, children, moduleType, variant = '
                     {children}
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

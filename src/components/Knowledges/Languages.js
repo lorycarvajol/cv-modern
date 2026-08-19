@@ -66,7 +66,10 @@ class Languages extends Component {
                 >
                     <h2>Ma Stack Technique</h2>
                     
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', marginBottom: '30px' }}>
+                    {/* Grille definie dans _fullpage-modal.scss : en style en
+                        ligne, les deux colonnes etaient imposees jusqu'a 320px
+                        de large et la seconde sortait du cadre. */}
+                    <div className="colonnes-modale">
                         <div>
                             <h3>Langages de Programmation</h3>
                             <ul>
