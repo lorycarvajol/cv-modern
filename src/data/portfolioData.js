@@ -20,6 +20,7 @@ export const portfolioData = [
     languages: ['React','symfony'],
     languagesIcons: ['fab fa-react','fab fa-symfony'],
     source: 'https://github.com/maclory73/olgadesignsite',
+    shortInfo: "Boutique en ligne d'objets faits main, en Symfony et React",
     info: 'Site e-commerce de produit fait main en France, avec une architecture Symfony/React, projet mort née car les clientes ont changé d\'orientation',
     picture: './media/project1.png'
   },
@@ -284,6 +285,7 @@ export const portfolioData = [
   languages: ['PHP', 'Symfony', 'MySQL', 'Stimulus'],
   languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-js'],
   source: 'https://github.com/lorycarvajol/olga-com-site',
+  website: 'https://tapistyle.lorycarvajol.dev',
   shortInfo: "Boutique en ligne Symfony pour une créatrice de tapis et objets d'art (Vilna Design)",
   info: "Site e-commerce sur mesure pour Vilna Design, une créatrice de tapis et d'œuvres artisanales. Backend Symfony 7.2 / PHP 8.3 avec Doctrine ORM et MySQL, panneau d'administration EasyAdmin pour la gestion du catalogue et des commandes, authentification classique et connexion sociale (Google, Facebook), upload d'images produits via VichUploader. Le frontend s'appuie sur Symfony UX (Turbo/Stimulus) plutôt qu'un framework JS séparé, avec l'asset-mapper natif de Symfony pour le build de production — pas de bundler externe. Déployé en Docker (image PHP-FPM + nginx en trois étapes, worker Messenger dédié pour l'envoi asynchrone des e-mails), derrière Traefik avec certificat HTTPS automatique et une politique de sécurité (CSP à nonce, HSTS) strictement configurée. Le tunnel de commande est fonctionnel mais le paiement n'est pas encore intégré : le site tourne en phase de test, sans traitement de vraies transactions.",
   techSpecs: {
@@ -316,6 +318,7 @@ export const portfolioData = [
   languages: ['PHP', 'MySQL', 'React', 'JavaScript'],
   languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-react'],
   source: 'https://github.com/lorycarvajol/apprentissage-JS',
+  website: 'https://js.lorycarvajol.dev',
   shortInfo: 'Plateforme e-learning pour apprendre JavaScript, avec exercices corrigés et système de badges',
   info: "Plateforme d'apprentissage interactive dédiée à JavaScript : cours structurés en modules et chapitres, exercices de code corrigés automatiquement, suivi de progression, et système de gamification à 19+ badges (progression, réussite du premier coup, séries de connexion). Backend PHP 8.2 en MVC artisanal (sans framework), authentification par JWT, base de données MySQL 8.0 mutualisée avec son projet jumeau PHP/POO. Particularité de sécurité : le code soumis par les apprenants s'exécute côté client, dans un Web Worker isolé du thread principal — aucune exécution de code arbitraire ne transite par le serveur, contrairement à son projet jumeau orienté objet. Frontend React/Vite. Déployé en Docker derrière Traefik, avec migrations de schéma idempotentes rejouées automatiquement au démarrage du conteneur.",
   techSpecs: {
@@ -344,6 +347,7 @@ export const portfolioData = [
   languages: ['PHP', 'MySQL', 'React', 'JavaScript'],
   languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-react'],
   source: 'https://github.com/lorycarvajol/apprentissage-POO-PHP',
+  website: 'https://php.lorycarvajol.dev',
   shortInfo: 'Plateforme e-learning pour apprendre PHP procédural puis orienté objet, avec bac à sable serveur isolé',
   info: "Projet jumeau d'Apprentissage JavaScript, dédié cette fois à PHP : tronc commun procédural (6 modules) puis programmation orientée objet (6 modules supplémentaires), avec MySQL comme fil rouge pédagogique. Authentification robuste (JWT court + refresh token httpOnly rotatif, vérification d'e-mail, limitation de débit, verrouillage de compte après échecs répétés), suivi de progression et salle des trophées de 26 titres scellés, reprise du principe de gamification du projet jumeau. Conformité RGPD : export JSON complet des données personnelles et suppression de compte depuis l'espace « Mon compte ». La différence structurante avec la version JavaScript : le code des apprenants s'exécute ici côté serveur (PHP ne s'exécutant pas dans le navigateur), via un conteneur sandbox dédié et durci — utilisateur non privilégié, aucune capacité système, accès réseau sortant coupé, quotas CPU/mémoire stricts — isolé du reste de l'infrastructure par un mandataire qui ne laisse passer que les opérations Docker strictement nécessaires. Frontend React/Vite, backend PHP 8.2 en MVC artisanal, base MySQL 8.0 mutualisée avec le projet jumeau.",
   techSpecs: {
