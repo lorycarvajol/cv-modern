@@ -20,7 +20,7 @@ export const portfolioData = [
     languages: ['React','symfony'],
     languagesIcons: ['fab fa-react','fab fa-symfony'],
     source: 'https://github.com/maclory73/olgadesignsite',
-    info: 'Site e-commerce de produit fait main en France, avec une architecture Symfony/React en cours de développement sur mon temp libre',
+    info: 'Site e-commerce de produit fait main en France, avec une architecture Symfony/React, projet mort née car les clientes ont changé d\'orientation',
     picture: './media/project1.png'
   },
   {
@@ -292,12 +292,20 @@ export const portfolioData = [
     hosting: ['Docker (PHP-FPM + nginx, build multi-étapes)', 'Traefik + Let\'s Encrypt', 'VPS OVH', 'MySQL 8.0 mutualisée']
   },
   screenshots: [
-    { src: './media/tapistyle/hero.png', caption: "Page d'accueil de Vilna Design, présentation du catalogue" },
-    { src: './media/tapistyle/produit.png', caption: 'Fiche produit avec galerie d\'images et variantes' },
-    { src: './media/tapistyle/admin.png', caption: "Panneau d'administration EasyAdmin — gestion du catalogue" },
-    { src: './media/tapistyle/login.png', caption: 'Connexion classique et sociale (Google / Facebook)' }
+    { src: './media/tapistyle/accueil.png', caption: "Accueil : direction artistique sombre et dorée, corde tressée en fil conducteur le long du défilement" },
+    { src: './media/tapistyle/philosophie.png', caption: "Le parti pris de la marque en trois arguments : sur mesure, résistance, geste artisanal" },
+    { src: './media/tapistyle/univers.png', caption: 'Les trois univers du catalogue : tapis, œuvres murales et objets' },
+    { src: './media/tapistyle/selection.png', caption: 'Sélection en page d’accueil : prix, aperçu rapide, ajout au panier et stock restant' },
+    { src: './media/tapistyle/catalogue.png', caption: 'Catalogue filtrable par couleur, forme et tranche de prix, avec tri et compteur de résultats' },
+    { src: './media/tapistyle/sur-mesure.png', caption: "Le sur-mesure : dimensions et couleurs libres, devis annoncé sous 48h" },
+    { src: './media/tapistyle/devis.png', caption: 'Formulaire de devis en étapes : coordonnées, puis description du projet' },
+    { src: './media/tapistyle/compte-client.png', caption: 'Espace client : commandes, devis, adresses et gestion du profil' },
+    { src: './media/tapistyle/pied-de-page.png', caption: 'Pied de page : infolettre, garanties, CGV, rétractation et gestion des cookies' },
+    { src: './media/tapistyle/admin-tableau-de-bord.png', caption: "Back-office : ce qui attend un traitement, chiffre du mois et stocks à surveiller" },
+    { src: './media/tapistyle/admin-produit.png', caption: 'Fiche produit côté administration : SKU, prix, et régime de vente pièce en stock ou fabriquée à la commande' },
+    { src: './media/tapistyle/admin-reglages.png', caption: "Réglages du site : identité, seuil de livraison offerte et diaporama de la bannière d’accueil" }
   ],
-  picture: './media/tapistyle/hero.png',
+  picture: './media/tapistyle/accueil.png',
   cadrage: 'top center'
 },
  
