@@ -304,7 +304,7 @@ export const portfolioData = [
 {
   id: 20,
   name: 'Apprentissage JavaScript',
-  themes: ['Formation'],
+  themes: ['Formateur'],
   languages: ['PHP', 'MySQL', 'React', 'JavaScript'],
   languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-react'],
   source: 'https://github.com/lorycarvajol/apprentissage-JS',
@@ -317,9 +317,13 @@ export const portfolioData = [
   },
   screenshots: [
     { src: './media/apprentissage-js/accueil.png', caption: "Page d'accueil, aperçu des modules disponibles" },
+    { src: './media/apprentissage-js/modules.png', caption: "Aperçu des modules disponibles" },
+    { src: './media/apprentissage-js/cours.png', caption: "Ensemble de cours illustrés" },
     { src: './media/apprentissage-js/exercice.png', caption: "Éditeur d'exercice avec correction automatique en direct" },
     { src: './media/apprentissage-js/trophees.png', caption: 'Salle des trophées — badges obtenus et progression' },
-    { src: './media/apprentissage-js/progression.png', caption: "Tableau de suivi de progression par module" }
+    { src: './media/apprentissage-js/edit-admin.png', caption: "Interface d'édition pour les administrateurs" },
+    { src: './media/apprentissage-js/edit-html.png', caption: "Editeur de cours en HTML" },
+    
   ],
   picture: './media/apprentissage-js/accueil.png',
   cadrage: 'top center'
@@ -328,22 +332,24 @@ export const portfolioData = [
 {
   id: 21,
   name: 'Apprentissage PHP / POO',
-  themes: ['Formation'],
+  themes: ['Formateur'],
   languages: ['PHP', 'MySQL', 'React', 'JavaScript'],
   languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-react'],
   source: 'https://github.com/lorycarvajol/apprentissage-POO-PHP',
   shortInfo: 'Plateforme e-learning pour apprendre PHP procédural puis orienté objet, avec bac à sable serveur isolé',
-  info: "Projet jumeau d'Apprentissage JavaScript, dédié cette fois à PHP : tronc commun procédural (6 modules) puis programmation orientée objet (6 modules supplémentaires), avec MySQL comme fil rouge pédagogique. Authentification robuste (JWT court + refresh token httpOnly rotatif, vérification d'e-mail, limitation de débit, verrouillage de compte après échecs répétés), suivi de progression et système de badges partagé avec le projet jumeau. La différence structurante avec la version JavaScript : le code des apprenants s'exécute ici côté serveur (PHP ne s'exécutant pas dans le navigateur), via un conteneur sandbox dédié et durci — utilisateur non privilégié, aucune capacité système, accès réseau sortant coupé, quotas CPU/mémoire stricts — isolé du reste de l'infrastructure par un mandataire qui ne laisse passer que les opérations Docker strictement nécessaires. Frontend React/Vite, backend PHP 8.2 en MVC artisanal, base MySQL 8.0 mutualisée avec le projet jumeau.",
+  info: "Projet jumeau d'Apprentissage JavaScript, dédié cette fois à PHP : tronc commun procédural (6 modules) puis programmation orientée objet (6 modules supplémentaires), avec MySQL comme fil rouge pédagogique. Authentification robuste (JWT court + refresh token httpOnly rotatif, vérification d'e-mail, limitation de débit, verrouillage de compte après échecs répétés), suivi de progression et salle des trophées de 26 titres scellés, reprise du principe de gamification du projet jumeau. Conformité RGPD : export JSON complet des données personnelles et suppression de compte depuis l'espace « Mon compte ». La différence structurante avec la version JavaScript : le code des apprenants s'exécute ici côté serveur (PHP ne s'exécutant pas dans le navigateur), via un conteneur sandbox dédié et durci — utilisateur non privilégié, aucune capacité système, accès réseau sortant coupé, quotas CPU/mémoire stricts — isolé du reste de l'infrastructure par un mandataire qui ne laisse passer que les opérations Docker strictement nécessaires. Frontend React/Vite, backend PHP 8.2 en MVC artisanal, base MySQL 8.0 mutualisée avec le projet jumeau.",
   techSpecs: {
     frontend: ['React', 'Vite'],
     backend: ['PHP 8.2 (MVC maison)', 'MySQL 8.0', 'JWT (auth + refresh token rotatif)'],
     hosting: ['Docker (conteneur sandbox isolé, docker-socket-proxy)', 'Traefik + Let\'s Encrypt', 'VPS OVH', 'MySQL mutualisée']
   },
   screenshots: [
-    { src: './media/apprentissage-poo-php/accueil.png', caption: "Page d'accueil, parcours procédural puis orienté objet" },
-    { src: './media/apprentissage-poo-php/exercice.png', caption: 'Exercice de POO avec correction automatique via le bac à sable serveur' },
-    { src: './media/apprentissage-poo-php/trophees.png', caption: 'Salle des trophées, partagée avec le projet jumeau JavaScript' },
-    { src: './media/apprentissage-poo-php/connexion.png', caption: "Écran de connexion avec vérification d'e-mail" }
+    { src: './media/apprentissage-poo-php/accueil.png', caption: "Accueil : l'interface reprend la syntaxe PHP, les statistiques de l'apprenant s'affichent comme les propriétés d'une classe" },
+    { src: './media/apprentissage-poo-php/modules.png', caption: 'Les 12 modules : six de tronc commun procédural, puis six de programmation orientée objet' },
+    { src: './media/apprentissage-poo-php/cours.png', caption: 'Un chapitre : contenus théoriques et exercices, avec le sommaire des modules en colonne' },
+    { src: './media/apprentissage-poo-php/exercice.png', caption: "Exercice à trous : le code est exécuté dans le bac à sable serveur, le résultat s'affiche à droite" },
+    { src: './media/apprentissage-poo-php/trophees.png', caption: 'Salle des trophées : 26 titres à sceller, révélés au fur et à mesure de la progression' },
+    { src: './media/apprentissage-poo-php/compte-rgpd.png', caption: "Mon compte : export JSON de toutes les données personnelles et suppression définitive, conformément au RGPD" }
   ],
   picture: './media/apprentissage-poo-php/accueil.png',
   cadrage: 'top center'
@@ -365,10 +371,11 @@ export const portfolioData = [
     hosting: ['Hébergement statique (aucun backend)', 'localStorage pour la progression']
   },
   screenshots: [
-    { src: './media/shuzan/accueil.png', caption: "Page d'accueil, les six modules de leçons" },
-    { src: './media/shuzan/lecon.png', caption: 'Boulier interactif, manipulable à la souris et au clavier' },
-    { src: './media/shuzan/walkthrough.png', caption: 'Correction pas-à-pas : les gestes joués un par un sur le boulier' },
-    { src: './media/shuzan/exercice.png', caption: "Générateur d'exercices ciblés par compétence" }
+    { src: './media/shuzan/accueil.png', caption: "Accueil : le boulier est manipulable dès la page d'entrée, sans compte ni installation" },
+    { src: './media/shuzan/cours.png', caption: "Le parcours : dix-sept leçons qui se lisent dans l'ordre, chacune supposant le geste de la précédente" },
+    { src: './media/shuzan/lecon.png', caption: "Une leçon : la règle unique de lecture du boulier, illustrée par un soroban dessiné à zéro" },
+    { src: './media/shuzan/exercice.png', caption: "Entraînement ciblé par compétence, des gestes directs aux amis combinés, en trois rythmes" },
+    { src: './media/shuzan/progression.png', caption: 'Progression : maîtrise calculée sur les vingt dernières tentatives, et régularité jour par jour' }
   ],
   picture: './media/shuzan/accueil.png',
   cadrage: 'top center'
