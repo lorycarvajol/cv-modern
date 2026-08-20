@@ -274,5 +274,103 @@ export const portfolioData = [
     // Meme raison que pour les projets precedents : le rognage centre couperait
     // le titre et la barre de navigation.
     cadrage: 'top center'
-  }
+  },
+  {
+  id: 19,
+  name: 'Tapistyle',
+  // 'Vitrine' : projet client réel (boutique en ligne pour Olga), pas une
+  // expérimentation personnelle — à la différence des labos comme Shuzan.
+  themes: ['Vitrine'],
+  languages: ['PHP', 'Symfony', 'MySQL', 'Stimulus'],
+  languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-js'],
+  source: 'https://github.com/lorycarvajol/olga-com-site',
+  shortInfo: "Boutique en ligne Symfony pour une créatrice de tapis et objets d'art (Vilna Design)",
+  info: "Site e-commerce sur mesure pour Vilna Design, une créatrice de tapis et d'œuvres artisanales. Backend Symfony 7.2 / PHP 8.3 avec Doctrine ORM et MySQL, panneau d'administration EasyAdmin pour la gestion du catalogue et des commandes, authentification classique et connexion sociale (Google, Facebook), upload d'images produits via VichUploader. Le frontend s'appuie sur Symfony UX (Turbo/Stimulus) plutôt qu'un framework JS séparé, avec l'asset-mapper natif de Symfony pour le build de production — pas de bundler externe. Déployé en Docker (image PHP-FPM + nginx en trois étapes, worker Messenger dédié pour l'envoi asynchrone des e-mails), derrière Traefik avec certificat HTTPS automatique et une politique de sécurité (CSP à nonce, HSTS) strictement configurée. Le tunnel de commande est fonctionnel mais le paiement n'est pas encore intégré : le site tourne en phase de test, sans traitement de vraies transactions.",
+  techSpecs: {
+    frontend: ['Symfony UX (Turbo/Stimulus)', 'Symfony Asset Mapper', 'Bootstrap'],
+    backend: ['Symfony 7.2', 'PHP 8.3', 'Doctrine ORM', 'EasyAdmin', 'OAuth2 (Google, Facebook)'],
+    hosting: ['Docker (PHP-FPM + nginx, build multi-étapes)', 'Traefik + Let\'s Encrypt', 'VPS OVH', 'MySQL 8.0 mutualisée']
+  },
+  screenshots: [
+    { src: './media/tapistyle/hero.png', caption: "Page d'accueil de Vilna Design, présentation du catalogue" },
+    { src: './media/tapistyle/produit.png', caption: 'Fiche produit avec galerie d\'images et variantes' },
+    { src: './media/tapistyle/admin.png', caption: "Panneau d'administration EasyAdmin — gestion du catalogue" },
+    { src: './media/tapistyle/login.png', caption: 'Connexion classique et sociale (Google / Facebook)' }
+  ],
+  picture: './media/tapistyle/hero.png',
+  cadrage: 'top center'
+},
+ 
+{
+  id: 20,
+  name: 'Apprentissage JavaScript',
+  themes: ['Formation'],
+  languages: ['PHP', 'MySQL', 'React', 'JavaScript'],
+  languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-react'],
+  source: 'https://github.com/lorycarvajol/apprentissage-JS',
+  shortInfo: 'Plateforme e-learning pour apprendre JavaScript, avec exercices corrigés et système de badges',
+  info: "Plateforme d'apprentissage interactive dédiée à JavaScript : cours structurés en modules et chapitres, exercices de code corrigés automatiquement, suivi de progression, et système de gamification à 19+ badges (progression, réussite du premier coup, séries de connexion). Backend PHP 8.2 en MVC artisanal (sans framework), authentification par JWT, base de données MySQL 8.0 mutualisée avec son projet jumeau PHP/POO. Particularité de sécurité : le code soumis par les apprenants s'exécute côté client, dans un Web Worker isolé du thread principal — aucune exécution de code arbitraire ne transite par le serveur, contrairement à son projet jumeau orienté objet. Frontend React/Vite. Déployé en Docker derrière Traefik, avec migrations de schéma idempotentes rejouées automatiquement au démarrage du conteneur.",
+  techSpecs: {
+    frontend: ['React', 'Vite', 'Web Worker (sandbox client)'],
+    backend: ['PHP 8.2 (MVC maison)', 'MySQL 8.0', 'JWT (auth + refresh token)'],
+    hosting: ['Docker', 'Traefik + Let\'s Encrypt', 'VPS OVH', 'MySQL mutualisée']
+  },
+  screenshots: [
+    { src: './media/apprentissage-js/accueil.png', caption: "Page d'accueil, aperçu des modules disponibles" },
+    { src: './media/apprentissage-js/exercice.png', caption: "Éditeur d'exercice avec correction automatique en direct" },
+    { src: './media/apprentissage-js/trophees.png', caption: 'Salle des trophées — badges obtenus et progression' },
+    { src: './media/apprentissage-js/progression.png', caption: "Tableau de suivi de progression par module" }
+  ],
+  picture: './media/apprentissage-js/accueil.png',
+  cadrage: 'top center'
+},
+ 
+{
+  id: 21,
+  name: 'Apprentissage PHP / POO',
+  themes: ['Formation'],
+  languages: ['PHP', 'MySQL', 'React', 'JavaScript'],
+  languagesIcons: ['fab fa-php', 'fas fa-database', 'fab fa-react'],
+  source: 'https://github.com/lorycarvajol/apprentissage-POO-PHP',
+  shortInfo: 'Plateforme e-learning pour apprendre PHP procédural puis orienté objet, avec bac à sable serveur isolé',
+  info: "Projet jumeau d'Apprentissage JavaScript, dédié cette fois à PHP : tronc commun procédural (6 modules) puis programmation orientée objet (6 modules supplémentaires), avec MySQL comme fil rouge pédagogique. Authentification robuste (JWT court + refresh token httpOnly rotatif, vérification d'e-mail, limitation de débit, verrouillage de compte après échecs répétés), suivi de progression et système de badges partagé avec le projet jumeau. La différence structurante avec la version JavaScript : le code des apprenants s'exécute ici côté serveur (PHP ne s'exécutant pas dans le navigateur), via un conteneur sandbox dédié et durci — utilisateur non privilégié, aucune capacité système, accès réseau sortant coupé, quotas CPU/mémoire stricts — isolé du reste de l'infrastructure par un mandataire qui ne laisse passer que les opérations Docker strictement nécessaires. Frontend React/Vite, backend PHP 8.2 en MVC artisanal, base MySQL 8.0 mutualisée avec le projet jumeau.",
+  techSpecs: {
+    frontend: ['React', 'Vite'],
+    backend: ['PHP 8.2 (MVC maison)', 'MySQL 8.0', 'JWT (auth + refresh token rotatif)'],
+    hosting: ['Docker (conteneur sandbox isolé, docker-socket-proxy)', 'Traefik + Let\'s Encrypt', 'VPS OVH', 'MySQL mutualisée']
+  },
+  screenshots: [
+    { src: './media/apprentissage-poo-php/accueil.png', caption: "Page d'accueil, parcours procédural puis orienté objet" },
+    { src: './media/apprentissage-poo-php/exercice.png', caption: 'Exercice de POO avec correction automatique via le bac à sable serveur' },
+    { src: './media/apprentissage-poo-php/trophees.png', caption: 'Salle des trophées, partagée avec le projet jumeau JavaScript' },
+    { src: './media/apprentissage-poo-php/connexion.png', caption: "Écran de connexion avec vérification d'e-mail" }
+  ],
+  picture: './media/apprentissage-poo-php/accueil.png',
+  cadrage: 'top center'
+},
+ 
+{
+  id: 22,
+  name: 'Shuzan',
+  // 'Labo' : expérimentation personnelle sans backend ni compte, dans le même
+  // esprit que Voyage à Milan.
+  themes: ['Labo'],
+  languages: ['React', 'JavaScript'],
+  languagesIcons: ['fab fa-react', 'fab fa-js'],
+  source: 'https://github.com/lorycarvajol/Shuzan',
+  shortInfo: 'École du soroban en ligne : 17 leçons progressives et exercices ciblés sur le boulier japonais',
+  info: "Application d'apprentissage du calcul au boulier japonais (soroban) : dix-sept leçons progressives réparties en six modules, et un générateur d'exercices aléatoires ciblés par compétence. Toute l'application repose sur un unique moteur de calcul (src/lib/technique.js) qui détermine, pour chaque opération, laquelle des quatre techniques du soroban s'applique — geste direct, « petit ami », « grand ami », ou technique combinée — et produit la séquence de gestes élémentaires correspondante. Ce même moteur alimente à la fois les exercices (le générateur rejette tout tirage qui ne travaille pas la compétence visée), les corrections pas-à-pas jouées geste par geste sur le boulier, et le contenu des leçons elles-mêmes — aucune démonstration ne peut donc raconter un geste différent de celui que produirait réellement le moteur. Une suite de vérification dédiée (npm run check) recalcule 120 000 opérations aléatoires et contrôle les 180 plans de gestes possibles avant chaque publication. Aucun serveur ni compte : la progression est stockée dans le localStorage du navigateur, le routage par hash permettant de servir l'application depuis n'importe quel hébergement statique. Boulier manipulable au clavier, trois apparences (système, jour, nuit), animations respectant prefers-reduced-motion, palette inspirée des indigos traditionnels japonais.",
+  techSpecs: {
+    frontend: ['React 19', 'Vite 7', 'react-router-dom (hash router)'],
+    hosting: ['Hébergement statique (aucun backend)', 'localStorage pour la progression']
+  },
+  screenshots: [
+    { src: './media/shuzan/accueil.png', caption: "Page d'accueil, les six modules de leçons" },
+    { src: './media/shuzan/lecon.png', caption: 'Boulier interactif, manipulable à la souris et au clavier' },
+    { src: './media/shuzan/walkthrough.png', caption: 'Correction pas-à-pas : les gestes joués un par un sur le boulier' },
+    { src: './media/shuzan/exercice.png', caption: "Générateur d'exercices ciblés par compétence" }
+  ],
+  picture: './media/shuzan/accueil.png',
+  cadrage: 'top center'
+}
 ]
